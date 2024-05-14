@@ -13,7 +13,7 @@ namespace IDCL.AVGUST.SIP.PedidoApi.Controllers
         private readonly IPedidoManager _pedidoManager;
 
 
-        //Camoens
+        //Api para generar JWT
         public PedidoController(ILogger<PedidoController> logger, IPedidoManager pedidoManager)
         {
             _logger = logger;
