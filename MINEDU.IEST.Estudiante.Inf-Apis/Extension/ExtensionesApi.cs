@@ -14,6 +14,7 @@ using IDCL.AVGUST.SIP.Repository.Maestra;
 using IDCL.AVGUST.SIP.Repository.Pedido;
 using IDCL.AVGUST.SIP.Repository.Seguridad;
 using IDCL.AVGUST.SIP.Repository.Tacama;
+using IDCL.AVGUST.SIP.Repository.Tacama.Procedure;
 using IDCL.AVGUST.SIP.Repository.UnitOfWork;
 using IDCL.AVGUST.SIP.Repository.UnitOfWork.Tacama;
 using IDCL.Tacama.Core.Contexto.IDCL.Tacama.Core.Contexto;
@@ -150,8 +151,6 @@ namespace MINEDU.IEST.Estudiante.Inf_Apis.Extension
 
         }
 
-
-
         #region Tacama
 
         public static IServiceCollection AddRepositoriesTacama(this IServiceCollection services, Action<RepositoriesOptions> configureOptions)
@@ -161,6 +160,8 @@ namespace MINEDU.IEST.Estudiante.Inf_Apis.Extension
 
             services.AddScoped<IUsuarioTacRepository, UsuarioTacRepository>();
             services.AddScoped<ITramaDiarioRepository, TramaDiarioRepository>();
+            services.AddScoped<IClienteRepository, ClienteRepository>();
+            services.AddScoped<IArticuloTacamaRepository, ArticuloTacamaRepository>();
             services.AddScoped<TacamaUnitOfWork>();
 
 
@@ -179,6 +180,24 @@ namespace MINEDU.IEST.Estudiante.Inf_Apis.Extension
         {
 
             services.AddScoped<ITacamaManager, TacamaManager>();
+
+            return services;
+
+        }
+
+        public static IServiceCollection AddProcedureTacama(this IServiceCollection services, Action<RepositoriesOptions> configureOptions)
+        {
+            var options = new RepositoriesOptions();
+            configureOptions(options);
+
+            services.AddScoped<IPedidoTacamaRepository, PedidoTacamaRepository>();
+            services.AddScoped<IDapper, DataBase>();
+
+
+            services.AddDbContext<DbTacamaContext>(opt =>
+            {
+                opt.UseSqlServer(options.ConnectionString);
+            });
 
             return services;
 

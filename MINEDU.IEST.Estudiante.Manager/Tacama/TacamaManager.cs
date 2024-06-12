@@ -1,5 +1,8 @@
 ﻿using AutoMapper;
+using IDCL.AVGUST.SIP.Entity.Tacama.SpEntity;
 using IDCL.AVGUST.SIP.ManagerDto.Tacama;
+using IDCL.AVGUST.SIP.ManagerDto.Tacama.Articulo;
+using IDCL.AVGUST.SIP.ManagerDto.Tacama.Cliente;
 using IDCL.AVGUST.SIP.ManagerDto.Tacama.TramaDiario;
 using IDCL.AVGUST.SIP.Repository.UnitOfWork.Tacama;
 using IDCL.Tacama.Core.Entity;
@@ -89,6 +92,51 @@ namespace IDCL.AVGUST.SIP.Manager.Tacama
                 throw ex;
             }
         }
+
+        #endregion
+
+
+        #region Gestion - Pedidos
+
+
+        public async Task<List<ListarPedidoNacional>> GetListarPedidoNacionalAsync(int idEmpresa, int idLocal, string codPedidoCad, bool todos, DateTime fecInicial, DateTime fecFinal,
+            string Estado, string RazonSocial, bool Tipo, int idVendedor, string indCotPed)
+        {
+
+            try
+            {
+                var query = await _tacamaUnitOfWork._pedidoTacamaRepository.ListarPedidoNacional(idEmpresa, idLocal, codPedidoCad, todos, fecInicial, fecFinal, Estado, RazonSocial, Tipo, idVendedor, indCotPed);
+                return query;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+
+        public async Task<List<GetArticuloTacamaDto>> GetArticulosTacamaAsync(string filter)
+        {
+            var query = _tacamaUnitOfWork._articuloTacamaRepository.GetAllTake(
+                (l => filter.Contains(l.NomArticulo) || filter == ""),
+                includeProperties: "ArticuloCategorium", orderBy: l => l.OrderBy(s => s.NomArticulo));
+
+            var response = _mapper.Map<List<GetArticuloTacamaDto>>(query);
+
+            return response;
+        }
+
+
+        public async Task<List<GetClienteTacamaDto>> GetClientesFilterAsync(string filter)
+        {
+            var query = _tacamaUnitOfWork._clienteRepository.GetAllTake(
+                (l => filter.Contains(l.SiglaComercial) || filter == ""),
+                includeProperties: "IdPersonaNavigation", orderBy: l => l.OrderBy(s => s.SiglaComercial), PageSize: 15);
+
+            var response = _mapper.Map<List<GetClienteTacamaDto>>(query);
+            return response;
+        }
+
 
         #endregion
 
