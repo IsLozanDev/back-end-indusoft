@@ -22,7 +22,7 @@ namespace IDCL.AVGUST.SIP.PedidoApi.Controllers
             _pedidoManager = pedidoManager;
         }
 
-        [Authorize]
+        [AllowAnonymous]
         [HttpGet("GetListCostoArticulo/{idEmpresa:int}/{idMoneda}/{codArticulo?}/{fechaStock?}")]
         public async Task<IActionResult> GetArticulos(int idEmpresa, string idMoneda, string? codArticulo = null, string? fechaStock = null)
         {
@@ -119,7 +119,7 @@ namespace IDCL.AVGUST.SIP.PedidoApi.Controllers
 
         #endregion
 
-        [Authorize]
+        [AllowAnonymous]
         [HttpPost("AddPedido")]
         public async Task<IActionResult> AddPedido(AddPedidoDto model)
         {
