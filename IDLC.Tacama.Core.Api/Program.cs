@@ -45,6 +45,7 @@ builder.Services.AddAutoMapper(typeof(AutoMapperHelper).GetTypeInfo().Assembly);
 
 //EF Core - Inyeccion de Dependencia.
 builder.Services.AddRepositoriesTacama(opt => opt.ConnectionString = backEndConfig.BdSqlServer);
+builder.Services.AddProcedureTacama(opt => opt.ConnectionString = backEndConfig.BdSqlServer);
 builder.Services.AddManagerTacama();
 builder.Services.AddTransient<IEmailSender, EmailSender>();
 builder.Services.AddStorageManager(opt => opt.Type = StorageType.FileStorage);

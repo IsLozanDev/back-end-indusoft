@@ -2,12 +2,11 @@
    "CodeGenerationMode": 2,
    "ContextClassName": "DbTacamaContext",
    "ContextNamespace": "IDCL.Tacama.Core.Contexto",
-   "DefaultDacpacSchema": null,
    "FilterSchemas": false,
    "IncludeConnectionString": false,
    "ModelNamespace": "IDCL.Tacama.Core.Entity",
-   "OutputContextPath": "DataTacama",
-   "OutputPath": "DataTacama",
+   "OutputContextPath": "DataTacama-Arti2",
+   "OutputPath": "DataTacama-Arti2",
    "PreserveCasingWithRegex": true,
    "ProjectRootNamespace": "IDCL.Tacama.Core.Contexto",
    "Schemas": null,
@@ -16,28 +15,25 @@
    "T4TemplatePath": null,
    "Tables": [
       {
-         "Name": "[dbo].[Rol]",
+         "Name": "[dbo].[ArticuloServ]",
          "ObjectType": 0
       },
       {
-         "Name": "[dbo].[TramaDiario]",
+         "Name": "[dbo].[ArticuloServPresentacion]",
          "ObjectType": 0
       },
       {
-         "Name": "[dbo].[TramaHistorico]",
+         "Name": "[dbo].[exp_PedidoCab]",
          "ObjectType": 0
       },
       {
-         "Name": "[dbo].[Usuario]",
-         "ObjectType": 0
-      },
-      {
-         "Name": "[dbo].[UsuarioRol]",
+         "Name": "[dbo].[exp_PedidoDet]",
          "ObjectType": 0
       }
    ],
-   "UiHint": "serverindusoft1\\sql22.INDUSOFT_NET_ERP_TACAMA.dbo",
+   "UiHint": null,
    "UncountableWords": null,
+   "UseAsyncStoredProcedureCalls": true,
    "UseBoolPropertiesWithoutDefaultSql": false,
    "UseDatabaseNames": false,
    "UseDateOnlyTimeOnly": false,
@@ -54,6 +50,7 @@
    "UseNoObjectFilter": false,
    "UseNodaTime": false,
    "UseNullableReferences": true,
+   "UsePrefixNavigationNaming": false,
    "UseSchemaFolders": false,
    "UseSchemaNamespaces": false,
    "UseSpatial": false,

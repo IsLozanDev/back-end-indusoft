@@ -1,4 +1,5 @@
 ﻿using IDCL.AVGUST.SIP.Repository.Tacama;
+using IDCL.AVGUST.SIP.Repository.Tacama.Procedure;
 using IDCL.Tacama.Core.Contexto.IDCL.Tacama.Core.Contexto;
 using MINEDU.IEST.Estudiante.Repository.Base;
 
@@ -9,15 +10,26 @@ namespace IDCL.AVGUST.SIP.Repository.UnitOfWork.Tacama
         private bool disposedValue;
         public IUsuarioTacRepository _usuarioTacRepository { get; }
         public ITramaDiarioRepository _tramaDiarioRepository { get; }
+        public IPedidoTacamaRepository _pedidoTacamaRepository { get; }
+        public IClienteRepository _clienteRepository { get; }
+        public IArticuloTacamaRepository _articuloTacamaRepository { get; }
+
+
         private readonly DbTacamaContext _context;
 
-        public TacamaUnitOfWork(IUsuarioTacRepository usuarioTacRepository, 
-            DbTacamaContext context, 
-            ITramaDiarioRepository tramaDiarioRepository)
+        public TacamaUnitOfWork(IUsuarioTacRepository usuarioTacRepository,
+            DbTacamaContext context,
+            ITramaDiarioRepository tramaDiarioRepository,
+            IPedidoTacamaRepository pedidoTacamaRepository,
+            IClienteRepository clienteRepository,
+            IArticuloTacamaRepository articuloTacamaRepository)
         {
             this._usuarioTacRepository = usuarioTacRepository;
             this._context = context;
             _tramaDiarioRepository = tramaDiarioRepository;
+            _pedidoTacamaRepository = pedidoTacamaRepository;
+            _clienteRepository = clienteRepository;
+            _articuloTacamaRepository = articuloTacamaRepository;
         }
         public void Save()
         {

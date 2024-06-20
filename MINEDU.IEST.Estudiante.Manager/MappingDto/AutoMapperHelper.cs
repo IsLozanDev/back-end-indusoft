@@ -21,6 +21,11 @@ using IDCL.AVGUST.SIP.ManagerDto.Seguridad.Add;
 using IDCL.AVGUST.SIP.ManagerDto.StoreProcedure;
 using IDCL.AVGUST.SIP.ManagerDto.StoreProcedure.LineaCuentas;
 using IDCL.AVGUST.SIP.ManagerDto.Tacama;
+using IDCL.AVGUST.SIP.ManagerDto.Tacama.Articulo;
+using IDCL.AVGUST.SIP.ManagerDto.Tacama.Cliente;
+using IDCL.AVGUST.SIP.ManagerDto.Tacama.Pedido;
+using IDCL.AVGUST.SIP.ManagerDto.Tacama.Pedido.Cmd;
+using IDCL.AVGUST.SIP.ManagerDto.Tacama.Persona;
 using IDCL.AVGUST.SIP.ManagerDto.Tacama.TramaDiario;
 using IDCL.Tacama.Core.Entity;
 
@@ -145,19 +150,55 @@ namespace IDCL.AVGUST.SIP.Manager.MappingDto
             #region Lineas cuentas
 
             CreateMap<AvanceCobranzaZV, GetAvanceCobranzaZVDto>().ReverseMap();
-            CreateMap<ClientesAprobados,GetClientesAprobadoDto>().ReverseMap();
-            CreateMap<ClientesAtendidos,GetClientesAtendidosDto>().ReverseMap();
-            CreateMap<ClientesAtendidosSinLC,GetClientesAtentidosSinLCDto>().ReverseMap();
-            CreateMap<CtaCteAtrazadaZona,GetCtaCteAtrazadaZonaDto>().ReverseMap();
-            CreateMap<LetraPorAceptarZona,GetLetraPorAceptarZonaDto>().ReverseMap();
-            CreateMap<LineaCreditoDisponible,GetLineaCreditoDisponibleDto>().ReverseMap();
+            CreateMap<ClientesAprobados, GetClientesAprobadoDto>().ReverseMap();
+            CreateMap<ClientesAtendidos, GetClientesAtendidosDto>().ReverseMap();
+            CreateMap<ClientesAtendidosSinLC, GetClientesAtentidosSinLCDto>().ReverseMap();
+            CreateMap<CtaCteAtrazadaZona, GetCtaCteAtrazadaZonaDto>().ReverseMap();
+            CreateMap<LetraPorAceptarZona, GetLetraPorAceptarZonaDto>().ReverseMap();
+            CreateMap<LineaCreditoDisponible, GetLineaCreditoDisponibleDto>().ReverseMap();
 
             #endregion
 
             #region Tacama
-            CreateMap<Rol, GetUsuarioRolTacamaDto> ().ReverseMap();
-            CreateMap<UsuarioTacama, GetUsuarioTacamaDto> ().ReverseMap();
-            CreateMap<TramaDiario, GetTramaDiarioDto> ().ReverseMap();
+            CreateMap<Rol, GetUsuarioRolTacamaDto>().ReverseMap();
+            CreateMap<UsuarioTacama, GetUsuarioTacamaDto>().ReverseMap();
+            CreateMap<TramaDiario, GetTramaDiarioDto>().ReverseMap();
+
+
+            #region Pedidos
+            CreateMap<ExpPedidoCab, GetPedidoTacamaDto>();
+            CreateMap<ExpPedidoDet, GetPedidoDetalleTacamaDto>();
+
+            CreateMap<ExpPedidoCab, CmdPedidoTacamaDto>().ReverseMap();
+            CreateMap<ExpPedidoDet, CmdPedidoDetalleTacamaDto>().ReverseMap();
+
+            #endregion
+
+            #region Articulos
+            CreateMap<ArticuloTacamaServ, GetArticuloTacamaDto>();
+            CreateMap<ArticuloTacamaCategorium, GetArticuloTacamaCategoriaDto>();
+            CreateMap<ArticuloServPresentacion, GetArticuloServicioPresentacionDto>();
+
+
+            #endregion
+
+            #region Clientes
+            CreateMap<Cliente, GetClienteTacamaDto>();
+            CreateMap<PersonaTacama, GetPersonaTacamaDto>();
+            CreateMap<PersonaDireccion, GetDireccionTacamaDto>();
+
+
+            #endregion
+
+            #region Persona
+
+
+            #endregion
+
+
+
+
+
             #endregion
         }
     }

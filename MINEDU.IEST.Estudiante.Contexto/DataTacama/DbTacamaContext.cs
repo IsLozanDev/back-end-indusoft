@@ -21,14 +21,31 @@ namespace IDCL.Tacama.Core.Contexto.IDCL.Tacama.Core.Contexto
         public virtual DbSet<TramaHistorico> TramaHistoricos { get; set; } = null!;
         public virtual DbSet<UsuarioTacama> Usuarios { get; set; } = null!;
         public virtual DbSet<UsuarioRol> UsuarioRols { get; set; } = null!;
+        public virtual DbSet<Cliente> Clientes { get; set; } = null!;
+        public virtual DbSet<ExpPedidoCab> ExpPedidoCabs { get; set; } = null!;
+        public virtual DbSet<ExpPedidoDet> ExpPedidoDets { get; set; } = null!;
+        public virtual DbSet<PersonaTacama> Personas { get; set; } = null!;
+        public virtual DbSet<PersonaDireccion> PersonaDireccions { get; set; } = null!;
+
+        public virtual DbSet<ArticuloTacamaCategorium> ArticuloCategoria { get; set; } = null!;
+        public virtual DbSet<ArticuloTacamaServ> ArticuloServs { get; set; } = null!;
+        public virtual DbSet<ArticuloServPresentacion> ArticuloServPresentacions { get; set; } = null!;
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-        modelBuilder.ApplyConfiguration(new Configurations.RolConfiguration());
-        modelBuilder.ApplyConfiguration(new Configurations.TramaDiarioConfiguration());
-        modelBuilder.ApplyConfiguration(new Configurations.TramaHistoricoConfiguration());
-        modelBuilder.ApplyConfiguration(new Configurations.UsuarioConfiguration());
-        modelBuilder.ApplyConfiguration(new Configurations.UsuarioRolConfiguration());
+            modelBuilder.ApplyConfiguration(new Configurations.RolConfiguration());
+            modelBuilder.ApplyConfiguration(new Configurations.TramaDiarioConfiguration());
+            modelBuilder.ApplyConfiguration(new Configurations.TramaHistoricoConfiguration());
+            modelBuilder.ApplyConfiguration(new Configurations.UsuarioConfiguration());
+            modelBuilder.ApplyConfiguration(new Configurations.UsuarioRolConfiguration());
+            modelBuilder.ApplyConfiguration(new Configurations.ClienteConfiguration());
+            modelBuilder.ApplyConfiguration(new Configurations.ExpPedidoCabConfiguration());
+            modelBuilder.ApplyConfiguration(new Configurations.ExpPedidoDetConfiguration());
+            modelBuilder.ApplyConfiguration(new Configurations.PersonaConfiguration());
+            modelBuilder.ApplyConfiguration(new Configurations.PersonaDireccionConfiguration());
+            modelBuilder.ApplyConfiguration(new Configurations.ArticuloCategoriumConfiguration());
+            modelBuilder.ApplyConfiguration(new Configurations.ArticuloServConfiguration());
+            modelBuilder.ApplyConfiguration(new Configurations.ArticuloServPresentacionConfiguration());
 
             OnModelCreatingPartial(modelBuilder);
         }
