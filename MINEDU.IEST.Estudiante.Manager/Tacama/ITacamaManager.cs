@@ -2,6 +2,7 @@
 using IDCL.AVGUST.SIP.ManagerDto.Tacama;
 using IDCL.AVGUST.SIP.ManagerDto.Tacama.Articulo;
 using IDCL.AVGUST.SIP.ManagerDto.Tacama.Cliente;
+using IDCL.AVGUST.SIP.ManagerDto.Tacama.Pedido.Cmd;
 using IDCL.AVGUST.SIP.ManagerDto.Tacama.TramaDiario;
 
 namespace IDCL.AVGUST.SIP.Manager.Tacama
@@ -16,5 +17,6 @@ namespace IDCL.AVGUST.SIP.Manager.Tacama
             DateTime fecInicial, DateTime fecFinal, string Estado, string RazonSocial, bool Tipo, int idVendedor, string indCotPed);
         Task<List<GetArticuloTacamaDto>> GetArticulosTacamaAsync(string filter);
         Task<List<GetClienteTacamaDto>> GetClientesFilterAsync(string filter);
+        Task<CmdPedidoTacamaDto> SavePedido(CmdPedidoTacamaDto model);
     }
 }

@@ -1,6 +1,8 @@
-﻿namespace IDCL.AVGUST.SIP.ManagerDto.Tacama.Pedido.Cmd
+﻿using MINEDU.IEST.Estudiante.Inf_Utils.Dtos;
+
+namespace IDCL.AVGUST.SIP.ManagerDto.Tacama.Pedido.Cmd
 {
-    public class CmdPedidoTacamaDto
+    public class CmdPedidoTacamaDto: Validation
     {
         public int IdPedido { get; set; }
         public int IdEmpresa { get; set; }
@@ -133,6 +135,8 @@
         public DateTime? FechaRegistro { get; set; }
         public string? UsuarioModificacion { get; set; }
         public DateTime? FechaModificacion { get; set; }
+        //Adicionales
+        public string NroRucCliente { get; set; }
 
         public List<CmdPedidoDetalleTacamaDto> ExpPedidoDets { get; set; }
     }

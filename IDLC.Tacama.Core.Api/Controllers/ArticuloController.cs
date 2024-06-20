@@ -18,7 +18,6 @@ namespace IDLC.Tacama.Core.Api.Controllers
 
 
         [HttpGet("GetArticulosByFilter/{filter?}")]
-
         public async Task<IActionResult> GetArticulosByFilter(string? filter = "")
         {
             filter = filter ?? string.Empty;

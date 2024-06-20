@@ -12,19 +12,17 @@ namespace IDCL.AVGUST.SIP.Repository.UnitOfWork
         public IPedidoRepository _pedidoRepository { get; }
         public IPersonaRepository _personaRepository { get; }
         public ITipoCambioRepository _tipoCambioRepository{ get; }
-        public IArticuloTacamaRepository  _articuloTacamaRepository { get; }
+
 
         public PedidoUnitOfWork(DbPedidoContext context,
             IPedidoRepository pedidoRepository,
             IPersonaRepository personaRepository,
-            ITipoCambioRepository tipoCambioRepository,
-            IArticuloTacamaRepository articuloTacamaRepository)
+            ITipoCambioRepository tipoCambioRepository)
         {
             _context = context;
             _pedidoRepository = pedidoRepository;
             _personaRepository = personaRepository;
             _tipoCambioRepository = tipoCambioRepository;
-            _articuloTacamaRepository = articuloTacamaRepository;
         }
 
         public void Save()
