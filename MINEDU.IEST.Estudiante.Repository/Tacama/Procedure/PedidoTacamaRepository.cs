@@ -39,5 +39,27 @@ namespace IDCL.AVGUST.SIP.Repository.Tacama.Procedure
             var qResult = await _database.GetAll<ListarPedidoNacional>(procedureName, parameters, CommandType.StoredProcedure);
             return qResult;
         }
+
+        public async Task<string> ObtenerNroPedido(int idEmpresa, int idLocal, string indCotPed)
+        {
+            var procedureName = "usp_ObtenerNroPedido";
+            var parameters = new DynamicParameters();
+            parameters.Add("idEmpresa", idEmpresa, DbType.Int32, ParameterDirection.Input);
+            parameters.Add("idLocal", idLocal, DbType.Int32, ParameterDirection.Input);
+            parameters.Add("indCotPed", indCotPed, DbType.String, ParameterDirection.Input);
+            var qResult = await _database.Get<string>(procedureName, parameters, CommandType.StoredProcedure);
+            return qResult;
+        }
+        
+        public async Task<ObtenerTipoCambio> ObtenerTipoCambioPorDia(string idMoneda, DateTime fecCambio)
+        {
+            var procedureName = "usp_ObtenerTipoCambioPorDia";
+            var parameters = new DynamicParameters();
+            parameters.Add("idMoneda", idMoneda, DbType.String, ParameterDirection.Input);
+            parameters.Add("fecCambio", fecCambio, DbType.Date, ParameterDirection.Input);
+            var qResult = await _database.Get<ObtenerTipoCambio>(procedureName, parameters, CommandType.StoredProcedure);
+            return qResult;
+        }
+
     }
 }

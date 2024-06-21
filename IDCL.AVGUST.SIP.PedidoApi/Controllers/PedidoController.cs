@@ -3,6 +3,8 @@ using IDCL.AVGUST.SIP.ManagerDto.Pedido;
 using Microsoft.AspNetCore.Mvc;
 using MINEDU.IEST.Estudiante.Inf_Utils.Helpers;
 using Microsoft.AspNetCore.Authorization;
+using System.Net.Http.Headers;
+using System.Text;
 
 
 namespace IDCL.AVGUST.SIP.PedidoApi.Controllers

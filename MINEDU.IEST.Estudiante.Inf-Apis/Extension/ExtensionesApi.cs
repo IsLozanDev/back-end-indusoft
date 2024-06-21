@@ -162,15 +162,14 @@ namespace MINEDU.IEST.Estudiante.Inf_Apis.Extension
             services.AddScoped<ITramaDiarioRepository, TramaDiarioRepository>();
             services.AddScoped<IClienteRepository, ClienteRepository>();
             services.AddScoped<IArticuloTacamaRepository, ArticuloTacamaRepository>();
-            services.AddScoped<TacamaUnitOfWork>();
+            services.AddScoped<IPersonaTacamaRepository, PersonaTacamaRepository>();
 
+            services.AddScoped<TacamaUnitOfWork>();
 
             services.AddDbContext<DbTacamaContext>(opt =>
             {
                 opt.UseSqlServer(options.ConnectionString);
             });
-
-
 
             return services;
         }
@@ -178,11 +177,9 @@ namespace MINEDU.IEST.Estudiante.Inf_Apis.Extension
 
         public static IServiceCollection AddManagerTacama(this IServiceCollection services)
         {
-
             services.AddScoped<ITacamaManager, TacamaManager>();
 
             return services;
-
         }
 
         public static IServiceCollection AddProcedureTacama(this IServiceCollection services, Action<RepositoriesOptions> configureOptions)
@@ -193,14 +190,12 @@ namespace MINEDU.IEST.Estudiante.Inf_Apis.Extension
             services.AddScoped<IPedidoTacamaRepository, PedidoTacamaRepository>();
             services.AddScoped<IDapper, DataBase>();
 
-
             services.AddDbContext<DbTacamaContext>(opt =>
             {
                 opt.UseSqlServer(options.ConnectionString);
             });
 
             return services;
-
         }
 
         #endregion

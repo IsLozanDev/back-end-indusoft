@@ -1,7 +1,7 @@
 ﻿using IDCL.AVGUST.SIP.Manager.Tacama;
-using IDLC.Tacama.Core.Api.Models;
-using Microsoft.AspNetCore.Http;
+using IDCL.AVGUST.SIP.ManagerDto.Tacama.Pedido.Cmd;
 using Microsoft.AspNetCore.Mvc;
+using MINEDU.IEST.Estudiante.Inf_Utils.Helpers;
 
 namespace IDLC.Tacama.Core.Api.Controllers
 {
@@ -33,6 +33,28 @@ namespace IDLC.Tacama.Core.Api.Controllers
             var data = await _tacamaManager.GetListarPedidoNacionalAsync(idEmpresa, idLocal, codPedidoCad, false, fecInicial, fecFinal, Estado, RazonSocial, false, idVendedor, indCotPed);
 
             return Ok(data);
+        }
+
+        [HttpPost("SavePedido")]
+        public async Task<IActionResult> SavePedido(CmdPedidoTacamaDto model)
+        {
+            try
+            {
+                var response = await _tacamaManager.SavePedido(model);
+                if (response.EsError)
+                {
+                    ModelState.AddModelError("validacion", response.MensajeError);
+                    return UnprocessableEntity(ExtensionTools.Validaciones(ModelState));
+                }
+                return Ok(new { idPedido = response.IdFacturar });
+            }
+            catch (Exception ex)
+            {
+                ModelState.AddModelError("validacion", ex.Message);
+                UnprocessableEntity(ExtensionTools.Validaciones(ModelState));
+                _logger.LogError(ex.Message, ex);
+                throw;
+            }
         }
     }
 }
