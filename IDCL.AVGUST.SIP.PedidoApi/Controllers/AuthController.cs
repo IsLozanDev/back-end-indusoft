@@ -33,7 +33,7 @@ namespace IDCL.AVGUST.SIP.PedidoApi.Controllers
                     claims: new List<Claim> {
                         new Claim(SecurityClaimType.PersonId ,user.UserName)
                     },
-                    expires: DateTime.Now.AddMinutes(int.MaxValue),
+                    expires: DateTime.Now.AddMinutes(60),
                     signingCredentials: signinCredentials
                 );
                 var tokenString = new JwtSecurityTokenHandler().WriteToken(tokeOptions);
