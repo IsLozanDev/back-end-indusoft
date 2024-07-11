@@ -175,6 +175,10 @@ namespace IDCL.AVGUST.SIP.Manager.MappingDto
             #endregion
 
             #region Articulos
+            CreateMap<ArticuloTacamaServ, GetListArticuloDto>()
+                .ForMember(dest => dest.Id, source => source.MapFrom(s => s.IdArticulo))
+                .ForMember(dest => dest.FullName, source => source.MapFrom(s => $"{s.CodArticulo} - {s.NomArticuloLargo}"));
+
             CreateMap<ArticuloTacamaServ, GetArticuloTacamaDto>();
             CreateMap<ArticuloTacamaCategorium, GetArticuloTacamaCategoriaDto>();
             CreateMap<ArticuloServPresentacion, GetArticuloServicioPresentacionDto>();
@@ -183,6 +187,7 @@ namespace IDCL.AVGUST.SIP.Manager.MappingDto
             #endregion
 
             #region Clientes
+            
             CreateMap<Cliente, GetClienteTacamaDto>();
             CreateMap<PersonaTacama, GetPersonaTacamaDto>();
             CreateMap<PersonaDireccion, GetDireccionTacamaDto>();
@@ -191,7 +196,9 @@ namespace IDCL.AVGUST.SIP.Manager.MappingDto
             #endregion
 
             #region Persona
-
+            CreateMap<PersonaTacama, GetListPersonaDto>()
+                .ForMember(dest => dest.Id, source => source.MapFrom(s => s.IdPersona))
+                .ForMember(dest => dest.FullName, source => source.MapFrom(s => $"{s.Ruc} - {s.RazonSocial}"));
 
             #endregion
 

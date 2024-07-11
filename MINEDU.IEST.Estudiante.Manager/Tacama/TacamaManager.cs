@@ -6,6 +6,7 @@ using IDCL.AVGUST.SIP.ManagerDto.Tacama;
 using IDCL.AVGUST.SIP.ManagerDto.Tacama.Articulo;
 using IDCL.AVGUST.SIP.ManagerDto.Tacama.Cliente;
 using IDCL.AVGUST.SIP.ManagerDto.Tacama.Pedido.Cmd;
+using IDCL.AVGUST.SIP.ManagerDto.Tacama.Persona;
 using IDCL.AVGUST.SIP.ManagerDto.Tacama.TramaDiario;
 using IDCL.AVGUST.SIP.Repository.UnitOfWork;
 using IDCL.AVGUST.SIP.Repository.UnitOfWork.Tacama;
@@ -119,27 +120,7 @@ namespace IDCL.AVGUST.SIP.Manager.Tacama
         }
 
 
-        public async Task<List<GetArticuloTacamaDto>> GetArticulosTacamaAsync(string filter)
-        {
-            var query = _tacamaUnitOfWork._articuloTacamaRepository.GetAllTake(
-                (l => filter.Contains(l.NomArticulo) || filter == ""),
-                includeProperties: "ArticuloCategorium", orderBy: l => l.OrderBy(s => s.NomArticulo));
 
-            var response = _mapper.Map<List<GetArticuloTacamaDto>>(query);
-
-            return response;
-        }
-
-
-        public async Task<List<GetClienteTacamaDto>> GetClientesFilterAsync(string filter)
-        {
-            var query = _tacamaUnitOfWork._clienteRepository.GetAllTake(
-                (l => filter.Contains(l.SiglaComercial) || filter == ""),
-                includeProperties: "IdPersonaNavigation", orderBy: l => l.OrderBy(s => s.SiglaComercial), PageSize: 15);
-
-            var response = _mapper.Map<List<GetClienteTacamaDto>>(query);
-            return response;
-        }
 
         public async Task<CmdPedidoTacamaDto> SavePedido(CmdPedidoTacamaDto model)
         {
@@ -207,6 +188,64 @@ namespace IDCL.AVGUST.SIP.Manager.Tacama
         #endregion
 
 
+        #region Clientes
+        public async Task<List<GetClienteTacamaDto>> GetClientesFilterAsync(string filter)
+        {
+            var query = _tacamaUnitOfWork._clienteRepository.GetAllTake(
+                (l => filter.Contains(l.SiglaComercial) || filter == ""),
+                includeProperties: "IdPersonaNavigation", orderBy: l => l.OrderBy(s => s.SiglaComercial), PageSize: 15);
+
+            var response = _mapper.Map<List<GetClienteTacamaDto>>(query);
+            return response;
+        }
+
+        public async Task<List<GetListPersonaDto>> GetListClientesFilterAsync(string filter)
+        {
+            var query = _tacamaUnitOfWork._personaTacamaRepository
+                .GetAllTake(l => !string.IsNullOrEmpty(l.RazonSocial.Trim()) &&
+                (l.Ruc.Contains(filter) ||
+                    l.RazonSocial.Contains(filter) ||
+                    filter == ""
+                ),
+                includeProperties: "Clientes", orderBy: l => l.OrderBy(s => s.RazonSocial.Trim().TrimStart()), PageSize: 15);
+
+            var response = _mapper.Map<List<GetListPersonaDto>>(query);
+
+            return response;
+        }
+
+        #endregion
+
+        #region Articulos
+        public async Task<List<GetArticuloTacamaDto>> GetArticulosTacamaAsync(string filter)
+        {
+            var query = _tacamaUnitOfWork._articuloTacamaRepository.GetAllTake(
+                (l => filter.Contains(l.NomArticulo) || filter == ""),
+                includeProperties: "ArticuloCategorium", orderBy: l => l.OrderBy(s => s.NomArticulo));
+
+            var response = _mapper.Map<List<GetArticuloTacamaDto>>(query);
+
+            return response;
+        }
+
+
+        public async Task<List<GetListArticuloDto>> GetListArticulosTacamaFiltersAsync(string filter)
+        {
+            var query = _tacamaUnitOfWork._articuloTacamaRepository
+                .GetAllTake(
+                (
+                    l => l.CodArticulo.Contains(filter) ||
+                    l.NomArticuloLargo.Contains(filter) ||
+                    filter == ""
+                ),
+                orderBy: l => l.OrderBy(s => s.NomArticuloLargo.Trim().TrimStart()), PageSize: 15);
+
+            var response = _mapper.Map<List<GetListArticuloDto>>(query);
+
+            return response;
+        }
+
+        #endregion
 
     }
 }
