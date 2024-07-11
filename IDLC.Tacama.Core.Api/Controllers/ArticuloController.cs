@@ -24,5 +24,13 @@ namespace IDLC.Tacama.Core.Api.Controllers
             var data = await _tacamaManager.GetArticulosTacamaAsync(filter);
             return Ok(data);
         }
+        
+        [HttpGet("getListArticulos/{filter?}")]
+        public async Task<IActionResult> GetListArticulosTacamaFiltersAsync(string? filter = "")
+        {
+            filter = filter ?? string.Empty;
+            var data = await _tacamaManager.GetListArticulosTacamaFiltersAsync(filter);
+            return Ok(data);
+        }
     }
 }

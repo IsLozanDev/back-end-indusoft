@@ -18,10 +18,16 @@ namespace IDLC.Tacama.Core.Api.Controllers
         }
 
         [HttpGet("GetClientesFilterAsync/{filter?}")]
-
         public async Task<IActionResult> GetClientesFilterAsync(string? filter = "")
         {
             var data = await _tacamaManager.GetClientesFilterAsync(filter);
+            return Ok(data);
+        }
+        
+        [HttpGet("getListClients/{filter?}")]
+        public async Task<IActionResult> GetListClientesFilterAsync(string? filter = "")
+        {
+            var data = await _tacamaManager.GetListClientesFilterAsync(filter);
             return Ok(data);
         }
     }
