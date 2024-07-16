@@ -2,6 +2,7 @@
 using IDCL.AVGUST.SIP.Manager.Tacama;
 using IDCL.AVGUST.SIP.ManagerDto.Tacama.TramaDiario;
 using IDLC.Tacama.Core.Api.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using MINEDU.IEST.Estudiante.Inf_Utils.Helpers;
 using System.Net;
@@ -10,6 +11,7 @@ namespace IDLC.Tacama.Core.Api.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize]
     public class GeolocalizacionController : ControllerBase
     {
         private readonly ILogger<GeolocalizacionController> _logger;
