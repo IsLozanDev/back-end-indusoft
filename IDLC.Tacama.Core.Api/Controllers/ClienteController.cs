@@ -1,4 +1,5 @@
 ﻿using IDCL.AVGUST.SIP.Manager.Tacama;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -6,6 +7,7 @@ namespace IDLC.Tacama.Core.Api.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize]
     public class ClienteController : ControllerBase
     {
         private readonly ILogger<ClienteController> _logger;

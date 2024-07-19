@@ -1,5 +1,6 @@
 ﻿using IDCL.AVGUST.SIP.Manager.Tacama;
 using IDCL.AVGUST.SIP.ManagerDto.Tacama.Pedido.Cmd;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using MINEDU.IEST.Estudiante.Inf_Utils.Helpers;
 
@@ -7,6 +8,7 @@ namespace IDLC.Tacama.Core.Api.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize]
     public class PedidoController : ControllerBase
     {
         private readonly ILogger<PedidoController> _logger;
