@@ -5,13 +5,19 @@ using IDCL.AVGUST.SIP.ManagerDto.Pedido;
 using IDCL.AVGUST.SIP.ManagerDto.Tacama;
 using IDCL.AVGUST.SIP.ManagerDto.Tacama.Articulo;
 using IDCL.AVGUST.SIP.ManagerDto.Tacama.Cliente;
+using IDCL.AVGUST.SIP.ManagerDto.Tacama.Maestro;
 using IDCL.AVGUST.SIP.ManagerDto.Tacama.Pedido.Cmd;
 using IDCL.AVGUST.SIP.ManagerDto.Tacama.Persona;
 using IDCL.AVGUST.SIP.ManagerDto.Tacama.TramaDiario;
 using IDCL.AVGUST.SIP.Repository.UnitOfWork;
 using IDCL.AVGUST.SIP.Repository.UnitOfWork.Tacama;
 using IDCL.Tacama.Core.Entity;
+using Microsoft.AspNetCore.Http;
+using MINEDU.IEST.Estudiante.Inf_Utils.Constants;
 using MINEDU.IEST.Estudiante.Inf_Utils.Helpers;
+using System;
+using System.Security.Claims;
+using System.Threading.Tasks;
 
 namespace IDCL.AVGUST.SIP.Manager.Tacama
 {
@@ -19,11 +25,13 @@ namespace IDCL.AVGUST.SIP.Manager.Tacama
     {
         private readonly IMapper _mapper;
         private readonly TacamaUnitOfWork _tacamaUnitOfWork;
+        private readonly IHttpContextAccessor _httpContextAccessor;
 
-        public TacamaManager(IMapper mapper, TacamaUnitOfWork tacamaUnitOfWork)
+        public TacamaManager(IMapper mapper, TacamaUnitOfWork tacamaUnitOfWork, IHttpContextAccessor httpContextAccessor)
         {
             _mapper = mapper;
             _tacamaUnitOfWork = tacamaUnitOfWork;
+            _httpContextAccessor = httpContextAccessor;
         }
 
         public async Task<string> getCredencials(int id)
@@ -41,23 +49,20 @@ namespace IDCL.AVGUST.SIP.Manager.Tacama
 
         #region Seguridad
 
-        public async Task<GetUsuarioTacamaDto> login(string usuario, string password)
+        public async Task<GetUsuarioTacamaDto?> login(string usuario, string password)
         {
             try
             {
                 var resp = new GetUsuarioTacamaDto();
-
                 var clave = EncryptHelper.EncryptToByte(password);
-                UsuarioTacama query = await _tacamaUnitOfWork._usuarioTacRepository.Autenticar(usuario, clave);
-                if (query == null)
+                var query = await _tacamaUnitOfWork._usuarioTacRepository.Autenticar(usuario, clave);
+                if (query != null)
                 {
-                    resp.EsError = true;
-                    resp.MensajeError = "Usuario y/o Clave no valido";
+                    resp = _mapper.Map<GetUsuarioTacamaDto>(query);
+                    resp.roles = _mapper.Map<List<GetUsuarioRolTacamaDto>>(query.UsuarioRols.Select(l => l.IdRolNavigation).ToList());
                     return resp;
                 }
-                var entidad = _mapper.Map<GetUsuarioTacamaDto>(query);
-                entidad.roles = _mapper.Map<List<GetUsuarioRolTacamaDto>>(query.UsuarioRols.Select(l => l.IdRolNavigation).ToList());
-                return entidad;
+                return null;
             }
             catch (Exception ex)
             {
@@ -103,7 +108,6 @@ namespace IDCL.AVGUST.SIP.Manager.Tacama
 
         #region Gestion - Pedidos
 
-
         public async Task<List<ListarPedidoNacional>> GetListarPedidoNacionalAsync(int idEmpresa, int idLocal, string codPedidoCad, bool todos, DateTime fecInicial, DateTime fecFinal,
             string Estado, string RazonSocial, bool Tipo, int idVendedor, string indCotPed)
         {
@@ -119,11 +123,10 @@ namespace IDCL.AVGUST.SIP.Manager.Tacama
             }
         }
 
-
-
-
         public async Task<CmdPedidoTacamaDto> SavePedido(CmdPedidoTacamaDto model)
         {
+            var userName = _httpContextAccessor.HttpContext.User.Claims.FirstOrDefault(p=>p.Type=="UserName")?.Value;
+
             var pedido = _mapper.Map<ExpPedidoCab>(model);
             var resp = new CmdPedidoTacamaDto();
 
@@ -148,7 +151,7 @@ namespace IDCL.AVGUST.SIP.Manager.Tacama
                 pedido.IdEmpresa = 10;
                 pedido.IdLocal = 1;
                 pedido.CodPedidoCad = nroPedido;
-                pedido.UsuarioModificacion = pedido.UsuarioRegistro;
+                pedido.UsuarioModificacion = pedido.UsuarioRegistro = userName;
                 pedido.FechaModificacion = pedido.FechaRegistro = DateTime.Now;
                 pedido.IndCotPed = "P";
                 pedido.IdTipCondicion = 1;
@@ -184,9 +187,7 @@ namespace IDCL.AVGUST.SIP.Manager.Tacama
             }
         }
 
-
         #endregion
-
 
         #region Clientes
         public async Task<List<GetClienteTacamaDto>> GetClientesFilterAsync(string filter)
@@ -198,7 +199,6 @@ namespace IDCL.AVGUST.SIP.Manager.Tacama
             var response = _mapper.Map<List<GetClienteTacamaDto>>(query);
             return response;
         }
-
         public async Task<List<GetListPersonaDto>> GetListClientesFilterAsync(string filter)
         {
             var query = _tacamaUnitOfWork._personaTacamaRepository
@@ -211,6 +211,25 @@ namespace IDCL.AVGUST.SIP.Manager.Tacama
 
             var response = _mapper.Map<List<GetListPersonaDto>>(query);
 
+            return response;
+        }
+        public async Task<GetClienteHeaderPedidoDto> GetCanalandConditionByIdClienteAsync(int idcliente)
+        {
+            var query = _tacamaUnitOfWork._personaTacamaRepository
+                .GetAll(p => p.IdPersona == idcliente,
+                includeProperties: "PersonaDireccions,CanalesVenta.IdListaPrecioNav")
+                .FirstOrDefault();
+            var response = _mapper.Map<GetClienteHeaderPedidoDto>(query);
+            var canvalVenta = _tacamaUnitOfWork._canalVentaRepository.GetAll(p => p.IdCanalVenta == query.IdCanalVenta,
+                includeProperties: "IdListaPrecioNav").FirstOrDefault();
+
+            response.IdCanalVenta = canvalVenta.IdCanalVenta;
+            response.NombreCanalVenta = canvalVenta.NombreCanal;
+            response.IdListaPrecio = canvalVenta.IdListaPrecio.Value;
+            response.NombreListaPrecio = canvalVenta.IdListaPrecioNav.Nombre;
+
+            var condiciones = _tacamaUnitOfWork._condicionasRepository.GetAll(p => p.IdTipCondicion == 1);
+            response.condiciones = _mapper.Map<List<GetCondicionHeaderDto>>(condiciones);
             return response;
         }
 
@@ -227,8 +246,6 @@ namespace IDCL.AVGUST.SIP.Manager.Tacama
 
             return response;
         }
-
-
         public async Task<List<GetListArticuloDto>> GetListArticulosTacamaFiltersAsync(string filter)
         {
             var query = _tacamaUnitOfWork._articuloTacamaRepository
@@ -242,6 +259,36 @@ namespace IDCL.AVGUST.SIP.Manager.Tacama
 
             var response = _mapper.Map<List<GetListArticuloDto>>(query);
 
+            return response;
+        }
+
+        public async Task<List<GetArticuloSearchPedidoDto>> GetArticulosDetailsPedidoAsync(
+            int idEmpresa,
+            int idAlmacen,
+            int idTipoArticulo,
+            string Anio,
+            string Mes,
+            string codArticulo,
+            string nomArticulo,
+            int idListaPrecio,
+            bool conLote,
+            DateTime FechaStock,
+            int idCanalVenta = 0)
+        {
+            var query = await _tacamaUnitOfWork._pedidoTacamaRepository.GetArticulosPorListaPrecioCanalStock(
+                idEmpresa,
+                idAlmacen,
+                idTipoArticulo,
+                Anio,
+                Mes,
+                codArticulo,
+                nomArticulo,
+                idListaPrecio,
+                conLote,
+                FechaStock,
+                idCanalVenta);
+
+            var response = _mapper.Map<List<GetArticuloSearchPedidoDto>>(query);
             return response;
         }
 

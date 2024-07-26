@@ -50,7 +50,7 @@ namespace IDCL.AVGUST.SIP.Repository.Tacama.Procedure
             var qResult = await _database.Get<string>(procedureName, parameters, CommandType.StoredProcedure);
             return qResult;
         }
-        
+
         public async Task<ObtenerTipoCambio> ObtenerTipoCambioPorDia(string idMoneda, DateTime fecCambio)
         {
             var procedureName = "usp_ObtenerTipoCambioPorDia";
@@ -60,6 +60,38 @@ namespace IDCL.AVGUST.SIP.Repository.Tacama.Procedure
             var qResult = await _database.Get<ObtenerTipoCambio>(procedureName, parameters, CommandType.StoredProcedure);
             return qResult;
         }
+
+
+        public async Task<List<GetArticulosPorListaPrecioCanalStock>> GetArticulosPorListaPrecioCanalStock(int idEmpresa,
+            int idAlmacen,
+            int idTipoArticulo,
+            string Anio,
+            string Mes,
+            string codArticulo,
+            string nomArticulo,
+            int idListaPrecio,
+            bool conLote,
+            DateTime FechaStock,
+            int idCanalVenta = 0)
+        {
+
+            var procedureName = "usp_ArticulosPorListaPrecioCanalStock";
+            var parameters = new DynamicParameters();
+            parameters.Add("idEmpresa", idEmpresa, DbType.Int32, ParameterDirection.Input);
+            parameters.Add("idAlmacen", idAlmacen, DbType.Int32, ParameterDirection.Input);
+            parameters.Add("idTipoArticulo", idTipoArticulo, DbType.Int32, ParameterDirection.Input);
+            parameters.Add("Anio", Anio, DbType.String, ParameterDirection.Input);
+            parameters.Add("Mes", Mes, DbType.String, ParameterDirection.Input);
+            parameters.Add("codArticulo", codArticulo, DbType.String, ParameterDirection.Input);
+            parameters.Add("nomArticulo", nomArticulo, DbType.String, ParameterDirection.Input);
+            parameters.Add("idListaPrecio", idListaPrecio, DbType.Int32, ParameterDirection.Input);
+            parameters.Add("conLote", conLote, DbType.Boolean, ParameterDirection.Input);
+            parameters.Add("FechaStock", FechaStock, DbType.Date, ParameterDirection.Input);
+            parameters.Add("idCanalVenta ", idCanalVenta, DbType.Int32, ParameterDirection.Input);
+            var qResult = await _database.GetAll<GetArticulosPorListaPrecioCanalStock>(procedureName, parameters, CommandType.StoredProcedure);
+            return qResult;
+        }
+
 
     }
 }

@@ -1,11 +1,14 @@
-﻿using IDCL.AVGUST.SIP.Manager.Tacama;
+﻿using IDCL.AVGUST.SIP.Contexto.IDCL.AVGUST.SIP.Entity.Avgust;
+using IDCL.AVGUST.SIP.Manager.Tacama;
 using IDLC.Tacama.Core.Api.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
 using MINEDU.IEST.Estudiante.Inf_Utils.Constants;
 using MINEDU.IEST.Estudiante.Inf_Utils.Dtos;
+using Org.BouncyCastle.Bcpg.Sig;
 using System.IdentityModel.Tokens.Jwt;
+using System.Net;
 using System.Security.Claims;
 using System.Text;
 
@@ -35,7 +38,13 @@ namespace IDLC.Tacama.Core.Api.Controllers
             {
                 return BadRequest("Solicitud del cliente invalido.");
             }
-            if (user.UserName == _config.UserName && user.Password == _config.Password)
+            var response = await _tacamaManager.login(user.UserName, user.Password);
+
+            if (response == null)
+            {
+                return NotFound(new { codigo = HttpStatusCode.NotFound, message = "Usuario y/o clave incorrecto." });
+            }
+            else
             {
                 var secretKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_config.Secret));
                 var signinCredentials = new SigningCredentials(secretKey, SecurityAlgorithms.HmacSha256);
@@ -49,9 +58,9 @@ namespace IDLC.Tacama.Core.Api.Controllers
                     signingCredentials: signinCredentials
                 );
                 var tokenString = new JwtSecurityTokenHandler().WriteToken(tokeOptions);
-                return Ok(new { Token = tokenString });
+                response.token = tokenString;
+                return Ok(response);
             }
-            return Unauthorized();
 
             //var resp = new response();
 

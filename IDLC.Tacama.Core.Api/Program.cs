@@ -47,6 +47,7 @@ BackEndConfig backEndConfig = configuration.GetSection("BackEndConfig").Get<Back
 
 //Auto Mapper
 builder.Services.AddAutoMapper(typeof(AutoMapperHelper).GetTypeInfo().Assembly);
+builder.Services.AddAutoMapper(typeof(AutoMapperTacama).GetTypeInfo().Assembly);
 
 
 //EF Core - Inyeccion de Dependencia.

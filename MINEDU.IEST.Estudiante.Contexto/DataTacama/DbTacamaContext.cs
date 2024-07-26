@@ -16,20 +16,26 @@ namespace IDCL.Tacama.Core.Contexto.IDCL.Tacama.Core.Contexto
         {
         }
 
-        public virtual DbSet<Rol> Rols { get; set; } = null!;
-        public virtual DbSet<TramaDiario> TramaDiarios { get; set; } = null!;
-        public virtual DbSet<TramaHistorico> TramaHistoricos { get; set; } = null!;
-        public virtual DbSet<UsuarioTacama> Usuarios { get; set; } = null!;
-        public virtual DbSet<UsuarioRol> UsuarioRols { get; set; } = null!;
-        public virtual DbSet<Cliente> Clientes { get; set; } = null!;
-        public virtual DbSet<ExpPedidoCab> ExpPedidoCabs { get; set; } = null!;
-        public virtual DbSet<ExpPedidoDet> ExpPedidoDets { get; set; } = null!;
-        public virtual DbSet<PersonaTacama> Personas { get; set; } = null!;
-        public virtual DbSet<PersonaDireccion> PersonaDireccions { get; set; } = null!;
+        public virtual DbSet<Rol> Rols { get; set; }
+        public virtual DbSet<TramaDiario> TramaDiarios { get; set; }
+        public virtual DbSet<TramaHistorico> TramaHistoricos { get; set; }
+        public virtual DbSet<UsuarioTacama> Usuarios { get; set; }
+        public virtual DbSet<UsuarioRol> UsuarioRols { get; set; }
+        public virtual DbSet<Cliente> Clientes { get; set; }
+        public virtual DbSet<ExpPedidoCab> ExpPedidoCabs { get; set; }
+        public virtual DbSet<ExpPedidoDet> ExpPedidoDets { get; set; }
+        public virtual DbSet<PersonaTacama> Personas { get; set; }
+        public virtual DbSet<PersonaDireccion> PersonaDireccions { get; set; }
 
-        public virtual DbSet<ArticuloTacamaCategorium> ArticuloCategoria { get; set; } = null!;
-        public virtual DbSet<ArticuloTacamaServ> ArticuloServs { get; set; } = null!;
-        public virtual DbSet<ArticuloServPresentacion> ArticuloServPresentacions { get; set; } = null!;
+        public virtual DbSet<ArticuloTacamaCategorium> ArticuloCategoria { get; set; }
+        public virtual DbSet<ArticuloTacamaServ> ArticuloServs { get; set; }
+        public virtual DbSet<ArticuloServPresentacion> ArticuloServPresentacions { get; set; }
+
+
+        public virtual DbSet<Condicion> Condicions { get; set; }
+        public virtual DbSet<ListaPrecioTacama> ListaPrecios { get; set; }
+        public virtual DbSet<ListaPrecioItemTacama> ListaPrecioItems { get; set; }
+        public virtual DbSet<VenCanalVentum> VenCanalVenta { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -46,6 +52,12 @@ namespace IDCL.Tacama.Core.Contexto.IDCL.Tacama.Core.Contexto
             modelBuilder.ApplyConfiguration(new Configurations.ArticuloCategoriumConfiguration());
             modelBuilder.ApplyConfiguration(new Configurations.ArticuloServConfiguration());
             modelBuilder.ApplyConfiguration(new Configurations.ArticuloServPresentacionConfiguration());
+
+
+            modelBuilder.ApplyConfiguration(new Configurations.CondicionConfiguration());
+            modelBuilder.ApplyConfiguration(new Configurations.ListaPrecioConfiguration());
+            modelBuilder.ApplyConfiguration(new Configurations.ListaPrecioItemConfiguration());
+            modelBuilder.ApplyConfiguration(new Configurations.VenCanalVentumConfiguration());
 
             OnModelCreatingPartial(modelBuilder);
         }

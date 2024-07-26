@@ -15,19 +15,19 @@
    "T4TemplatePath": null,
    "Tables": [
       {
-         "Name": "[dbo].[ArticuloServ]",
+         "Name": "[dbo].[Condicion]",
          "ObjectType": 0
       },
       {
-         "Name": "[dbo].[ArticuloServPresentacion]",
+         "Name": "[dbo].[ListaPrecio]",
          "ObjectType": 0
       },
       {
-         "Name": "[dbo].[exp_PedidoCab]",
+         "Name": "[dbo].[ListaPrecioItem]",
          "ObjectType": 0
       },
       {
-         "Name": "[dbo].[exp_PedidoDet]",
+         "Name": "[dbo].[ven_CanalVenta]",
          "ObjectType": 0
       }
    ],

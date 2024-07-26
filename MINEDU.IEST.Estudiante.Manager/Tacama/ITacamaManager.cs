@@ -10,7 +10,7 @@ namespace IDCL.AVGUST.SIP.Manager.Tacama
 {
     public interface ITacamaManager
     {
-        Task<GetUsuarioTacamaDto> login(string usuario, string password);
+        Task<GetUsuarioTacamaDto?> login(string usuario, string password);
         Task<string> getCredencials(int id);
         Task<List<GetTramaDiarioDto>> GetTramaListByIdPersona(int idPersona);
         Task<GetTramaDiarioDto> AddTramaDiaria(GetTramaDiarioDto model);
@@ -21,5 +21,8 @@ namespace IDCL.AVGUST.SIP.Manager.Tacama
         Task<CmdPedidoTacamaDto> SavePedido(CmdPedidoTacamaDto model);
         Task<List<GetListPersonaDto>> GetListClientesFilterAsync(string filter);
         Task<List<GetListArticuloDto>> GetListArticulosTacamaFiltersAsync(string filter);
+        Task<GetClienteHeaderPedidoDto> GetCanalandConditionByIdClienteAsync(int idcliente);
+        Task<List<GetArticuloSearchPedidoDto>> GetArticulosDetailsPedidoAsync(
+            int idEmpresa, int idAlmacen, int idTipoArticulo, string Anio, string Mes, string codArticulo, string nomArticulo, int idListaPrecio, bool conLote, DateTime FechaStock, int idCanalVenta = 0);
     }
 }

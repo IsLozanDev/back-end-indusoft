@@ -34,7 +34,10 @@ namespace IDCL.Tacama.Core.Contexto.Configurations
 
             entity.Property(e => e.UsuarioModificacion).HasMaxLength(20).IsUnicode(false).HasDefaultValueSql("('')");
             entity.Property(e => e.UsuarioRegistro).HasMaxLength(20).IsUnicode(false).HasDefaultValueSql("('')");
-            entity.HasOne(d => d.IdPersonaNavigation).WithMany(p => p.Clientes).HasForeignKey(d => d.IdPersona).HasConstraintName("FK_Cliente_Persona");
+            entity.HasOne(d => d.IdPersonaNavigation)
+                .WithMany(p => p.Clientes)
+                .HasForeignKey(d => d.IdPersona)
+                .HasConstraintName("FK_Cliente_Persona");
 
             OnConfigurePartial(entity);
         }

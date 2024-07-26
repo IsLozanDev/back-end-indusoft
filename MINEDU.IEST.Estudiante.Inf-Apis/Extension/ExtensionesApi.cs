@@ -14,6 +14,7 @@ using IDCL.AVGUST.SIP.Repository.Maestra;
 using IDCL.AVGUST.SIP.Repository.Pedido;
 using IDCL.AVGUST.SIP.Repository.Seguridad;
 using IDCL.AVGUST.SIP.Repository.Tacama;
+using IDCL.AVGUST.SIP.Repository.Tacama.Maestro;
 using IDCL.AVGUST.SIP.Repository.Tacama.Procedure;
 using IDCL.AVGUST.SIP.Repository.UnitOfWork;
 using IDCL.AVGUST.SIP.Repository.UnitOfWork.Tacama;
@@ -163,6 +164,8 @@ namespace MINEDU.IEST.Estudiante.Inf_Apis.Extension
             services.AddScoped<IClienteRepository, ClienteRepository>();
             services.AddScoped<IArticuloTacamaRepository, ArticuloTacamaRepository>();
             services.AddScoped<IPersonaTacamaRepository, PersonaTacamaRepository>();
+            services.AddScoped<ICondicionasRepository, CondicionasRepository>();
+            services.AddScoped<ICanalVentaRepository, CanalVentaRepository>();
 
             services.AddScoped<TacamaUnitOfWork>();
 

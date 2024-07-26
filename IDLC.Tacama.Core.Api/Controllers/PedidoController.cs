@@ -3,6 +3,9 @@ using IDCL.AVGUST.SIP.ManagerDto.Tacama.Pedido.Cmd;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using MINEDU.IEST.Estudiante.Inf_Utils.Helpers;
+using System;
+using System.Net;
+using System.Threading.Tasks;
 
 namespace IDLC.Tacama.Core.Api.Controllers
 {
@@ -19,7 +22,7 @@ namespace IDLC.Tacama.Core.Api.Controllers
             _logger = logger;
             _tacamaManager = tacamaManager;
         }
-        
+
 
         [HttpGet("GetListPedidoNacional/{idEmpresa:int}/{idLocal:int}/{codPedidoCad?}/{todos:bool}/{fecInicial:DateTime}/{fecFinal:DateTime}/{Estado?}/{RazonSocial?}/{Tipo:bool}/{idVendedor:int}/{indCotPed}")]
 
@@ -58,5 +61,22 @@ namespace IDLC.Tacama.Core.Api.Controllers
                 throw;
             }
         }
+
+        [HttpGet("getClientInfo/{id:int}")]
+        public async Task<IActionResult> GetPedidoHeaderByIdClienteAsync(int id)
+        {
+            try
+            {
+                var query = await _tacamaManager.GetCanalandConditionByIdClienteAsync(id);
+                return Ok(query);
+            }
+            catch (Exception ex)
+            {
+                return NotFound(new { code = HttpStatusCode.InternalServerError, message = ex.Message });
+                throw;
+            }
+        }
+
+        
     }
 }
