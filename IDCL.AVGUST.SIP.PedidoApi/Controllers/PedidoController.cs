@@ -41,8 +41,8 @@ namespace IDCL.AVGUST.SIP.PedidoApi.Controllers
                             var username = usernamePassword[..separatorIndex];
                             var password = usernamePassword[(separatorIndex + 1)..];
 
-                            if (username == "indusoft" &&
-                                password == "123456")
+                            if (username == "avgust2024" &&
+                                password == "$ind#!348f")
                             {
                                 return true;
                             }
