@@ -160,7 +160,7 @@ namespace IDCL.AVGUST.SIP.Manager.Pedido
                 pedido.Estado = "P";
                 pedido.NroGuia = pedido.NroFactura = pedido.NroGuiaGen = pedido.NroFacturaGen = string.Empty;
                 pedido.FecFactura = null;
-                pedido.TipoGeneracion = "N";
+                pedido.TipoGeneracion = "C";
                 var tc = _pedidoUnitOfWork._tipoCambioRepository
                                             .GetAll(l => l.IdMoneda == "02" && l.FecCambio.Date == pedido.Fecha.Date)
                                             .FirstOrDefault();
