@@ -6,6 +6,7 @@
         public string Documents { get; set; }
         public string ImagesUser { get; set; }
         public bool IsDev { get; set; }
+        public string storage { get; set; }
         public string template_correo { get; set; }
     }
 

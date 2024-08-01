@@ -181,6 +181,7 @@ namespace MINEDU.IEST.Estudiante.Inf_Apis.Extension
         public static IServiceCollection AddManagerTacama(this IServiceCollection services)
         {
             services.AddScoped<ITacamaManager, TacamaManager>();
+            services.AddScoped<IReporteTacamaManager, ReporteTacamaManager>();
 
             return services;
         }

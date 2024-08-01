@@ -26,5 +26,10 @@ namespace IDCL.AVGUST.SIP.Repository.Tacama.Procedure
         Task<string> ObtenerNroPedido(int idEmpresa, int idLocal, string indCotPed);
         
         Task<ObtenerTipoCambio> ObtenerTipoCambioPorDia(string idMoneda, DateTime fecCambio);
+
+        Task<GetSpArticuloServForPdf> GetSpArticuloServForPdf(int idEmpresa, int idArticulo);
+        Task<GetSpPedidoCabNacional> GetSpPedidoCabNacional(int idEmpresa, int idLocal, int idPedido);
+        Task<List<GetSpPedidoNacionalDet>> GetSpPedidoNacionalDet(int idEmpresa, int idLocal, int idPedido);
+        Task<List<GetSpListarCuentasParaDoc>> GetSpListarCuentasParaDoc(int idEmpresa);
     }
 }

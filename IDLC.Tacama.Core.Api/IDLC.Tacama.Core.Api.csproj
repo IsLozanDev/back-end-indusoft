@@ -19,4 +19,14 @@
     <ProjectReference Include="..\MINEDU.IEST.Estudiante.Manager\IDCL.AVGUST.SIP.Manager.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Resources\images\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="Resources\images\logo-cotizacion.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
 </Project>

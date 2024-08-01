@@ -1,17 +1,16 @@
 using IDCL.AVGUST.SIP.Manager.MappingDto;
 using IDLC.Tacama.Core.Api.Helpers;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Http.Features;
-using Microsoft.Extensions.FileProviders;
+using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
+using MINEDU.IEST.Estudiante.Inf_Apis.Extension;
 using MINEDU.IEST.Estudiante.Inf_Utils.Dtos;
 using MINEDU.IEST.Estudiante.Inf_Utils.Filters;
 using MINEDU.IEST.Estudiante.Inf_Utils.Helpers.EmailSender;
 using MINEDU.IEST.Estudiante.Inf_Utils.Helpers.FileManager;
 using Newtonsoft.Json.Serialization;
 using System.Reflection;
-using MINEDU.IEST.Estudiante.Inf_Apis.Extension;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.IdentityModel.Tokens;
 using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -26,6 +25,7 @@ builder.Services.Configure<FormOptions>(o =>
     o.ValueLengthLimit = int.MaxValue;
     o.MultipartBodyLengthLimit = int.MaxValue;
     o.MemoryBufferThreshold = int.MaxValue;
+    
 });
 /*------------------------------------------------------------*/
 
@@ -68,10 +68,6 @@ builder.Services.AddCors(options =>
         b.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader();
     });
 });
-
-//Filters
-builder.Services.AddScoped<ModelValidationAttribute>();
-
 
 //Filters
 builder.Services.AddScoped<ModelValidationAttribute>();

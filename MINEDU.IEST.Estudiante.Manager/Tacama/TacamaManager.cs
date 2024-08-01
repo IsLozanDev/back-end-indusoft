@@ -1,7 +1,5 @@
 ﻿using AutoMapper;
-using IDCL.AVGUST.SIP.Entity.Pedido;
 using IDCL.AVGUST.SIP.Entity.Tacama.SpEntity;
-using IDCL.AVGUST.SIP.ManagerDto.Pedido;
 using IDCL.AVGUST.SIP.ManagerDto.Tacama;
 using IDCL.AVGUST.SIP.ManagerDto.Tacama.Articulo;
 using IDCL.AVGUST.SIP.ManagerDto.Tacama.Cliente;
@@ -9,15 +7,11 @@ using IDCL.AVGUST.SIP.ManagerDto.Tacama.Maestro;
 using IDCL.AVGUST.SIP.ManagerDto.Tacama.Pedido.Cmd;
 using IDCL.AVGUST.SIP.ManagerDto.Tacama.Persona;
 using IDCL.AVGUST.SIP.ManagerDto.Tacama.TramaDiario;
-using IDCL.AVGUST.SIP.Repository.UnitOfWork;
 using IDCL.AVGUST.SIP.Repository.UnitOfWork.Tacama;
 using IDCL.Tacama.Core.Entity;
 using Microsoft.AspNetCore.Http;
-using MINEDU.IEST.Estudiante.Inf_Utils.Constants;
+using MINEDU.IEST.Estudiante.Inf_Utils.Dtos;
 using MINEDU.IEST.Estudiante.Inf_Utils.Helpers;
-using System;
-using System.Security.Claims;
-using System.Threading.Tasks;
 
 namespace IDCL.AVGUST.SIP.Manager.Tacama
 {
@@ -26,12 +20,17 @@ namespace IDCL.AVGUST.SIP.Manager.Tacama
         private readonly IMapper _mapper;
         private readonly TacamaUnitOfWork _tacamaUnitOfWork;
         private readonly IHttpContextAccessor _httpContextAccessor;
+        private readonly ResourceDto _resourceDto;
 
-        public TacamaManager(IMapper mapper, TacamaUnitOfWork tacamaUnitOfWork, IHttpContextAccessor httpContextAccessor)
+        public TacamaManager(IMapper mapper, 
+            TacamaUnitOfWork tacamaUnitOfWork, 
+            IHttpContextAccessor httpContextAccessor, 
+            ResourceDto resourceDto)
         {
             _mapper = mapper;
             _tacamaUnitOfWork = tacamaUnitOfWork;
             _httpContextAccessor = httpContextAccessor;
+            _resourceDto = resourceDto;
         }
 
         public async Task<string> getCredencials(int id)
@@ -293,6 +292,8 @@ namespace IDCL.AVGUST.SIP.Manager.Tacama
         }
 
         #endregion
+
+
 
     }
 }

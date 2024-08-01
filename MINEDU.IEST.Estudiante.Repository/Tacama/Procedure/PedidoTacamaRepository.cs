@@ -1,4 +1,5 @@
 ﻿using Dapper;
+using IDCL.AVGUST.SIP.Contexto.IDCL.AVGUST.SIP.Entity.Avgust;
 using IDCL.AVGUST.SIP.Entity.Tacama.SpEntity;
 using IDCL.Tacama.Core.Contexto.IDCL.Tacama.Core.Contexto;
 using IDCL.Tacama.Core.Entity;
@@ -62,7 +63,8 @@ namespace IDCL.AVGUST.SIP.Repository.Tacama.Procedure
         }
 
 
-        public async Task<List<GetArticulosPorListaPrecioCanalStock>> GetArticulosPorListaPrecioCanalStock(int idEmpresa,
+        public async Task<List<GetArticulosPorListaPrecioCanalStock>> GetArticulosPorListaPrecioCanalStock(
+            int idEmpresa,
             int idAlmacen,
             int idTipoArticulo,
             string Anio,
@@ -92,6 +94,50 @@ namespace IDCL.AVGUST.SIP.Repository.Tacama.Procedure
             return qResult;
         }
 
+        public async Task<GetSpPedidoCabNacional> GetSpPedidoCabNacional(int idEmpresa, int idLocal, int idPedido)
+        {
+            var procedureName = "usp_RecuperarPedidoCabNacional";
+            var parameters = new DynamicParameters();
+            parameters.Add("idEmpresa", idEmpresa, DbType.Int32, ParameterDirection.Input);
+            parameters.Add("idLocal", idLocal, DbType.Int32, ParameterDirection.Input);
+            parameters.Add("idPedido", idPedido, DbType.Int32, ParameterDirection.Input);
+
+            var qResult = await _database.Get<GetSpPedidoCabNacional>(procedureName, parameters, CommandType.StoredProcedure);
+            return qResult;
+        }
+        
+        public async Task<List<GetSpPedidoNacionalDet>> GetSpPedidoNacionalDet(int idEmpresa, int idLocal, int idPedido)
+        {
+            var procedureName = "usp_RecuperarPedidoNacionalDet";
+            var parameters = new DynamicParameters();
+            parameters.Add("idEmpresa", idEmpresa, DbType.Int32, ParameterDirection.Input);
+            parameters.Add("idLocal", idLocal, DbType.Int32, ParameterDirection.Input);
+            parameters.Add("idPedido", idPedido, DbType.Int32, ParameterDirection.Input);
+
+            var qResult = await _database.GetAll<GetSpPedidoNacionalDet>(procedureName, parameters, CommandType.StoredProcedure);
+            return qResult;
+        }
+        
+        public async Task<GetSpArticuloServForPdf> GetSpArticuloServForPdf(int idEmpresa, int @idArticulo)
+        {
+            var procedureName = "usp_ObtenerArticuloServ";
+            var parameters = new DynamicParameters();
+            parameters.Add("idEmpresa", idEmpresa, DbType.Int32, ParameterDirection.Input);
+            parameters.Add("idArticulo", @idArticulo, DbType.Int32, ParameterDirection.Input);
+
+            var qResult = await _database.Get<GetSpArticuloServForPdf>(procedureName, parameters, CommandType.StoredProcedure);
+            return qResult;
+        }
+        
+        public async Task<List<GetSpListarCuentasParaDoc>> GetSpListarCuentasParaDoc(int idEmpresa)
+        {
+            var procedureName = "usp_ListarCuentasParaDoc";
+            var parameters = new DynamicParameters();
+            parameters.Add("idEmpresa", idEmpresa, DbType.Int32, ParameterDirection.Input);
+
+            var qResult = await _database.GetAll<GetSpListarCuentasParaDoc>(procedureName, parameters, CommandType.StoredProcedure);
+            return qResult;
+        }
 
     }
 }
