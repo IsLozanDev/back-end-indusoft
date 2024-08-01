@@ -122,8 +122,8 @@ builder.Services.AddSwaggerGen(opt =>
         Contact = new OpenApiContact
         {
             Name = "AVGUST",
-            Email = "danielitolozano85@gmail.com",
-            Url = new Uri("https://twitter.com/IsraelCamoens"),
+            Email = "indusoftperu@gmail.com",
+            Url = new Uri("https://twitter.com/indusoftperu"),
         },
         License = new OpenApiLicense
         {
