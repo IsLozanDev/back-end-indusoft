@@ -106,19 +106,19 @@ builder.Services.AddSwaggerGen(opt =>
 {
     opt.SwaggerDoc("v1", new OpenApiInfo
     {
-        Title = "Web Api Gestion Pedidos - AVGUST",
+        Title = "Recursos de Web Api",
         Version = "v1",
-        Description = "Recurso de Web API para pedidos",
+        Description = "Recurso de Web API para el Sistema de Gesion y Soporte",
         TermsOfService = new Uri("https://example.com/terms"),
         Contact = new OpenApiContact
         {
-            Name = "AVGUST",
+            Name = "SGS",
             Email = "danielitolozano85@gmail.com",
             Url = new Uri("https://twitter.com/IsraelCamoens"),
         },
         License = new OpenApiLicense
         {
-            Name = "Gestion de Pedidos API LICX",
+            Name = "Gestion y Soporte LICX",
             Url = new Uri("https://example.com/license"),
         }
     });

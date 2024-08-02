@@ -166,6 +166,7 @@ namespace MINEDU.IEST.Estudiante.Inf_Apis.Extension
             services.AddScoped<IPersonaTacamaRepository, PersonaTacamaRepository>();
             services.AddScoped<ICondicionasRepository, CondicionasRepository>();
             services.AddScoped<ICanalVentaRepository, CanalVentaRepository>();
+            services.AddScoped<IPedidoDetalleTacamaRepository, PedidoDetalleTacamaRepository>();
 
             services.AddScoped<TacamaUnitOfWork>();
 

@@ -4,6 +4,7 @@ using IDCL.AVGUST.SIP.ManagerDto.Tacama;
 using IDCL.AVGUST.SIP.ManagerDto.Tacama.Articulo;
 using IDCL.AVGUST.SIP.ManagerDto.Tacama.Cliente;
 using IDCL.AVGUST.SIP.ManagerDto.Tacama.Maestro;
+using IDCL.AVGUST.SIP.ManagerDto.Tacama.Pedido;
 using IDCL.AVGUST.SIP.ManagerDto.Tacama.Pedido.Cmd;
 using IDCL.AVGUST.SIP.ManagerDto.Tacama.Persona;
 using IDCL.AVGUST.SIP.ManagerDto.Tacama.TramaDiario;
@@ -22,9 +23,9 @@ namespace IDCL.AVGUST.SIP.Manager.Tacama
         private readonly IHttpContextAccessor _httpContextAccessor;
         private readonly ResourceDto _resourceDto;
 
-        public TacamaManager(IMapper mapper, 
-            TacamaUnitOfWork tacamaUnitOfWork, 
-            IHttpContextAccessor httpContextAccessor, 
+        public TacamaManager(IMapper mapper,
+            TacamaUnitOfWork tacamaUnitOfWork,
+            IHttpContextAccessor httpContextAccessor,
             ResourceDto resourceDto)
         {
             _mapper = mapper;
@@ -124,7 +125,7 @@ namespace IDCL.AVGUST.SIP.Manager.Tacama
 
         public async Task<CmdPedidoTacamaDto> SavePedido(CmdPedidoTacamaDto model)
         {
-            var userName = _httpContextAccessor.HttpContext.User.Claims.FirstOrDefault(p=>p.Type=="UserName")?.Value;
+            var userName = _httpContextAccessor.HttpContext.User.Claims.FirstOrDefault(p => p.Type == "UserName")?.Value;
 
             var pedido = _mapper.Map<ExpPedidoCab>(model);
             var resp = new CmdPedidoTacamaDto();
@@ -143,38 +144,81 @@ namespace IDCL.AVGUST.SIP.Manager.Tacama
                     resp.MensajeError = "El ruc ingresado no existe o no es valido";
                     return resp;
                 }
-                //Obtener Codigo Pedido 
-                var nroPedido = await _tacamaUnitOfWork._pedidoTacamaRepository.ObtenerNroPedido(10, 1, "P");
 
-                //Adicionales
-                pedido.IdEmpresa = 10;
-                pedido.IdLocal = 1;
-                pedido.CodPedidoCad = nroPedido;
-                pedido.UsuarioModificacion = pedido.UsuarioRegistro = userName;
-                pedido.FechaModificacion = pedido.FechaRegistro = DateTime.Now;
-                pedido.IndCotPed = "P";
-                pedido.IdTipCondicion = 1;
-                pedido.Estado = "P";
-                pedido.NroGuia = pedido.NroFactura = pedido.NroGuiaGen = pedido.NroFacturaGen = string.Empty;
-                pedido.FecFactura = null;
-                pedido.TipoGeneracion = "N";
-
-                var tc = await _tacamaUnitOfWork._pedidoTacamaRepository.ObtenerTipoCambioPorDia("02", pedido.Fecha.Date);
-                if (tc != null)
-                    pedido.TipCambio = tc.valVenta;
-
-                pedido.ExpPedidoDets.ForEach(l =>
+                if (pedido.IdPedido == 0)
                 {
-                    l.IdEmpresa = pedido.IdEmpresa;
-                    l.IdLocal = pedido.IdLocal;
-                    l.CantidadUnit = 0;
-                    l.CantidadFinal = l.Cantidad;
-                    l.UsuarioRegistro = l.UsuarioModificacion = pedido.UsuarioRegistro;
-                    l.FechaRegistro = l.FechaModificacion = pedido.FechaRegistro;
-                });
+                    //Obtener Codigo Pedido 
+                    var nroPedido = await _tacamaUnitOfWork._pedidoTacamaRepository.ObtenerNroPedido(10, 1, "P");
 
-                _tacamaUnitOfWork._pedidoTacamaRepository.Insert(pedido);
-                await _tacamaUnitOfWork.SaveAsync();
+                    //Adicionales
+                    pedido.IdEmpresa = 10;
+                    pedido.IdLocal = 1;
+                    pedido.CodPedidoCad = nroPedido;
+                    pedido.UsuarioModificacion = pedido.UsuarioRegistro = userName;
+                    pedido.FechaModificacion = pedido.FechaRegistro = DateTime.Now;
+                    pedido.IndCotPed = "P";
+                    pedido.IdTipCondicion = 1;
+                    pedido.Estado = "P";
+                    pedido.NroGuia = pedido.NroFactura = pedido.NroGuiaGen = pedido.NroFacturaGen = string.Empty;
+                    pedido.FecFactura = null;
+                    pedido.TipoGeneracion = "N";
+
+                    var tc = await _tacamaUnitOfWork._pedidoTacamaRepository.ObtenerTipoCambioPorDia("02", pedido.Fecha.Date);
+                    if (tc != null)
+                        pedido.TipCambio = tc.valVenta;
+
+                    pedido.ExpPedidoDets.ForEach(l =>
+                    {
+                        l.IdEmpresa = pedido.IdEmpresa;
+                        l.IdLocal = pedido.IdLocal;
+                        l.CantidadUnit = 0;
+                        l.CantidadFinal = l.Cantidad;
+                        l.UsuarioRegistro = l.UsuarioModificacion = pedido.UsuarioRegistro;
+                        l.FechaRegistro = l.FechaModificacion = pedido.FechaRegistro;
+                    });
+
+                    _tacamaUnitOfWork._pedidoTacamaRepository.Insert(pedido);
+                    await _tacamaUnitOfWork.SaveAsync();
+                }
+                else
+                {
+                    // Delete details existing             
+                    var query = _tacamaUnitOfWork._pedidoTacamaRepository.GetAll(p => p.IdPedido == model.IdPedido, includeProperties: "ExpPedidoDets").FirstOrDefault();
+
+                    var detailsForRemove = query.ExpPedidoDets;
+
+                    detailsForRemove.ForEach(p =>
+                    {
+                        _tacamaUnitOfWork._pedidoDetalleTacamaRepository.Delete(p);
+                    });
+
+                    await _tacamaUnitOfWork.SaveAsync();
+
+
+                    query.TotIgv = model.TotIgv;
+                    query.TotsubTotal = model.TotsubTotal;
+                    query.TotTotal = model.TotTotal;
+                    query.TotDscto1 = model.TotDscto1;
+                    query.ExpPedidoDets = _mapper.Map<List<ExpPedidoDet>>(model.ExpPedidoDets);
+
+
+                    query.UsuarioModificacion = userName;
+                    query.FechaModificacion = DateTime.Now;
+
+
+                    query.ExpPedidoDets.ForEach(l =>
+                    {
+                        l.IdEmpresa = query.IdEmpresa;
+                        l.IdLocal = query.IdLocal;
+                        l.CantidadUnit = 0;
+                        l.CantidadFinal = l.Cantidad;
+                        l.UsuarioModificacion = query.UsuarioRegistro;
+                        l.FechaModificacion = query.FechaRegistro;
+                    });
+
+                    _tacamaUnitOfWork._pedidoTacamaRepository.Update(query);
+                    await _tacamaUnitOfWork.SaveAsync();
+                }
 
                 var result = _mapper.Map<CmdPedidoTacamaDto>(pedido);
                 result.IdFacturar = pedido.IdPedido;
@@ -184,8 +228,25 @@ namespace IDCL.AVGUST.SIP.Manager.Tacama
             {
                 throw ex;
             }
+
+
         }
 
+
+        public async Task<GetPedidoTacamaDto> GetPedidoForEditAsync(int idPedido)
+        {
+
+            var query = _tacamaUnitOfWork._pedidoTacamaRepository
+                .GetAll(p => p.IdPedido == idPedido, includeProperties: "ExpPedidoDets")
+                .FirstOrDefault();
+
+            var cliente = await this.GetCanalandConditionByIdClienteAsync(query.IdFacturar);
+            var response = _mapper.Map<GetPedidoTacamaDto>(query);
+            response.clienteHeader = cliente;
+
+            return response;
+
+        }
         #endregion
 
         #region Clientes
@@ -226,6 +287,7 @@ namespace IDCL.AVGUST.SIP.Manager.Tacama
             response.NombreCanalVenta = canvalVenta.NombreCanal;
             response.IdListaPrecio = canvalVenta.IdListaPrecio.Value;
             response.NombreListaPrecio = canvalVenta.IdListaPrecioNav.Nombre;
+            response.NombreCliente = $"{response.Ruc} - {query.RazonSocial}";
 
             var condiciones = _tacamaUnitOfWork._condicionasRepository.GetAll(p => p.IdTipCondicion == 1);
             response.condiciones = _mapper.Map<List<GetCondicionHeaderDto>>(condiciones);
@@ -287,7 +349,7 @@ namespace IDCL.AVGUST.SIP.Manager.Tacama
                 FechaStock,
                 idCanalVenta);
 
-            var response = _mapper.Map<List<GetArticuloSearchPedidoDto>>(query);
+            var response = _mapper.Map<List<GetArticuloSearchPedidoDto>>(query.Take(15));
             return response;
         }
 

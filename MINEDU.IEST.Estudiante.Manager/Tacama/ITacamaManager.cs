@@ -2,6 +2,7 @@
 using IDCL.AVGUST.SIP.ManagerDto.Tacama;
 using IDCL.AVGUST.SIP.ManagerDto.Tacama.Articulo;
 using IDCL.AVGUST.SIP.ManagerDto.Tacama.Cliente;
+using IDCL.AVGUST.SIP.ManagerDto.Tacama.Pedido;
 using IDCL.AVGUST.SIP.ManagerDto.Tacama.Pedido.Cmd;
 using IDCL.AVGUST.SIP.ManagerDto.Tacama.Persona;
 using IDCL.AVGUST.SIP.ManagerDto.Tacama.TramaDiario;
@@ -24,5 +25,6 @@ namespace IDCL.AVGUST.SIP.Manager.Tacama
         Task<GetClienteHeaderPedidoDto> GetCanalandConditionByIdClienteAsync(int idcliente);
         Task<List<GetArticuloSearchPedidoDto>> GetArticulosDetailsPedidoAsync(
             int idEmpresa, int idAlmacen, int idTipoArticulo, string Anio, string Mes, string codArticulo, string nomArticulo, int idListaPrecio, bool conLote, DateTime FechaStock, int idCanalVenta = 0);
+        Task<GetPedidoTacamaDto> GetPedidoForEditAsync(int idPedido);
     }
 }

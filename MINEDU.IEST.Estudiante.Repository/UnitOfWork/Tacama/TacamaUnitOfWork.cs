@@ -17,6 +17,7 @@ namespace IDCL.AVGUST.SIP.Repository.UnitOfWork.Tacama
         public IPersonaTacamaRepository _personaTacamaRepository { get; }        
         public ICondicionasRepository _condicionasRepository { get; }
         public ICanalVentaRepository _canalVentaRepository { get; }
+        public IPedidoDetalleTacamaRepository _pedidoDetalleTacamaRepository { get; }
 
         private readonly DbTacamaContext _context;
 
@@ -28,7 +29,8 @@ namespace IDCL.AVGUST.SIP.Repository.UnitOfWork.Tacama
             IArticuloTacamaRepository articuloTacamaRepository,
             IPersonaTacamaRepository personaTacamaRepository,
             ICondicionasRepository condicionasRepository,
-            ICanalVentaRepository canalVentaRepository)
+            ICanalVentaRepository canalVentaRepository,
+            IPedidoDetalleTacamaRepository pedidoDetalleTacamaRepository)
         {
             this._usuarioTacRepository = usuarioTacRepository;
             this._context = context;
@@ -39,6 +41,7 @@ namespace IDCL.AVGUST.SIP.Repository.UnitOfWork.Tacama
             _personaTacamaRepository = personaTacamaRepository;
             _condicionasRepository = condicionasRepository;
             _canalVentaRepository = canalVentaRepository;
+            _pedidoDetalleTacamaRepository = pedidoDetalleTacamaRepository;
         }
         public void Save()
         {

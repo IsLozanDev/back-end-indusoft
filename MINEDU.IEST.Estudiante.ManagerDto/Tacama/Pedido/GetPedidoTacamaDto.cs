@@ -1,4 +1,6 @@
-﻿namespace IDCL.AVGUST.SIP.ManagerDto.Tacama.Pedido
+﻿using IDCL.AVGUST.SIP.ManagerDto.Tacama.Cliente;
+
+namespace IDCL.AVGUST.SIP.ManagerDto.Tacama.Pedido
 {
     public class GetPedidoTacamaDto
     {
@@ -142,5 +144,6 @@
         public bool? IndMailTg { get; set; }
 
         public List<GetPedidoDetalleTacamaDto> ExpPedidoDets { get; set; }
+        public GetClienteHeaderPedidoDto clienteHeader { get; set; }
     }
 }

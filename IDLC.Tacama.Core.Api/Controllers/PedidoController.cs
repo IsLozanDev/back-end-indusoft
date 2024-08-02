@@ -77,6 +77,12 @@ namespace IDLC.Tacama.Core.Api.Controllers
             }
         }
 
+        [HttpGet("{id}")]
+        public async Task<IActionResult> GetPedidoByIdAsync(int id)
+        {
+            var query = await _tacamaManager.GetPedidoForEditAsync(id);
+            return Ok(query);
+        }
         
     }
 }
