@@ -1,5 +1,7 @@
 ﻿using IDCL.AVGUST.SIP.Contexto.IDCL.AVGUST.SIP.Entity.Avgust;
 using IDCL.AVGUST.SIP.Manager.Tacama;
+using IDCL.AVGUST.SIP.ManagerDto.Tacama;
+using IDCL.Tacama.Core.Entity;
 using IDLC.Tacama.Core.Api.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -61,33 +63,48 @@ namespace IDLC.Tacama.Core.Api.Controllers
                 response.token = tokenString;
                 return Ok(response);
             }
-
-            //var resp = new response();
-
-            //try
-            //{
-            //    var response = await _tacamaManager.login(usuario, clave);
-            //    if (response.EsError)
-            //    {
-            //        resp.status = "Error";
-            //        resp.message = "Validaciones";
-
-            //        ModelState.AddModelError("validacion", response.MensajeError);
-            //        resp.data = ExtensionTools.Validaciones(ModelState);
-            //        return UnprocessableEntity(resp);
-            //    }
-            //    resp.status = "OK";
-            //    resp.message = "OK";
-            //    resp.data = response;
-            //    return Ok(resp);
-            //}
-            //catch (Exception ex)
-            //{
-            //    ModelState.AddModelError("validacion", ex.Message);
-            //    UnprocessableEntity(ExtensionTools.Validaciones(ModelState));
-            //    _logger.LogError(ex.Message, ex);
-            //    throw;
-            //}
         }
+
+        [HttpPost("loginExt")]
+        [AllowAnonymous]
+        public async Task<IActionResult> loginExt([FromBody] LoginModel user)
+        {
+            var response = new GetUsuarioTacamaDto();
+
+            if (user is null)
+            {
+                return BadRequest(new { codigo = HttpStatusCode.BadRequest, message = "Solicitud del cliente invalido." });
+            }
+
+            if (user.UserName != _config.UserName || user.Password != _config.Password)
+            {
+                return NotFound(new { codigo = HttpStatusCode.NotFound, message = "Usuario y/o clave no existe" });
+            }
+
+            var query = await _tacamaManager.loginExt(user.Email);
+
+            if (query is null || !query.Value)
+            {
+                return NotFound(new { codigo = HttpStatusCode.NotFound, message = "Email no valido." });
+            }
+            else
+            {
+                var secretKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_config.Secret));
+                var signinCredentials = new SigningCredentials(secretKey, SecurityAlgorithms.HmacSha256);
+                var tokeOptions = new JwtSecurityToken(
+                    issuer: "http://localhost:5281",
+                    audience: "http://localhost:5281",
+                    claims: new List<Claim> {
+                        new Claim(SecurityClaimType.PersonId ,user.UserName)
+                    },
+                    expires: DateTime.Now.AddHours(4),
+                    signingCredentials: signinCredentials
+                );
+                var tokenString = new JwtSecurityTokenHandler().WriteToken(tokeOptions);
+
+                return Ok(new { token = tokenString });
+            }
+        }
+
     }
 }

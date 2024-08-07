@@ -76,7 +76,7 @@ namespace MINEDU.IEST.Estudiante.Repository.Audit.Helper
                         Protocol = req.Protocol,
                         QueryString = req.QueryString.ToString()
                     }),
-                    Response = "",//JsonSerializer.Serialize(context.HttpContext.Request),
+                    Response = "",//JsonSerializer.Serialize(_context.HttpContext.Request),
                     Error = ""
                 };
 

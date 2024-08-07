@@ -71,6 +71,20 @@ namespace IDCL.AVGUST.SIP.Manager.Tacama
             }
         }
 
+        public async Task<bool?> loginExt(string email)
+        {
+            try
+            {
+                var query = await _tacamaUnitOfWork._personaTacamaRepository.GetPersonaByEmailAsync(email);
+                return query;
+
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
 
         #endregion
 

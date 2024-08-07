@@ -6,7 +6,7 @@ namespace MINEDU.IEST.Estudiante.Repository.Audit
 {
     public class AuditLogRepository : GenericRepository<AuditLog>, IAuditLogRepository
     {
-        //public AuditLogRepository(AuditDbContext context) : base(context)
+        //public AuditLogRepository(AuditDbContext _context) : base(_context)
         //{
         //}
         public AuditLogRepository(DbContext context) : base(context)
