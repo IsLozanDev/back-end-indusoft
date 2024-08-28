@@ -15,19 +15,23 @@
    "T4TemplatePath": null,
    "Tables": [
       {
-         "Name": "[dbo].[Condicion]",
+         "Name": "[dbo].[Establecimientos]",
          "ObjectType": 0
       },
       {
-         "Name": "[dbo].[ListaPrecio]",
+         "Name": "[dbo].[UbigeoSunat]",
          "ObjectType": 0
       },
       {
-         "Name": "[dbo].[ListaPrecioItem]",
+         "Name": "[dbo].[ven_Division]",
          "ObjectType": 0
       },
       {
-         "Name": "[dbo].[ven_CanalVenta]",
+         "Name": "[dbo].[Vendedores]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[ZonaTrabajo]",
          "ObjectType": 0
       }
    ],

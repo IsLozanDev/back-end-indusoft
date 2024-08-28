@@ -32,6 +32,19 @@ namespace IDCL.AVGUST.SIP.Repository.Tacama
                     }).ToList()
                 }).FirstOrDefaultAsync();
 
+            var infoVenedor = await _context.Vendedores.FirstOrDefaultAsync(l => l.IdPersona == query.IdPersona);
+
+            if (infoVenedor != null)
+            {
+                var establecimiento = await _context.Establecimientos.FirstOrDefaultAsync(l => l.IdEstablecimiento == infoVenedor.IdEstablecimiento && l.IdEmpresa == infoVenedor.IdEmpresa);
+                var venDivision = await _context.VenDivisions.FirstOrDefaultAsync(l => l.IdDivision == infoVenedor.IdDivision);
+                var zonaTrabajo = await _context.ZonaTrabajos.FirstOrDefaultAsync(l => l.IdEstablecimiento == infoVenedor.IdEstablecimiento && l.IdZona == infoVenedor.IdZona && l.IdEmpresa == infoVenedor.IdEmpresa);
+                infoVenedor.IdEstablecimientoNavigation = establecimiento;
+                infoVenedor.IdDivisionNavigation = venDivision;
+                infoVenedor.IdZonaNavigation = zonaTrabajo;
+                query.IdVendedorNavigation = infoVenedor;
+            }
+
             return query;
         }
 

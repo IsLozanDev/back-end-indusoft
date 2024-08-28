@@ -14,6 +14,7 @@ using IDCL.AVGUST.SIP.Repository.Maestra;
 using IDCL.AVGUST.SIP.Repository.Pedido;
 using IDCL.AVGUST.SIP.Repository.Seguridad;
 using IDCL.AVGUST.SIP.Repository.Tacama;
+using IDCL.AVGUST.SIP.Repository.Tacama.Location;
 using IDCL.AVGUST.SIP.Repository.Tacama.Maestro;
 using IDCL.AVGUST.SIP.Repository.Tacama.Procedure;
 using IDCL.AVGUST.SIP.Repository.UnitOfWork;
@@ -67,7 +68,7 @@ namespace MINEDU.IEST.Estudiante.Inf_Apis.Extension
             services.AddScoped<ArticuloUnitOfWork>();
             services.AddScoped<MaestraUnitOfWork>();
             services.AddScoped<SeguridadUnitOfWork>();
-  
+
 
             services.AddDbContext<dbContextAvgust>(opt =>
             {
@@ -103,7 +104,7 @@ namespace MINEDU.IEST.Estudiante.Inf_Apis.Extension
 
             return services;
         }
-        
+
         public static IServiceCollection AddRepositoriesSp(this IServiceCollection services, Action<RepositoriesOptions> configureOptions)
         {
             var options = new RepositoriesOptions();
@@ -135,8 +136,8 @@ namespace MINEDU.IEST.Estudiante.Inf_Apis.Extension
             return services;
 
         }
-        
-      
+
+
         public static IServiceCollection AddSecurityApi(this IServiceCollection services, Action<RepositoriesOptions> configureOptions)
         {
             var options = new RepositoriesOptions();
@@ -167,8 +168,10 @@ namespace MINEDU.IEST.Estudiante.Inf_Apis.Extension
             services.AddScoped<ICondicionasRepository, CondicionasRepository>();
             services.AddScoped<ICanalVentaRepository, CanalVentaRepository>();
             services.AddScoped<IPedidoDetalleTacamaRepository, PedidoDetalleTacamaRepository>();
+            services.AddScoped<IUbigeoTacamaRepository, UbigeoTacamaRepository>();
 
             services.AddScoped<TacamaUnitOfWork>();
+            services.AddScoped<MasterTacamaUnitOfWork>();
 
             services.AddDbContext<DbTacamaContext>(opt =>
             {
@@ -183,6 +186,7 @@ namespace MINEDU.IEST.Estudiante.Inf_Apis.Extension
         {
             services.AddScoped<ITacamaManager, TacamaManager>();
             services.AddScoped<IReporteTacamaManager, ReporteTacamaManager>();
+            services.AddScoped<ILocationTacamaManager, LocationTacamaManager>();
 
             return services;
         }

@@ -83,7 +83,7 @@ namespace IDLC.Tacama.Core.Api.Controllers
 
             var query = await _tacamaManager.loginExt(user.Email);
 
-            if (query is null || !query.Value)
+            if (query <= 0)
             {
                 return NotFound(new { codigo = HttpStatusCode.NotFound, message = "Email no valido." });
             }
@@ -102,7 +102,7 @@ namespace IDLC.Tacama.Core.Api.Controllers
                 );
                 var tokenString = new JwtSecurityTokenHandler().WriteToken(tokeOptions);
 
-                return Ok(new { token = tokenString });
+                return Ok(new { token = tokenString, idUsuario = query });
             }
         }
 

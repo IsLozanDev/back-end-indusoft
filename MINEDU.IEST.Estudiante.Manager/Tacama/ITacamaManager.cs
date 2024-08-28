@@ -26,6 +26,6 @@ namespace IDCL.AVGUST.SIP.Manager.Tacama
         Task<List<GetArticuloSearchPedidoDto>> GetArticulosDetailsPedidoAsync(
             int idEmpresa, int idAlmacen, int idTipoArticulo, string Anio, string Mes, string codArticulo, string nomArticulo, int idListaPrecio, bool conLote, DateTime FechaStock, int idCanalVenta = 0);
         Task<GetPedidoTacamaDto> GetPedidoForEditAsync(int idPedido);
-        Task<bool?> loginExt(string email);
+        Task<int> loginExt(string email);
     }
 }

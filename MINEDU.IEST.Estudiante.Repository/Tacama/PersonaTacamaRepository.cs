@@ -14,7 +14,7 @@ namespace IDCL.AVGUST.SIP.Repository.Tacama
             this._context = context;
         }
 
-        public async Task<bool> GetPersonaByEmailAsync(string email)
+        public async Task<int> GetPersonaByEmailAsync(string email)
         {
             var query = from p in _context.Personas
                         join u in _context.Usuarios on p.IdPersona equals u.IdPersona
@@ -23,7 +23,7 @@ namespace IDCL.AVGUST.SIP.Repository.Tacama
 
             var response = await query.FirstOrDefaultAsync();
 
-            return response != default;
+            return response;
         }
     }
 }

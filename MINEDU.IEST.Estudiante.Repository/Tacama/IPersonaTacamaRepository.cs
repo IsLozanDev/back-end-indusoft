@@ -5,6 +5,6 @@ namespace IDCL.AVGUST.SIP.Repository.Tacama
 {
     public interface IPersonaTacamaRepository : IGenericRepository<PersonaTacama>
     {
-        Task<bool> GetPersonaByEmailAsync(string email);
+        Task<int> GetPersonaByEmailAsync(string email);
     }
 }

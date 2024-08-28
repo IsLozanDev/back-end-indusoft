@@ -32,15 +32,15 @@ namespace IDLC.Tacama.Test
         [Fact]
         public async Task GetUsuarioClave_VendedorById()
         {
-            var idPersona = 75254;
+            var idPersona = 34169;
             string clave = string.Empty;
             var query = await _repository.GetCredencials(idPersona);
             if (query != null)
             {
                 clave = EncryptHelper.Decrypt(query.Clave);
             }
-            Assert.True(query.IdPersona > 0, $"Su clave secreta es: ");
-            this._output.WriteLine($"Su clave secreta es: {clave}");
+            Assert.True(query.IdPersona > 0, $"Su clave secreta es vfinal: ");
+            this._output.WriteLine($"Su clave secreta es vfinal: {clave}");
 
         }
     }

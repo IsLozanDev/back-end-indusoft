@@ -8,6 +8,7 @@ using IDCL.AVGUST.SIP.ManagerDto.Tacama.Pedido;
 using IDCL.AVGUST.SIP.ManagerDto.Tacama.Pedido.Cmd;
 using IDCL.AVGUST.SIP.ManagerDto.Tacama.Persona;
 using IDCL.AVGUST.SIP.ManagerDto.Tacama.TramaDiario;
+using IDCL.AVGUST.SIP.Repository.UnitOfWork;
 using IDCL.AVGUST.SIP.Repository.UnitOfWork.Tacama;
 using IDCL.Tacama.Core.Entity;
 using Microsoft.AspNetCore.Http;
@@ -22,16 +23,19 @@ namespace IDCL.AVGUST.SIP.Manager.Tacama
         private readonly TacamaUnitOfWork _tacamaUnitOfWork;
         private readonly IHttpContextAccessor _httpContextAccessor;
         private readonly ResourceDto _resourceDto;
+        private readonly MasterTacamaUnitOfWork _masterTacamaUnitOfWork;
 
         public TacamaManager(IMapper mapper,
             TacamaUnitOfWork tacamaUnitOfWork,
             IHttpContextAccessor httpContextAccessor,
-            ResourceDto resourceDto)
+            ResourceDto resourceDto,
+            MasterTacamaUnitOfWork masterTacamaUnitOfWork)
         {
             _mapper = mapper;
             _tacamaUnitOfWork = tacamaUnitOfWork;
             _httpContextAccessor = httpContextAccessor;
             _resourceDto = resourceDto;
+            _masterTacamaUnitOfWork = masterTacamaUnitOfWork;
         }
 
         public async Task<string> getCredencials(int id)
@@ -59,6 +63,14 @@ namespace IDCL.AVGUST.SIP.Manager.Tacama
                 if (query != null)
                 {
                     resp = _mapper.Map<GetUsuarioTacamaDto>(query);
+                    resp.idEstablecimiento = query.IdVendedorNavigation.IdEstablecimiento.Value;
+                    resp.idZona = query.IdVendedorNavigation.IdZona.Value;
+                    resp.idDivision = query.IdVendedorNavigation.IdDivision.Value;
+
+                    resp.textDivision = query.IdVendedorNavigation.IdDivisionNavigation?.DesDivision;
+                    resp.textEstablecimiento = query.IdVendedorNavigation?.IdEstablecimientoNavigation?.Descripcion;
+                    resp.textZona = query.IdVendedorNavigation?.IdZonaNavigation?.Descripcion;
+
                     resp.roles = _mapper.Map<List<GetUsuarioRolTacamaDto>>(query.UsuarioRols.Select(l => l.IdRolNavigation).ToList());
                     return resp;
                 }
@@ -71,7 +83,7 @@ namespace IDCL.AVGUST.SIP.Manager.Tacama
             }
         }
 
-        public async Task<bool?> loginExt(string email)
+        public async Task<int> loginExt(string email)
         {
             try
             {
@@ -302,7 +314,7 @@ namespace IDCL.AVGUST.SIP.Manager.Tacama
             response.IdListaPrecio = canvalVenta.IdListaPrecio.Value;
             response.NombreListaPrecio = canvalVenta.IdListaPrecioNav.Nombre;
             response.NombreCliente = $"{response.Ruc} - {query.RazonSocial}";
-
+            response.puntoEntrega = await _masterTacamaUnitOfWork._ubigeoTacamaRepository.GetPuntoEntrebaByUbigeoAsync(query.IdUbigeo);
             var condiciones = _tacamaUnitOfWork._condicionasRepository.GetAll(p => p.IdTipCondicion == 1);
             response.condiciones = _mapper.Map<List<GetCondicionHeaderDto>>(condiciones);
             return response;

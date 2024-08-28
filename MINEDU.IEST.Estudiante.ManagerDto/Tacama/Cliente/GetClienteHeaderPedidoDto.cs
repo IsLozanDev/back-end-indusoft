@@ -14,6 +14,7 @@ namespace IDCL.AVGUST.SIP.ManagerDto.Tacama.Cliente
         public string Ruc { get; set; }
         public string NombreCliente { get; set; }
         public List<GetCondicionHeaderDto> condiciones { get; set; }
+        public string puntoEntrega { get; set; }
 
     }
 }

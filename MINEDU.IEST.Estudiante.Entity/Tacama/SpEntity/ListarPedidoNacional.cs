@@ -78,7 +78,7 @@
 
         public string desindBonificacion { get; set; }
 
-        public long indDsctoProntoPago { get; set; }
+        public bool? indDsctoProntoPago { get; set; }
 
         public long DsctoProntoPago { get; set; }
 
