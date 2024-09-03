@@ -66,15 +66,15 @@
 
         public DateTime fechaModificacion { get; set; }
 
-        public long indObsStock { get; set; }
+        public bool? indObsStock { get; set; }
 
         public string desindObsStock { get; set; }
 
-        public long indObsCredito { get; set; }
+        public bool? indObsCredito { get; set; }
 
         public string desindObsCredito { get; set; }
 
-        public long indBonificacion { get; set; }
+        public bool? indBonificacion { get; set; }
 
         public string desindBonificacion { get; set; }
 

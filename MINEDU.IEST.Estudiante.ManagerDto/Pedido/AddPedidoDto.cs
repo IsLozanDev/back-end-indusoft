@@ -2,7 +2,7 @@
 
 namespace IDCL.AVGUST.SIP.ManagerDto.Pedido
 {
-    public class AddPedidoDto: Validation
+    public class AddPedidoDto : Validation
     {
         //public int IdPedido { get; set; }
         //public int IdEmpresa { get; set; }
@@ -18,10 +18,10 @@ namespace IDCL.AVGUST.SIP.ManagerDto.Pedido
         public string NroRuc { get; set; }
         public int IdLocal { get; set; }
         public int CodPedido { get; set; } = 0;
-        public DateTime Fecha { get; set; }       
+        public DateTime Fecha { get; set; }
         public string? IdMoneda { get; set; }
         public string? Observacion { get; set; }
-        public string? Indicaciones { get; set; }        
+        public string? Indicaciones { get; set; }
         public string? NroGuia { get; set; }
         public DateTime? FecFactura { get; set; }
         public string? NroFactura { get; set; }
@@ -34,9 +34,9 @@ namespace IDCL.AVGUST.SIP.ManagerDto.Pedido
         public string? ObsStock { get; set; }
         public bool? IndObsCredito { get; set; }
         public string? ObsCredito { get; set; }
-        public int? IdVendedor { get; set; }        
-        public int? IdEstablecimiento { get; set; }        
-        public int? IdZona { get; set; }        
+        public int? IdVendedor { get; set; }
+        public int? IdEstablecimiento { get; set; }
+        public int? IdZona { get; set; }
         public bool? Tipo { get; set; }
         public decimal? TotsubTotal { get; set; }
         public decimal? TotDscto1 { get; set; }
@@ -81,6 +81,7 @@ namespace IDCL.AVGUST.SIP.ManagerDto.Pedido
         public int? IdAgenciaEnvio { get; set; }
         public int? IdDireccion { get; set; }
         public string? UbigeoCot { get; set; }
+        public int? IdExterno {get; set;}
         public string? UsuarioRegistro { get; set; }
         public DateTime? FechaRegistro { get; set; }
         public List<AddPedidoDetalleDto> PedidoDets { get; set; }

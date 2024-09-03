@@ -126,6 +126,7 @@ namespace IDCL.AVGUST.SIP.Entity.Pedido
         public int? IdAgenciaEnvio { get; set; }
         public int? IdDireccion { get; set; }
         public string? UbigeoCot { get; set; }
+        public int? IdExterno { get; set; }
         public string? UsuarioRegistro { get; set; }
         public DateTime? FechaRegistro { get; set; }
         public string? UsuarioModificacion { get; set; }

@@ -129,6 +129,7 @@ namespace IDCL.AVGUST.SIP.Contexto.DataPedido.Configurations
             entity.Property(e => e.TotsubTotal).HasColumnType("decimal(12, 2)").HasColumnName("totsubTotal");
             entity.Property(e => e.UbigeoCot).HasMaxLength(10);
             entity.Property(e => e.UsuarioGen).HasMaxLength(30).IsUnicode(false);
+            entity.Property(e => e.IdExterno).HasColumnName("idExterno");
             entity.Property(e => e.UsuarioModificacion).HasMaxLength(30).IsUnicode(false);
             entity.Property(e => e.UsuarioRegistro).HasMaxLength(30).IsUnicode(false);
             OnConfigurePartial(entity);
