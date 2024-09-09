@@ -259,11 +259,13 @@ namespace IDCL.AVGUST.SIP.Manager.Tacama
         }
 
 
+        /// <summary>
+        /// Retrieves a pedido for editing by its ID.
+        /// </summary>
+        /// <param name="idPedido">The ID of the pedido to retrieve.</param>
+        /// <returns>A task that represents the asynchronous operation. The task result contains the pedido details.</returns>
         public async Task<GetPedidoTacamaDto> GetPedidoForEditAsync(int idPedido)
         {
-            //var query = _tacamaUnitOfWork._pedidoTacamaRepository
-            //    .GetAll(p => p.IdPedido == idPedido, includeProperties: "ExpPedidoDets")
-            //    .FirstOrDefault();
             var query = await _tacamaUnitOfWork._pedidoTacamaRepository.GetPedidoAllByIdAsync(idPedido);
             var cliente = await this.GetCanalandConditionByIdClienteAsync(query.IdFacturar);
             var response = _mapper.Map<GetPedidoTacamaDto>(query);
