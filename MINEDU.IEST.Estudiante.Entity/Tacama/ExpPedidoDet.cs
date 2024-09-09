@@ -98,6 +98,6 @@ namespace IDCL.Tacama.Core.Entity
         [NotMapped]
         public string? CodArticulo { get; set; }
         [NotMapped]
-        public string AlamcenText { get; set; }
+        public string AlmacenText { get; set; }
     }
 }

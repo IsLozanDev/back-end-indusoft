@@ -12,7 +12,7 @@ namespace IDCL.AVGUST.SIP.ManagerDto.Tacama.Pedido
         public bool? IndArticuloNuevo { get; set; }
         public int IdArticulo { get; set; }
         public string? CodArticulo { get; set; }
-        public string AlamcenText { get; set; }
+        public string AlmacenText { get; set; }
 
         public string? NomArticulo { get; set; }
         public int? IdCalibre { get; set; }
