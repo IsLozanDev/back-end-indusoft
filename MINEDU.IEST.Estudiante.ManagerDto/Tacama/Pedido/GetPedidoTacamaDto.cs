@@ -1,4 +1,5 @@
 ﻿using IDCL.AVGUST.SIP.ManagerDto.Tacama.Cliente;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace IDCL.AVGUST.SIP.ManagerDto.Tacama.Pedido
 {
@@ -9,6 +10,8 @@ namespace IDCL.AVGUST.SIP.ManagerDto.Tacama.Pedido
         public int IdLocal { get; set; }
         public int CodPedido { get; set; }
         public string? CodPedidoCad { get; set; }
+        public string? MonedaDescription { get; set; }
+        public string FormaPagoDescription { get; set; }
         public DateTime Fecha { get; set; }
         public int? IdConsignatario { get; set; }
         public int? IdNotificar { get; set; }
@@ -145,5 +148,7 @@ namespace IDCL.AVGUST.SIP.ManagerDto.Tacama.Pedido
 
         public List<GetPedidoDetalleTacamaDto> ExpPedidoDets { get; set; }
         public GetClienteHeaderPedidoDto clienteHeader { get; set; }
+
+
     }
 }

@@ -261,18 +261,16 @@ namespace IDCL.AVGUST.SIP.Manager.Tacama
 
         public async Task<GetPedidoTacamaDto> GetPedidoForEditAsync(int idPedido)
         {
-
-            var query = _tacamaUnitOfWork._pedidoTacamaRepository
-                .GetAll(p => p.IdPedido == idPedido, includeProperties: "ExpPedidoDets")
-                .FirstOrDefault();
-
+            //var query = _tacamaUnitOfWork._pedidoTacamaRepository
+            //    .GetAll(p => p.IdPedido == idPedido, includeProperties: "ExpPedidoDets")
+            //    .FirstOrDefault();
+            var query = await _tacamaUnitOfWork._pedidoTacamaRepository.GetPedidoAllByIdAsync(idPedido);
             var cliente = await this.GetCanalandConditionByIdClienteAsync(query.IdFacturar);
             var response = _mapper.Map<GetPedidoTacamaDto>(query);
             response.clienteHeader = cliente;
-
             return response;
-
         }
+        
         #endregion
 
         #region Clientes

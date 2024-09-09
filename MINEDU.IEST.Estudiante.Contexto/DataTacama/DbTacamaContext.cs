@@ -40,15 +40,28 @@ namespace IDCL.Tacama.Core.Contexto.IDCL.Tacama.Core.Contexto
 
 
         //Master vendedores
-        public virtual DbSet<Establecimiento> Establecimientos { get; set; } 
-        public virtual DbSet<UbigeoSunat> UbigeoSunats { get; set; } 
-        public virtual DbSet<VenDivision> VenDivisions { get; set; } 
-        public virtual DbSet<Vendedore> Vendedores { get; set; } 
-        public virtual DbSet<ZonaTrabajo> ZonaTrabajos { get; set; } 
+        public virtual DbSet<Establecimiento> Establecimientos { get; set; }
+        public virtual DbSet<UbigeoSunat> UbigeoSunats { get; set; }
+        public virtual DbSet<VenDivision> VenDivisions { get; set; }
+        public virtual DbSet<Vendedore> Vendedores { get; set; }
+        public virtual DbSet<ZonaTrabajo> ZonaTrabajos { get; set; }
 
+        //Maestros
+        public virtual DbSet<AfectacionIgv> AfectacionIgvs { get; set; }
+        public virtual DbSet<Almacen> Almacens { get; set; }
+        public virtual DbSet<Moneda> Monedas { get; set; }
+        public virtual DbSet<ParTabla> ParTablas { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            //Maestros
+
+            modelBuilder.ApplyConfiguration(new Configurations.AfectacionIgvConfiguration());
+            modelBuilder.ApplyConfiguration(new Configurations.AlmacenConfiguration());
+            modelBuilder.ApplyConfiguration(new Configurations.MonedaConfiguration());
+            modelBuilder.ApplyConfiguration(new Configurations.ParTablaConfiguration());
+
+
             modelBuilder.ApplyConfiguration(new Configurations.RolConfiguration());
             modelBuilder.ApplyConfiguration(new Configurations.TramaDiarioConfiguration());
             modelBuilder.ApplyConfiguration(new Configurations.TramaHistoricoConfiguration());

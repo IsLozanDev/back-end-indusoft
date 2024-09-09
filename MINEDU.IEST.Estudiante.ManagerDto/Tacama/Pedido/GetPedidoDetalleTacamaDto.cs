@@ -1,4 +1,5 @@
 ﻿using IDCL.AVGUST.SIP.ManagerDto.Tacama.Articulo;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace IDCL.AVGUST.SIP.ManagerDto.Tacama.Pedido
 {
@@ -8,11 +9,14 @@ namespace IDCL.AVGUST.SIP.ManagerDto.Tacama.Pedido
         public int IdEmpresa { get; set; }
         public int IdLocal { get; set; }
         public int IdItem { get; set; }
-        public bool? IndArticuloNuevo { get; set; }        
+        public bool? IndArticuloNuevo { get; set; }
         public int IdArticulo { get; set; }
+        public string? CodArticulo { get; set; }
+        public string AlamcenText { get; set; }
+
         public string? NomArticulo { get; set; }
         public int? IdCalibre { get; set; }
-        public int? IdCategoria { get; set; }        
+        public int? IdCategoria { get; set; }
         public int? IdTipoPrecio { get; set; }
         public bool? IndSinStock { get; set; }
         public decimal Cantidad { get; set; }
@@ -34,7 +38,7 @@ namespace IDCL.AVGUST.SIP.ManagerDto.Tacama.Pedido
         public decimal? PorIsc { get; set; }
         public decimal? PorIgv { get; set; }
         public bool? FlgAfectacionIgv { get; set; }
-        public string? TipoAfectacionIgv { get; set; }        
+        public string? TipoAfectacionIgv { get; set; }
         public int? IdPresentacion { get; set; }
         public int? IdMarca { get; set; }
         public int? IdTipoMedida { get; set; }
@@ -73,5 +77,6 @@ namespace IDCL.AVGUST.SIP.ManagerDto.Tacama.Pedido
         public int? CantidadPack { get; set; }
         public GetArticuloTacamaDto IdArticuloNavegation { get; set; } = null!;
         public GetArticuloServicioPresentacionDto? IdPresentacionNavigation { get; set; }
+
     }
 }

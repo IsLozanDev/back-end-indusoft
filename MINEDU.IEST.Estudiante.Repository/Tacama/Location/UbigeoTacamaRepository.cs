@@ -60,7 +60,6 @@ namespace IDCL.AVGUST.SIP.Repository.Tacama.Location
 
         public async Task<string> GetPuntoEntrebaByUbigeoAsync(string codUbigeo)
         {
-
             var query = _context.UbigeoSunats.Where(u => u.IdUbigeo == codUbigeo).FirstOrDefault();
             if (query == null)
             {

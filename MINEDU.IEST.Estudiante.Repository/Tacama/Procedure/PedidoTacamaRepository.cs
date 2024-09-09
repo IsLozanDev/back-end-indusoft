@@ -1,8 +1,9 @@
 ﻿using Dapper;
-using IDCL.AVGUST.SIP.Contexto.IDCL.AVGUST.SIP.Entity.Avgust;
 using IDCL.AVGUST.SIP.Entity.Tacama.SpEntity;
 using IDCL.Tacama.Core.Contexto.IDCL.Tacama.Core.Contexto;
 using IDCL.Tacama.Core.Entity;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.ChangeTracking.Internal;
 using MINEDU.IEST.Estudiante.Inf_Utils.Helpers.Dapper;
 using MINEDU.IEST.Estudiante.Repository.Base;
 using System.Data;
@@ -11,13 +12,64 @@ namespace IDCL.AVGUST.SIP.Repository.Tacama.Procedure
 {
     public class PedidoTacamaRepository : GenericRepository<ExpPedidoCab>, IPedidoTacamaRepository
     {
-        private readonly DbTacamaContext context;
+        private readonly DbTacamaContext _context;
         private readonly IDapper _database;
 
         public PedidoTacamaRepository(DbTacamaContext context, IDapper database) : base(context)
         {
-            this.context = context;
+            this._context = context;
             _database = database;
+        }
+
+        public async Task<ExpPedidoCab> GetPedidoAllByIdAsync(int id)
+        {
+            var response = new ExpPedidoCab();
+
+            var query = from a in _context.ExpPedidoCabs.Include(b => b.ExpPedidoDets)
+                        join m in _context.Monedas on a.IdMoneda equals m.IdMoneda into m_join
+                        from m in m_join.DefaultIfEmpty()
+                        join fp in _context.ParTablas on a.IdFormaPago equals fp.IdParTabla into fp_join
+                        from fp in fp_join.DefaultIfEmpty()
+                        where a.IdPedido == id
+                        select new
+                        {
+                            a,
+                            m,
+                            fp
+                        };
+
+            var result = await query.FirstOrDefaultAsync();
+            if (result != null)
+            {
+                response = result.a;
+                response.MonedaDescription = result.m.DesMoneda;
+                response.FormaPagoDescription = result?.fp?.Nombre;
+            }
+
+            var details = from det in response.ExpPedidoDets
+                          join a in _context.ArticuloServs on det.IdArticulo equals a.IdArticulo into a_join
+                          from a in a_join.DefaultIfEmpty()
+                          join almacen in _context.Almacens on det.IdAlmacen equals almacen.IdAlmacen into almacen_join
+                          from almacen in almacen_join.DefaultIfEmpty()
+                          select new
+                          {
+                              det,
+                              a,
+                              almacen
+                          };
+            var resultDetails = details.ToList();
+
+            response.ExpPedidoDets.ForEach(det =>
+            {
+                var item = resultDetails.FirstOrDefault(x => x.det.IdArticulo == det.IdArticulo);
+                if (item != null)
+                {
+                    det.CodArticulo = item.a.CodArticulo;
+                    det.AlamcenText = item?.almacen?.DesAlmacen;
+                }
+            });
+
+            return response;
         }
 
         public async Task<List<ListarPedidoNacional>> ListarPedidoNacional(int idEmpresa, int idLocal, string codPedidoCad, bool todos, DateTime fecInicial, DateTime fecFinal,
@@ -105,7 +157,7 @@ namespace IDCL.AVGUST.SIP.Repository.Tacama.Procedure
             var qResult = await _database.Get<GetSpPedidoCabNacional>(procedureName, parameters, CommandType.StoredProcedure);
             return qResult;
         }
-        
+
         public async Task<List<GetSpPedidoNacionalDet>> GetSpPedidoNacionalDet(int idEmpresa, int idLocal, int idPedido)
         {
             var procedureName = "usp_RecuperarPedidoNacionalDet";
@@ -117,7 +169,7 @@ namespace IDCL.AVGUST.SIP.Repository.Tacama.Procedure
             var qResult = await _database.GetAll<GetSpPedidoNacionalDet>(procedureName, parameters, CommandType.StoredProcedure);
             return qResult;
         }
-        
+
         public async Task<GetSpArticuloServForPdf> GetSpArticuloServForPdf(int idEmpresa, int @idArticulo)
         {
             var procedureName = "usp_ObtenerArticuloServ";
@@ -128,7 +180,7 @@ namespace IDCL.AVGUST.SIP.Repository.Tacama.Procedure
             var qResult = await _database.Get<GetSpArticuloServForPdf>(procedureName, parameters, CommandType.StoredProcedure);
             return qResult;
         }
-        
+
         public async Task<List<GetSpListarCuentasParaDoc>> GetSpListarCuentasParaDoc(int idEmpresa)
         {
             var procedureName = "usp_ListarCuentasParaDoc";
