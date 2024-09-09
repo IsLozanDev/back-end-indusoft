@@ -423,3 +423,4 @@ FodyWeavers.xsd
 # End of https://www.toptal.com/developers/gitignore/api/visualstudio,visualstudiocode
 /IDCL.AVGUST.SIP.PedidoApi/.config
 /IDLC.Tacama.Core.Api/.config
+/MINEDU.IEST.Estudiante.Contexto/efpt.config.json
