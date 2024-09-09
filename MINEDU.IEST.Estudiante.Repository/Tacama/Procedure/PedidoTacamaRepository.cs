@@ -65,7 +65,7 @@ namespace IDCL.AVGUST.SIP.Repository.Tacama.Procedure
                 if (item != null)
                 {
                     det.CodArticulo = item.a.CodArticulo;
-                    det.AlamcenText = item?.almacen?.DesAlmacen;
+                    det.AlmacenText = item?.almacen?.DesAlmacen;
                 }
             });
 
