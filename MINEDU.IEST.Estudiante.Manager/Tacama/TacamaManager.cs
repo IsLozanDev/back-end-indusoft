@@ -269,10 +269,11 @@ namespace IDCL.AVGUST.SIP.Manager.Tacama
             var query = await _tacamaUnitOfWork._pedidoTacamaRepository.GetPedidoAllByIdAsync(idPedido);
             var cliente = await this.GetCanalandConditionByIdClienteAsync(query.IdFacturar);
             var response = _mapper.Map<GetPedidoTacamaDto>(query);
+            response.TipoDescription = response.Tipo.Value ? "Exportación" : "Nacional";
             response.clienteHeader = cliente;
             return response;
         }
-        
+
         #endregion
 
         #region Clientes

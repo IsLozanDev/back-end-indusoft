@@ -82,6 +82,7 @@ namespace IDCL.AVGUST.SIP.ManagerDto.Tacama.Pedido
         public int? IdZona { get; set; }
 
         public bool? Tipo { get; set; }
+        public string TipoDescription { get; set; }
         public decimal? TotsubTotal { get; set; }
         public decimal? TotDscto1 { get; set; }
         public decimal? TotDscto2 { get; set; }
