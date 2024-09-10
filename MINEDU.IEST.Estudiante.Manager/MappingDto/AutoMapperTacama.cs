@@ -4,6 +4,7 @@ using IDCL.AVGUST.SIP.ManagerDto.Tacama.Articulo;
 using IDCL.AVGUST.SIP.ManagerDto.Tacama.Cliente;
 using IDCL.AVGUST.SIP.ManagerDto.Tacama.Location;
 using IDCL.AVGUST.SIP.ManagerDto.Tacama.Maestro;
+using IDCL.AVGUST.SIP.ManagerDto.Tacama.Maestro.CondicioVenta;
 using IDCL.Tacama.Core.Entity;
 using IDCL.Tacama.Core.Entity.Tacama.master;
 
@@ -49,6 +50,11 @@ namespace IDCL.AVGUST.SIP.Manager.MappingDto
                 .ForMember(dest => dest.id, source => source.MapFrom(s => s.IdUbigeo))
                 .ForMember(dest => dest.description, source => source.MapFrom(s => s.description));
 
+            #endregion
+
+            #region condicion - venta
+
+            CreateMap<Condicion, GetCondicioVentaDto>();
             #endregion
         }
     }

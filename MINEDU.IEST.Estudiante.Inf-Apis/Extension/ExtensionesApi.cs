@@ -170,8 +170,10 @@ namespace MINEDU.IEST.Estudiante.Inf_Apis.Extension
             services.AddScoped<IPedidoDetalleTacamaRepository, PedidoDetalleTacamaRepository>();
             services.AddScoped<IUbigeoTacamaRepository, UbigeoTacamaRepository>();
 
+
             services.AddScoped<TacamaUnitOfWork>();
             services.AddScoped<MasterTacamaUnitOfWork>();
+            services.AddScoped<CustomerTacamaUnitOfWork>();
 
             services.AddDbContext<DbTacamaContext>(opt =>
             {
@@ -187,7 +189,8 @@ namespace MINEDU.IEST.Estudiante.Inf_Apis.Extension
             services.AddScoped<ITacamaManager, TacamaManager>();
             services.AddScoped<IReporteTacamaManager, ReporteTacamaManager>();
             services.AddScoped<ILocationTacamaManager, LocationTacamaManager>();
-
+            services.AddScoped<ICustomerTacamaManager, CustomerTacamaManager>();
+            services.AddScoped<IMasterTacamaManager,MasterTacamaManager>();
             return services;
         }
 

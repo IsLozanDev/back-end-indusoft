@@ -11,11 +11,13 @@ namespace IDLC.Tacama.Core.Api.Controllers
     {
         private readonly ILogger<ClienteController> _logger;
         private readonly ITacamaManager _tacamaManager;
+        private readonly ICustomerTacamaManager _customerTacamaManager;
 
-        public ClienteController(ILogger<ClienteController> logger, ITacamaManager tacamaManager)
+        public ClienteController(ILogger<ClienteController> logger, ITacamaManager tacamaManager, ICustomerTacamaManager customerTacamaManager)
         {
             _logger = logger;
             _tacamaManager = tacamaManager;
+            _customerTacamaManager = customerTacamaManager;
         }
 
         //[HttpGet("GetClientesFilterAsync/{filter?}")]
@@ -24,11 +26,22 @@ namespace IDLC.Tacama.Core.Api.Controllers
         //    var data = await _tacamaManager.GetClientesFilterAsync(filter);
         //    return Ok(data);
         //}
-        
+
         [HttpGet("getListClients/{filter?}")]
         public async Task<IActionResult> GetListClientesFilterAsync(string? filter = "")
         {
             var data = await _tacamaManager.GetListClientesFilterAsync(filter);
+            return Ok(data);
+        }
+
+
+        [HttpGet("getClienteSpById/{id:int}")]
+        public async Task<IActionResult> GetClienteSpById(int id)
+        {
+            var data = await _customerTacamaManager.GetClienteSpByIdAsync(id);
+            if (data == null) {
+                return NotFound("Cliente no encontrado");
+            }
             return Ok(data);
         }
     }

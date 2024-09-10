@@ -1,12 +1,10 @@
 ﻿using AutoMapper;
-using IDCL.AVGUST.SIP.ManagerDto.Tacama.Cliente;
+using IDCL.AVGUST.SIP.Entity.Tacama.Cliente.store_procedure;
 using IDCL.AVGUST.SIP.Repository.UnitOfWork.Tacama;
-using System;
-using System.Threading.Tasks;
 
 namespace IDCL.AVGUST.SIP.Manager.Tacama
 {
-    public class CustomerTacamaManager
+    public class CustomerTacamaManager : ICustomerTacamaManager
     {
         private readonly IMapper _mapper;
         private readonly CustomerTacamaUnitOfWork _customerTacamaUnitOfWork;
@@ -17,10 +15,26 @@ namespace IDCL.AVGUST.SIP.Manager.Tacama
             _customerTacamaUnitOfWork = customerTacamaUnitOfWork;
         }
 
-        public async Task<GetClienteTacamaDto> MyMethodAsync()
+        public async Task<usp_ApiRecuperarClientePorId> GetClienteSpByIdAsync(int idPersona)
         {
+            var response = new usp_ApiRecuperarClientePorId();
 
-            throw new NotImplementedException();
+            var cliente = await _customerTacamaUnitOfWork._clienteRepository.GetClienteByIdAsync(10, idPersona);
+            if (cliente == null)
+            {
+                return null;
+            }
+
+
+            var direccion = await _customerTacamaUnitOfWork._clienteRepository.GetClienteDireccionAsync(idPersona);
+            var contacto = await _customerTacamaUnitOfWork._clienteRepository.GetClienteContactoAsync(10, idPersona);
+
+            response = cliente;
+            response.direcciones = direccion;
+            response.contactos = contacto;
+
+            return response;
+
         }
     }
 }

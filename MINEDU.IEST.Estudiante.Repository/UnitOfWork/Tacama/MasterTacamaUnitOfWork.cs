@@ -1,4 +1,5 @@
-﻿using IDCL.AVGUST.SIP.Repository.Tacama.Location;
+﻿using IDCL.AVGUST.SIP.Repository.Tacama;
+using IDCL.AVGUST.SIP.Repository.Tacama.Location;
 using IDCL.Tacama.Core.Contexto.IDCL.Tacama.Core.Contexto;
 using MINEDU.IEST.Estudiante.Repository.Base;
 
@@ -8,13 +9,18 @@ namespace IDCL.AVGUST.SIP.Repository.UnitOfWork.Tacama
     {
         private bool disposedValue;
 
-        public IUbigeoTacamaRepository  _ubigeoTacamaRepository { get; }
+        public IUbigeoTacamaRepository _ubigeoTacamaRepository { get; }
+        public ICondicionasRepository _condicionasRepository { get; }
+
         private readonly DbTacamaContext _context;
 
-        public MasterTacamaUnitOfWork(IUbigeoTacamaRepository ubigeoTacamaRepository, DbTacamaContext context)
+        public MasterTacamaUnitOfWork(IUbigeoTacamaRepository ubigeoTacamaRepository, 
+            DbTacamaContext context, 
+            ICondicionasRepository condicionasRepository)
         {
             _ubigeoTacamaRepository = ubigeoTacamaRepository;
             _context = context;
+            _condicionasRepository = condicionasRepository;
         }
 
 
