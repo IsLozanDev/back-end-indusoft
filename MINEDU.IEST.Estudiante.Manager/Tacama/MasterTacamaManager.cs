@@ -1,6 +1,9 @@
 ﻿using AutoMapper;
+using IDCL.AVGUST.SIP.Entity.Tacama.master.store_procedure;
 using IDCL.AVGUST.SIP.ManagerDto.Tacama.Maestro.CondicioVenta;
 using IDCL.AVGUST.SIP.Repository.UnitOfWork.Tacama;
+using System;
+using System.Threading.Tasks;
 
 namespace IDCL.AVGUST.SIP.Manager.Tacama
 {
@@ -29,6 +32,21 @@ namespace IDCL.AVGUST.SIP.Manager.Tacama
                 }
             });
             return response;
+        }
+
+
+        public async Task<usp_ApiRecuperarVendedorPorId> GetSpVendedorById(int idEmpresa, int idPersona)
+        {
+            var response = new usp_ApiRecuperarVendedorPorId();
+
+            var query = await _masterTacamaUnitOfWork._vendedorRepository.GetSpVendedorById(idEmpresa, idPersona);
+            var canals = await _masterTacamaUnitOfWork._vendedorRepository.GetSpVendedorCanalesById(idEmpresa, idPersona);
+            response = query;
+            response.canales = canals;
+
+            return response;
+
+
 
         }
     }

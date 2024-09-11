@@ -33,5 +33,20 @@ namespace IDLC.Tacama.Core.Api.Controllers
         }
 
         #endregion
+
+        #region Vendedores
+
+        [HttpGet("getVendedorById/{idPersona:int}")]
+        public async Task<IActionResult> GetVendedorById(int idPersona)
+        {
+            int idEmpresa = 10;
+            var data = await _masterTacamaManager.GetSpVendedorById(idEmpresa, idPersona);
+            if (data == null)
+            {
+                return NotFound("Vendedor no encontrado");
+            }
+            return Ok(data);
+        }
+        #endregion
     }
 }
