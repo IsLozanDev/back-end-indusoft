@@ -45,11 +45,15 @@ namespace IDCL.AVGUST.SIP.Manager.Tacama
             return response;
         }
 
-        public async Task<usp_ApiRecuperarVendedorPorId> GetSpVendedorById(int idEmpresa, int idPersona)
+        public async Task<usp_ApiRecuperarVendedorPorId?> GetSpVendedorById(int idEmpresa, int idPersona)
         {
             var response = new usp_ApiRecuperarVendedorPorId();
 
             var query = await _masterTacamaUnitOfWork._vendedorRepository.GetSpVendedorById(idEmpresa, idPersona);
+            if (query == null)
+            {
+                return null;
+            }
             var canals = await _masterTacamaUnitOfWork._vendedorRepository.GetSpVendedorCanalesById(idEmpresa, idPersona);
             response = query;
             response.canales = canals;

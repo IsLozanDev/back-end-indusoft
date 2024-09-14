@@ -6,6 +6,6 @@ namespace IDCL.AVGUST.SIP.Manager.Tacama
     public interface IMasterTacamaManager
     {
         Task<List<GetCondicioVentaDto>> GetListCondicionesFilterAsync(string filter);
-        Task<usp_ApiRecuperarVendedorPorId> GetSpVendedorById(int idEmpresa, int idPersona);
+        Task<usp_ApiRecuperarVendedorPorId?> GetSpVendedorById(int idEmpresa, int idPersona);
     }
 }
