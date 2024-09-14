@@ -21,7 +21,12 @@ namespace IDCL.AVGUST.SIP.Manager.Tacama
         public async Task<List<GetCondicioVentaDto>> GetListCondicionesFilterAsync(string filter)
         {
             var query = _masterTacamaUnitOfWork._condicionasRepository.GetAll(l => l.DesCondicion.Contains(filter) || filter == "");
+
             var response = _mapper.Map<List<GetCondicioVentaDto>>(query);
+
+            var partabla = _masterTacamaUnitOfWork._partablaTacamaRepository.GetAll(l => l.Grupo == 381000 && l.IdParTabla > 381000);
+
+
             response.ForEach(l =>
             {
                 switch (l.IdTipCondicion)
@@ -30,10 +35,15 @@ namespace IDCL.AVGUST.SIP.Manager.Tacama
                     case 2: l.IdCondicionText = "NOTA DE CREDITO"; break;
                     case 3: l.IdCondicionText = "NOTA DE DEBITO"; break;
                 }
+
+                var part = partabla.FirstOrDefault(p => p.IdParTabla == l.IdClasificacion);
+                if (part != null)
+                {
+                    l.IdClasificacionDescription = part.Descripcion;
+                }
             });
             return response;
         }
-
 
         public async Task<usp_ApiRecuperarVendedorPorId> GetSpVendedorById(int idEmpresa, int idPersona)
         {
@@ -43,11 +53,7 @@ namespace IDCL.AVGUST.SIP.Manager.Tacama
             var canals = await _masterTacamaUnitOfWork._vendedorRepository.GetSpVendedorCanalesById(idEmpresa, idPersona);
             response = query;
             response.canales = canals;
-
             return response;
-
-
-
         }
     }
 }

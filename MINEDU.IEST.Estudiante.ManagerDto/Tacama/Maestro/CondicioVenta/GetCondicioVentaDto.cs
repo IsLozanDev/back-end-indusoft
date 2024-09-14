@@ -8,6 +8,7 @@
         public string? DesCondicion { get; set; }
         public string? DesCondicionIngles { get; set; }
         public int? IdClasificacion { get; set; }
+        public string IdClasificacionDescription { get; set; }
         public string? DesDias { get; set; }
         public bool? GeneraLetra { get; set; }
         public bool? Credito { get; set; }

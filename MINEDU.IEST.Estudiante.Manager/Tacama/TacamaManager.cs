@@ -307,17 +307,28 @@ namespace IDCL.AVGUST.SIP.Manager.Tacama
                 includeProperties: "PersonaDireccions,CanalesVenta.IdListaPrecioNav")
                 .FirstOrDefault();
             var response = _mapper.Map<GetClienteHeaderPedidoDto>(query);
+            response.NombreCliente = $"{response.Ruc} - {query.RazonSocial}";
+
             var canvalVenta = _tacamaUnitOfWork._canalVentaRepository.GetAll(p => p.IdCanalVenta == query.IdCanalVenta,
                 includeProperties: "IdListaPrecioNav").FirstOrDefault();
-
-            response.IdCanalVenta = canvalVenta.IdCanalVenta;
-            response.NombreCanalVenta = canvalVenta.NombreCanal;
-            response.IdListaPrecio = canvalVenta.IdListaPrecio.Value;
-            response.NombreListaPrecio = canvalVenta.IdListaPrecioNav.Nombre;
-            response.NombreCliente = $"{response.Ruc} - {query.RazonSocial}";
-            response.puntoEntrega = await _masterTacamaUnitOfWork._ubigeoTacamaRepository.GetPuntoEntrebaByUbigeoAsync(query.IdUbigeo);
             var condiciones = _tacamaUnitOfWork._condicionasRepository.GetAll(p => p.IdTipCondicion == 1);
+
+            if (canvalVenta != null)
+            {
+                response.IdCanalVenta = canvalVenta.IdCanalVenta;
+                response.NombreCanalVenta = canvalVenta.NombreCanal;
+                response.IdListaPrecio = canvalVenta.IdListaPrecio.Value;
+                response.NombreListaPrecio = canvalVenta.IdListaPrecioNav.Nombre;
+            }
+
+            var ubigeos = await _masterTacamaUnitOfWork._ubigeoTacamaRepository.GetPuntoEntrebaByUbigeoAsync(query.IdUbigeo);
+
+            if (ubigeos != null)
+            {
+                response.puntoEntrega = ubigeos;
+            }
             response.condiciones = _mapper.Map<List<GetCondicionHeaderDto>>(condiciones);
+
             return response;
         }
 

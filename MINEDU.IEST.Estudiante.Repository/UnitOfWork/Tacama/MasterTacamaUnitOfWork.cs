@@ -13,18 +13,21 @@ namespace IDCL.AVGUST.SIP.Repository.UnitOfWork.Tacama
         public IUbigeoTacamaRepository _ubigeoTacamaRepository { get; }
         public ICondicionasRepository _condicionasRepository { get; }
         public IVendedorRepository _vendedorRepository { get; }
+        public IPartablaTacamaRepository _partablaTacamaRepository { get; }
 
         private readonly DbTacamaContext _context;
 
         public MasterTacamaUnitOfWork(IUbigeoTacamaRepository ubigeoTacamaRepository,
             DbTacamaContext context,
             ICondicionasRepository condicionasRepository,
-            IVendedorRepository vendedorRepository)
+            IVendedorRepository vendedorRepository,
+            IPartablaTacamaRepository partablaTacamaRepository)
         {
             _context = context;
             _ubigeoTacamaRepository = ubigeoTacamaRepository;
             _condicionasRepository = condicionasRepository;
             _vendedorRepository = vendedorRepository;
+            _partablaTacamaRepository = partablaTacamaRepository;
         }
 
 

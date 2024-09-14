@@ -19,6 +19,8 @@ namespace IDCL.AVGUST.SIP.Repository.UnitOfWork.Tacama
         public ICanalVentaRepository _canalVentaRepository { get; }
         public IPedidoDetalleTacamaRepository _pedidoDetalleTacamaRepository { get; }
 
+
+
         private readonly DbTacamaContext _context;
 
         public TacamaUnitOfWork(IUsuarioTacRepository usuarioTacRepository,
