@@ -19,7 +19,6 @@ namespace IDCL.AVGUST.SIP.Repository.Tacama.Maestro
             this._dapper = dapper;
         }
 
-
         public async Task<usp_ApiRecuperarVendedorPorId> GetSpVendedorById(int idEmpresa, int idPersona)
         {
             var procedureName = "usp_ApiRecuperarVendedorPorId";
@@ -41,6 +40,5 @@ namespace IDCL.AVGUST.SIP.Repository.Tacama.Maestro
             var qResult = await _dapper.GetAll<usp_ApiListarVendedorCanal>(procedureName, parameters, CommandType.StoredProcedure);
             return qResult;
         }
-
     }
 }

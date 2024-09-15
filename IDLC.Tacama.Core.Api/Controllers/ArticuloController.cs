@@ -27,7 +27,7 @@ namespace IDLC.Tacama.Core.Api.Controllers
             var data = await _tacamaManager.GetArticulosTacamaAsync(filter);
             return Ok(data);
         }
-        
+
         [HttpGet("getListArticulos/{filter?}")]
         public async Task<IActionResult> GetListArticulosTacamaFiltersAsync(string? filter = "")
         {
@@ -36,20 +36,21 @@ namespace IDLC.Tacama.Core.Api.Controllers
             return Ok(data);
         }
 
-        [HttpGet("getArticulosDetailsSearch/{Anio}/{Mes}/{codArticulo}/{nomArticulo}/{idListaPrecio:int}/{FechaStock:DateTime}/{idCanalVenta:int}")]
-        public async Task<IActionResult> GetArticulosDetailsPedidoAsync(          
+        [HttpGet("getArticulosDetailsSearch/{Anio}/{Mes}/{codArticulo}/{idAlmacen}/{nomArticulo}/{idListaPrecio:int}/{FechaStock:DateTime}/{idCanalVenta:int}")]
+        public async Task<IActionResult> GetArticulosDetailsPedidoAsync(
             string Anio,
             string Mes,
             string codArticulo,
+            int idAlmacen,
             string nomArticulo,
-            int idListaPrecio,            
+            int idListaPrecio,
             DateTime FechaStock,
             int idCanalVenta = 0)
         {
             try
             {
                 int idEmpresa = 10;
-                int idAlmacen = 185;
+
                 int idTipoArticulo = 333002;
                 bool conLote = true;
                 //10, 185, 333002, '2023', '08', '', 'GRAN DEMONIO', 1016, 1 ,'20230810', 106001
@@ -61,9 +62,9 @@ namespace IDLC.Tacama.Core.Api.Controllers
             }
             catch (Exception ex)
             {
-                return NotFound(new {code = HttpStatusCode.InternalServerError, message = ex.Message});
+                return NotFound(new { code = HttpStatusCode.InternalServerError, message = ex.Message });
                 throw;
-            }           
+            }
         }
 
     }
