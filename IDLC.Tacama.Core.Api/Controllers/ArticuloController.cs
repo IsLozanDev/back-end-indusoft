@@ -67,5 +67,36 @@ namespace IDLC.Tacama.Core.Api.Controllers
             }
         }
 
+        [HttpGet("getArticulosDetailsSearchApi/{Anio}/{Mes}/{codArticulo}/{idAlmacen}/{nomArticulo}/{idListaPrecio:int}/{FechaStock:DateTime}/{idCanalVenta:int}")]
+        public async Task<IActionResult> GetArticulosDetailsPedidoApiAsync(
+           string Anio,
+           string Mes,
+           string codArticulo,
+           int idAlmacen,
+           string nomArticulo,
+           int idListaPrecio,
+           DateTime FechaStock,
+           int idCanalVenta = 0)
+        {
+            try
+            {
+                int idEmpresa = 10;
+
+                int idTipoArticulo = 333002;
+                bool conLote = true;
+                //10, 185, 333002, '2023', '08', '', 'GRAN DEMONIO', 1016, 1 ,'20230810', 106001
+                codArticulo = codArticulo ?? string.Empty;
+                nomArticulo = nomArticulo ?? string.Empty;
+
+                var data = await _tacamaManager.GetArticulosDetailsPedidoApiAsync(idEmpresa, idAlmacen, idTipoArticulo, Anio, Mes, codArticulo, nomArticulo, idListaPrecio, conLote, FechaStock, idCanalVenta);
+                return Ok(data);
+            }
+            catch (Exception ex)
+            {
+                return NotFound(new { code = HttpStatusCode.InternalServerError, message = ex.Message });
+                throw;
+            }
+        }
+
     }
 }

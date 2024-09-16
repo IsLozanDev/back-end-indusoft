@@ -41,6 +41,7 @@ namespace IDCL.AVGUST.SIP.Manager.MappingDto
             #region Articulos
 
             CreateMap<GetArticulosPorListaPrecioCanalStock, GetArticuloSearchPedidoDto>();
+            CreateMap<GetArticulosPorListaPrecioCanalStock, GetArticuloSearchPedidoApiDto>();
 
             #endregion
 

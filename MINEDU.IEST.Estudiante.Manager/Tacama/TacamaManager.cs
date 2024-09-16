@@ -390,6 +390,36 @@ namespace IDCL.AVGUST.SIP.Manager.Tacama
             var response = _mapper.Map<List<GetArticuloSearchPedidoDto>>(query.Take(15));
             return response;
         }
+        
+        public async Task<List<GetArticuloSearchPedidoApiDto>> GetArticulosDetailsPedidoApiAsync(
+            int idEmpresa,
+            int idAlmacen,
+            int idTipoArticulo,
+            string Anio,
+            string Mes,
+            string codArticulo,
+            string nomArticulo,
+            int idListaPrecio,
+            bool conLote,
+            DateTime FechaStock,
+            int idCanalVenta = 0)
+        {
+            var query = await _tacamaUnitOfWork._pedidoTacamaRepository.GetArticulosPorListaPrecioCanalStock(
+                idEmpresa,
+                idAlmacen,
+                idTipoArticulo,
+                Anio,
+                Mes,
+                codArticulo,
+                nomArticulo,
+                idListaPrecio,
+                conLote,
+                FechaStock,
+                idCanalVenta);
+
+            var response = _mapper.Map<List<GetArticuloSearchPedidoApiDto>>(query.Take(15));
+            return response;
+        }
 
         #endregion
 
