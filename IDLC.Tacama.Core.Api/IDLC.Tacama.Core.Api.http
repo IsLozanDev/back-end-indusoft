@@ -1,0 +1,15 @@
+﻿@IDLC.Tacama.Core.Api_HostAddress = http://localhost:5085
+
+GET {{IDLC.Tacama.Core.Api_HostAddress}}/api/location/getDptos
+
+###
+
+POST {{IDLC.Tacama.Core.Api_HostAddress}}/api/security/login
+Content-Type: application/json
+
+{
+    "UserName":"AESCATE", 
+    "Password": "123456" 
+}
+
+###

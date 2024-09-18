@@ -20,6 +20,7 @@ namespace IDLC.Tacama.Core.Api.Controllers
         }
 
 
+
         [HttpGet("GetArticulosByFilter/{filter?}")]
         public async Task<IActionResult> GetArticulosByFilter(string? filter = "")
         {
@@ -98,5 +99,21 @@ namespace IDLC.Tacama.Core.Api.Controllers
             }
         }
 
+        [HttpGet("getListarArticulosServiciosApi/{idTipoArticulo:int}/{Filtro?}")]
+        public async Task<IActionResult> GetListarArticulosServiciosApi_sp(int idTipoArticulo, string Filtro = "")
+        {
+            try
+            {
+                int idEmpresa = 10;
+                Filtro = Filtro ?? string.Empty;
+                var data = await _tacamaManager.GetListarArticulosServiciosApiSPAsync(idEmpresa, idTipoArticulo, Filtro);
+                return Ok(data);
+            }
+            catch (Exception ex)
+            {
+                return NotFound(new { code = HttpStatusCode.InternalServerError, message = ex.Message });
+                throw;
+            }
+        }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using IDCL.AVGUST.SIP.Entity.Tacama.master.store_procedure;
 using IDCL.AVGUST.SIP.Entity.Tacama.SpEntity;
 using IDCL.AVGUST.SIP.ManagerDto.Tacama;
 using IDCL.AVGUST.SIP.ManagerDto.Tacama.Articulo;
@@ -14,6 +15,8 @@ using IDCL.Tacama.Core.Entity;
 using Microsoft.AspNetCore.Http;
 using MINEDU.IEST.Estudiante.Inf_Utils.Dtos;
 using MINEDU.IEST.Estudiante.Inf_Utils.Helpers;
+using System;
+using System.Threading.Tasks;
 
 namespace IDCL.AVGUST.SIP.Manager.Tacama
 {
@@ -130,7 +133,6 @@ namespace IDCL.AVGUST.SIP.Manager.Tacama
         }
 
         #endregion
-
 
         #region Gestion - Pedidos
 
@@ -335,6 +337,9 @@ namespace IDCL.AVGUST.SIP.Manager.Tacama
         #endregion
 
         #region Articulos
+        public async Task<List<usp_ApiListarArticulosServicios>> GetListarArticulosServiciosApiSPAsync(int idEmpresa, int idTipoArticulo, string Filtro) =>
+            await _tacamaUnitOfWork._articuloTacamaRepository.GetListarArticulosServiciosApi(idEmpresa, idTipoArticulo, Filtro);
+
         public async Task<List<GetArticuloTacamaDto>> GetArticulosTacamaAsync(string filter)
         {
             var query = _tacamaUnitOfWork._articuloTacamaRepository.GetAllTake(
@@ -390,7 +395,7 @@ namespace IDCL.AVGUST.SIP.Manager.Tacama
             var response = _mapper.Map<List<GetArticuloSearchPedidoDto>>(query.Take(15));
             return response;
         }
-        
+
         public async Task<List<GetArticuloSearchPedidoApiDto>> GetArticulosDetailsPedidoApiAsync(
             int idEmpresa,
             int idAlmacen,

@@ -1,4 +1,5 @@
-﻿using IDCL.AVGUST.SIP.Entity.Tacama.SpEntity;
+﻿using IDCL.AVGUST.SIP.Entity.Tacama.master.store_procedure;
+using IDCL.AVGUST.SIP.Entity.Tacama.SpEntity;
 using IDCL.AVGUST.SIP.ManagerDto.Tacama;
 using IDCL.AVGUST.SIP.ManagerDto.Tacama.Articulo;
 using IDCL.AVGUST.SIP.ManagerDto.Tacama.Cliente;
@@ -33,5 +34,6 @@ namespace IDCL.AVGUST.SIP.Manager.Tacama
 
         Task<GetPedidoTacamaDto> GetPedidoForEditAsync(int idPedido);
         Task<int> loginExt(string email);
+        Task<List<usp_ApiListarArticulosServicios>> GetListarArticulosServiciosApiSPAsync(int idEmpresa, int idTipoArticulo, string Filtro);
     }
 }
