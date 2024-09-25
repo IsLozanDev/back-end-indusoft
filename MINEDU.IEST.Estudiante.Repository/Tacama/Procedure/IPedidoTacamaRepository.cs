@@ -32,5 +32,6 @@ namespace IDCL.AVGUST.SIP.Repository.Tacama.Procedure
         Task<List<GetSpPedidoNacionalDet>> GetSpPedidoNacionalDet(int idEmpresa, int idLocal, int idPedido);
         Task<List<GetSpListarCuentasParaDoc>> GetSpListarCuentasParaDoc(int idEmpresa);
         Task<ExpPedidoCab> GetPedidoAllByIdAsync(int id);
+        Task<string[]> GetPedidoForEmailAsync(int idPedido);
     }
 }

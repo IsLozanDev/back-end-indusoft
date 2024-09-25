@@ -1,4 +1,6 @@
-﻿namespace MINEDU.IEST.Estudiante.Inf_Utils.Helpers.FileManager
+﻿using System;
+
+namespace MINEDU.IEST.Estudiante.Inf_Utils.Helpers.FileManager
 {
     public class FileStorage : IStorageManager
     {
@@ -20,6 +22,13 @@
 
             string base64 = Convert.ToBase64String(bytes);
             return base64;
+        }
+
+        public byte[] GetArrayFromBase64(string base64)
+        {
+            byte[] bytes;
+            bytes = Convert.FromBase64String(base64);
+            return bytes;
         }
         public string LoadFileToBase64(string path)
         {

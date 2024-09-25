@@ -25,7 +25,7 @@ builder.Services.Configure<FormOptions>(o =>
     o.ValueLengthLimit = int.MaxValue;
     o.MultipartBodyLengthLimit = int.MaxValue;
     o.MemoryBufferThreshold = int.MaxValue;
-    
+
 });
 /*------------------------------------------------------------*/
 
@@ -54,7 +54,7 @@ builder.Services.AddAutoMapper(typeof(AutoMapperTacama).GetTypeInfo().Assembly);
 builder.Services.AddRepositoriesTacama(opt => opt.ConnectionString = backEndConfig.BdSqlServer);
 builder.Services.AddProcedureTacama(opt => opt.ConnectionString = backEndConfig.BdSqlServer);
 builder.Services.AddManagerTacama();
-builder.Services.AddTransient<IEmailSender, EmailSender>();
+builder.Services.AddTransient<IEmailSender, EmailTacama>();
 builder.Services.AddStorageManager(opt => opt.Type = StorageType.FileStorage);
 
 //Servicio de acceso al contexto

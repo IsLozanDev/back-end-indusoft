@@ -4,6 +4,7 @@
     {
         public const string GrantAccess = "GrantAccess";
         public const string PersonId = "UserName";
+        public const string IdUsuario = "UsuarioId";
 
     }
 }

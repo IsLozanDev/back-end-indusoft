@@ -8,5 +8,6 @@
         string GetBase64(Stream stream);
         string LoadFileToBase64(string path);
         void SaveFile(string path, string base64, string type);
+        byte[] GetArrayFromBase64(string base64);
     }
 }

@@ -54,7 +54,8 @@ namespace IDLC.Tacama.Core.Api.Controllers
                     issuer: "http://localhost:5281",
                     audience: "http://localhost:5281",
                     claims: new List<Claim> {
-                        new Claim(SecurityClaimType.PersonId ,user.UserName)
+                        new Claim(SecurityClaimType.PersonId ,user.UserName),
+                        new Claim(SecurityClaimType.IdUsuario, response.IdPersona.ToString())
                     },
                     expires: DateTime.Now.AddMinutes(60),
                     signingCredentials: signinCredentials

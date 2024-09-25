@@ -55,9 +55,15 @@ namespace IDCL.AVGUST.SIP.Manager.Tacama
                 return null;
             }
             var canals = await _masterTacamaUnitOfWork._vendedorRepository.GetSpVendedorCanalesById(idEmpresa, idPersona);
+            var zonas = await _masterTacamaUnitOfWork._vendedorRepository.GetSpVendedorByZonasAsync(idEmpresa, idPersona);
+
             response = query;
             response.canales = canals;
+            response.zonas = zonas;
             return response;
         }
+
+        public async Task<List<usp_ApiListarDivision>> GetListDivisionesAsync(int idEmpresa) => 
+            await _masterTacamaUnitOfWork._vendedorRepository.GetSpDivisionAsync(idEmpresa);
     }
 }

@@ -30,6 +30,7 @@
         public DateTime? fecBaja { get; set; }
 
         public List<usp_ApiListarVendedorCanal> canales { get; set; }
+        public List<usp_ApiListarVendedoresZonai> zonas { get; set; }
 
     }
 }

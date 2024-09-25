@@ -9,14 +9,12 @@ using IDCL.AVGUST.SIP.ManagerDto.Tacama.Pedido;
 using IDCL.AVGUST.SIP.ManagerDto.Tacama.Pedido.Cmd;
 using IDCL.AVGUST.SIP.ManagerDto.Tacama.Persona;
 using IDCL.AVGUST.SIP.ManagerDto.Tacama.TramaDiario;
-using IDCL.AVGUST.SIP.Repository.UnitOfWork;
 using IDCL.AVGUST.SIP.Repository.UnitOfWork.Tacama;
 using IDCL.Tacama.Core.Entity;
 using Microsoft.AspNetCore.Http;
+using MINEDU.IEST.Estudiante.Inf_Utils.Constants;
 using MINEDU.IEST.Estudiante.Inf_Utils.Dtos;
 using MINEDU.IEST.Estudiante.Inf_Utils.Helpers;
-using System;
-using System.Threading.Tasks;
 
 namespace IDCL.AVGUST.SIP.Manager.Tacama
 {
@@ -139,11 +137,12 @@ namespace IDCL.AVGUST.SIP.Manager.Tacama
         public async Task<List<ListarPedidoNacional>> GetListarPedidoNacionalAsync(int idEmpresa, int idLocal, string codPedidoCad, bool todos, DateTime fecInicial, DateTime fecFinal,
             string Estado, string RazonSocial, bool Tipo, int idVendedor, string indCotPed)
         {
-
             try
             {
                 var query = await _tacamaUnitOfWork._pedidoTacamaRepository.ListarPedidoNacional(idEmpresa, idLocal, codPedidoCad, todos, fecInicial, fecFinal, Estado, RazonSocial, Tipo, idVendedor, indCotPed);
-                return query.Take(10).ToList();
+                return query.Take(20)
+                    .OrderByDescending(l => l.Fecha)
+                    .ToList();
             }
             catch (Exception ex)
             {
@@ -260,6 +259,42 @@ namespace IDCL.AVGUST.SIP.Manager.Tacama
 
         }
 
+
+        public async Task<bool> AddDuplicatePedidoAsync(int idPedidoOrigen)
+        {
+            var pedidoOrigen = _tacamaUnitOfWork._pedidoTacamaRepository.GetAll(l => l.IdPedido == idPedidoOrigen, includeProperties: "ExpPedidoDets").FirstOrDefault();
+            var usuarioId = _httpContextAccessor.HttpContext.User.Claims.FirstOrDefault(p => p.Type == SecurityClaimType.IdUsuario)?.Value;
+            var userName = _httpContextAccessor.HttpContext.User.Claims.FirstOrDefault(p => p.Type == SecurityClaimType.PersonId)?.Value;
+            if (pedidoOrigen == null)
+            {
+                return false;
+            }
+            var pedidoClon = new ExpPedidoCab();
+            pedidoClon = pedidoOrigen;
+
+
+            //Obtener Codigo Pedido 
+            var nroPedido = await _tacamaUnitOfWork._pedidoTacamaRepository.ObtenerNroPedido(10, 1, "P");
+
+            pedidoOrigen.Estado = "P";
+
+            pedidoOrigen.IdVendedor = Convert.ToInt32(usuarioId);
+            pedidoOrigen.UsuarioModificacion = pedidoOrigen.UsuarioRegistro = userName;
+
+
+            var tc = await _tacamaUnitOfWork._pedidoTacamaRepository.ObtenerTipoCambioPorDia("02", DateTime.Now.Date);
+            if (tc != null)
+                pedidoClon.TipCambio = tc.valVenta;
+
+            pedidoClon.IdPedido = 0;
+            pedidoClon.CodPedidoCad = string.Empty;
+
+            _tacamaUnitOfWork._pedidoTacamaRepository.Insert(pedidoOrigen);
+            await _tacamaUnitOfWork.SaveAsync();
+
+
+            throw new NotImplementedException();
+        }
 
         /// <summary>
         /// Retrieves a pedido for editing by its ID.
@@ -427,8 +462,6 @@ namespace IDCL.AVGUST.SIP.Manager.Tacama
         }
 
         #endregion
-
-
 
     }
 }

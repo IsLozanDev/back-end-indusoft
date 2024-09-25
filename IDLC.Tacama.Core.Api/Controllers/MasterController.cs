@@ -48,5 +48,21 @@ namespace IDLC.Tacama.Core.Api.Controllers
             return Ok(data);
         }
         #endregion
+
+
+        #region Divisones
+
+        [HttpGet("getdivisiones")]
+        public async Task<IActionResult> GetDivisiones()
+        {
+            int idEmpresa = 10;
+            var data = await _masterTacamaManager.GetListDivisionesAsync(idEmpresa);
+            if (data == null)
+            {
+                return NotFound("Divisiones no encontrado");
+            }
+            return Ok(data);
+        }
+        #endregion
     }
 }

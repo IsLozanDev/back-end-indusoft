@@ -6,7 +6,9 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.ChangeTracking.Internal;
 using MINEDU.IEST.Estudiante.Inf_Utils.Helpers.Dapper;
 using MINEDU.IEST.Estudiante.Repository.Base;
+using System;
 using System.Data;
+using System.Threading.Tasks;
 
 namespace IDCL.AVGUST.SIP.Repository.Tacama.Procedure
 {
@@ -21,6 +23,32 @@ namespace IDCL.AVGUST.SIP.Repository.Tacama.Procedure
             _database = database;
         }
 
+        public async Task<string[]> GetPedidoForEmailAsync(int idPedido)
+        {
+
+            var query = from a in _context.ExpPedidoCabs
+                        join fac in _context.Clientes on a.IdFacturar equals fac.IdPersona into fac_join
+                        from fac in fac_join.DefaultIfEmpty()
+                        select new
+                        {
+                            a,
+                            fac.IdPersonaNavigation
+                        };
+            var response = await query.FirstOrDefaultAsync();
+            if (response == null)
+            {
+                return Array.Empty<string>();
+            }
+
+            var result = new string[]
+            {
+                response.a.CodPedidoCad ?? string.Empty,
+                response.IdPersonaNavigation?.RazonSocial ?? string.Empty
+            };
+
+            return result;
+
+        }
         public async Task<ExpPedidoCab> GetPedidoAllByIdAsync(int id)
         {
             var response = new ExpPedidoCab();

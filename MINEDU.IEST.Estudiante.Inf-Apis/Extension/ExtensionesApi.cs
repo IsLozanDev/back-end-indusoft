@@ -23,6 +23,7 @@ using IDCL.Tacama.Core.Contexto.IDCL.Tacama.Core.Contexto;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using MINEDU.IEST.Estudiante.Inf_Utils.Helpers.Dapper;
+using MINEDU.IEST.Estudiante.Inf_Utils.Helpers.EmailSender;
 
 namespace MINEDU.IEST.Estudiante.Inf_Apis.Extension
 {
@@ -192,7 +193,8 @@ namespace MINEDU.IEST.Estudiante.Inf_Apis.Extension
             services.AddScoped<IReporteTacamaManager, ReporteTacamaManager>();
             services.AddScoped<ILocationTacamaManager, LocationTacamaManager>();
             services.AddScoped<ICustomerTacamaManager, CustomerTacamaManager>();
-            services.AddScoped<IMasterTacamaManager,MasterTacamaManager>();
+            services.AddScoped<IMasterTacamaManager, MasterTacamaManager>();
+            services.AddScoped<IEmailTacamaManager, EmailTacamaManager>();
             return services;
         }
 

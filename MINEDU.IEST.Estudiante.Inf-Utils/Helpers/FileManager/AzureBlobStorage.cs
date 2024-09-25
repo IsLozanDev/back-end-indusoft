@@ -12,6 +12,11 @@
             throw new NotImplementedException();
         }
 
+        public byte[] GetArrayFromBase64(string base64)
+        {
+            throw new NotImplementedException();
+        }
+
         public string GetBase64(Stream stream)
         {
             throw new NotImplementedException();

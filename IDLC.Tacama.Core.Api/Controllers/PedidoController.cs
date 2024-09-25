@@ -16,11 +16,13 @@ namespace IDLC.Tacama.Core.Api.Controllers
     {
         private readonly ILogger<PedidoController> _logger;
         private readonly ITacamaManager _tacamaManager;
+        private readonly IEmailTacamaManager _emailTacamaManager;
 
-        public PedidoController(ILogger<PedidoController> logger, ITacamaManager tacamaManager)
+        public PedidoController(ILogger<PedidoController> logger, ITacamaManager tacamaManager, IEmailTacamaManager emailTacamaManager)
         {
             _logger = logger;
             _tacamaManager = tacamaManager;
+            this._emailTacamaManager = emailTacamaManager;
         }
 
 
@@ -83,6 +85,25 @@ namespace IDLC.Tacama.Core.Api.Controllers
             var query = await _tacamaManager.GetPedidoForEditAsync(id);
             return Ok(query);
         }
-        
+
+        [HttpGet("sendEmail/{id}")]
+        public async Task<IActionResult> SendEmailAsync(int id)
+        {
+            try
+            {
+                var query = await _emailTacamaManager.SendEmailAsync(id);
+                if (!query)
+                {
+                    return NotFound("No se pudo enviar el correo");
+                }
+                return Ok("Correo enviado correctamente");
+            }
+            catch (Exception ex)
+            {
+                return NotFound("Error: " + ex.Message);
+                throw;
+            }
+        }
+
     }
 }

@@ -49,16 +49,16 @@ namespace MINEDU.IEST.Estudiante.Inf_Utils.Helpers.EmailSender
 
                 if (message.Attachments != null && message.Attachments.Any())
                 {
-                    byte[] fileBytes;
+                    //byte[] fileBytes;
                     foreach (var attachment in message.Attachments)
                     {
-                        using (var ms = new MemoryStream())
-                        {
-                            attachment.CopyTo(ms);
-                            fileBytes = ms.ToArray();
-                        }
+                        //using (var ms = new MemoryStream())
+                        //{
+                        //    attachment.CopyTo(ms);
+                        //    fileBytes = ms.ToArray();
+                        //}
 
-                        bodyBuilder.Attachments.Add(attachment.FileName, fileBytes, ContentType.Parse(attachment.ContentType));
+                        bodyBuilder.Attachments.Add(attachment.FileName, attachment.Content, ContentType.Parse(attachment.ContentType));
                     }
                 }
                 //emailMessage.Body = new TextPart(MimeKit.Text.TextFormat.Html)
@@ -97,16 +97,16 @@ namespace MINEDU.IEST.Estudiante.Inf_Utils.Helpers.EmailSender
 
                 if (message.Attachments != null && message.Attachments.Any())
                 {
-                    byte[] fileBytes;
+                    //byte[] fileBytes;
                     foreach (var attachment in message.Attachments)
                     {
-                        using (var ms = new MemoryStream())
-                        {
-                            attachment.CopyTo(ms);
-                            fileBytes = ms.ToArray();
-                        }
+                        //using (var ms = new MemoryStream())
+                        //{
+                        //    attachment.CopyTo(ms);
+                        //    fileBytes = ms.ToArray();
+                        //}
 
-                        bodyBuilder.Attachments.Add(attachment.FileName, fileBytes, ContentType.Parse(attachment.ContentType));
+                        bodyBuilder.Attachments.Add(attachment.FileName, attachment.Content, ContentType.Parse(attachment.ContentType));
                     }
                 }
                 //emailMessage.Body = new TextPart(MimeKit.Text.TextFormat.Html)

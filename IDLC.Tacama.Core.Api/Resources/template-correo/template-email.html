@@ -1,0 +1,133 @@
+
+<!doctype html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta charset="utf-8" />
+    <title>Email Template</title>
+    <style>
+        /* Global Resets */
+        body, table, td, a {
+            -webkit-text-size-adjust: 100%;
+            -ms-text-size-adjust: 100%;
+        }
+
+        table, td {
+            mso-table-lspace: 0pt;
+            mso-table-rspace: 0pt;
+        }
+
+        img {
+            -ms-interpolation-mode: bicubic;
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            width: 100% !important;
+            height: 100% !important;
+            font-family: Arial, sans-serif;
+        }
+
+        table {
+            border-collapse: collapse !important;
+        }
+
+        a {
+            text-decoration: none;
+        }
+
+        /* Responsive Styles */
+        @media screen and (max-width: 600px) {
+            .container {
+                width: 100% !important;
+            }
+
+            .content {
+                padding: 10px !important;
+            }
+        }
+
+        /* Light Mode */
+        body.light-mode {
+            background-color: #f6f6f6;
+            color: #000000;
+        }
+
+        .light-mode .main {
+            background-color: #ffffff;
+        }
+
+        .light-mode .btn-primary {
+            background-color: #3498db;
+            color: #ffffff;
+        }
+
+        /* Dark Mode */
+        body.dark-mode {
+            background-color: #333333;
+            color: #ffffff;
+        }
+
+        .dark-mode .main {
+            background-color: #444444;
+        }
+
+        .dark-mode .btn-primary {
+            background-color: #1abc9c;
+            color: #ffffff;
+        }
+    </style>
+</head>
+<body class="light-mode">
+    <table role="presentation" border="0" cellpadding="0" cellspacing="0" width="100%">
+        <tr>
+            <td align="center">
+                <table role="presentation" border="0" cellpadding="0" cellspacing="0" class="container" width="600">
+                    <tr>
+                        <td class="content" style="padding: 20px;">
+                            <table role="presentation" border="0" cellpadding="0" cellspacing="0" width="100%">
+                                <tr>
+                                    <td align="left">
+                                        <img src="https://i0.wp.com/grupojhosefarias.com/wp-content/uploads/2022/06/logotipo-horizontal-positivo-e1656252332648.png" alt="Logo" style="max-width: 150px; height: auto;">
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="main" style="padding: 20px; border-radius: 5px;">
+                                        <h3 style="text-align: center; 
+                                                    background-color:Highlight; 
+                                                    color:azure; 
+                                                    padding:10px 10px 10px 10px;
+                                                    letter-spacing:15px">COTIZACION</h3>
+                                        <p><b>Estimados Señores:</b></p>
+                                        <p>Se adjunta la cotizacion en formato PDF.</p>
+                                        <p><b>Nro:</b>&emsp;&emsp;&emsp;&emsp;{nro-cotizacion}</p>
+                                        <p><b>Empresa:</b>&emsp;{nombre-empresa}</p>
+
+                                        <p>Atentamente:</p>
+                                        <p>TEAM Tacama</p>
+                                    </td>
+                                </tr>
+                            </table>
+                            <div class="footer" style="text-align: center; margin-top: 15px;">
+                                <p style="font-size:small">Powered by Plataforma de Tacama</p>
+                                <p style="font-size:small">Nota: Este correo electrónico fue enviado automáticamente, por favor no responda.</p>
+
+                            </div>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+    </table>
+    <script>
+        // Toggle between light and dark mode
+        function toggleMode() {
+            document.body.classList.toggle('dark-mode');
+            document.body.classList.toggle('light-mode');
+        }
+    </script>
+</body>
+</html>
+
+
