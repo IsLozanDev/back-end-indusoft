@@ -67,6 +67,36 @@ namespace IDCL.AVGUST.SIP.Repository.Tacama.Maestro
             var qResult = await _dapper.GetAll<usp_ApiListarDivision>(procedureName, parameters, CommandType.StoredProcedure);
             return qResult;
         }
+        
+        public async Task<List<usp_ApiListarCanalVentaAlmacen>> GetSpCanalAlmacences(int idCanalVenta, int idEmpresa)
+        {
+
+            var procedureName = "usp_ApiListarCanalVentaAlmacen";
+            var parameters = new DynamicParameters();
+            parameters.Add("idCanalVenta", idCanalVenta, DbType.Int32, ParameterDirection.Input);
+            parameters.Add("idEmpresa", idEmpresa, DbType.Int32, ParameterDirection.Input);
+
+            var qResult = await _dapper.GetAll<usp_ApiListarCanalVentaAlmacen>(procedureName, parameters, CommandType.StoredProcedure);
+            return qResult;
+        }
+        
+        
+        public async Task<List<usp_ApiListarVendedoresEstablecimientoZona>> GetSpEstablicimientoZonas(int idEmpresa, int idPersona, int idEstablecimiento)
+        {
+
+            var procedureName = "usp_ApiListarVendedoresEstablecimientoZona";
+            var parameters = new DynamicParameters();
+            parameters.Add("idEmpresa", idEmpresa, DbType.Int32, ParameterDirection.Input);
+            parameters.Add("idPersona", idPersona, DbType.Int32, ParameterDirection.Input);
+            parameters.Add("idEstablecimiento", idEstablecimiento, DbType.Int32, ParameterDirection.Input);
+
+            var qResult = await _dapper.GetAll<usp_ApiListarVendedoresEstablecimientoZona>(procedureName, parameters, CommandType.StoredProcedure);
+            return qResult;
+        }
+
+
+
+
 
 
 

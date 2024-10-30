@@ -6,9 +6,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.ChangeTracking.Internal;
 using MINEDU.IEST.Estudiante.Inf_Utils.Helpers.Dapper;
 using MINEDU.IEST.Estudiante.Repository.Base;
-using System;
 using System.Data;
-using System.Threading.Tasks;
 
 namespace IDCL.AVGUST.SIP.Repository.Tacama.Procedure
 {
@@ -53,51 +51,61 @@ namespace IDCL.AVGUST.SIP.Repository.Tacama.Procedure
         {
             var response = new ExpPedidoCab();
 
-            var query = from a in _context.ExpPedidoCabs.Include(b => b.ExpPedidoDets)
-                        join m in _context.Monedas on a.IdMoneda equals m.IdMoneda into m_join
-                        from m in m_join.DefaultIfEmpty()
-                        join fp in _context.ParTablas on a.IdFormaPago equals fp.IdParTabla into fp_join
-                        from fp in fp_join.DefaultIfEmpty()
-                        where a.IdPedido == id
-                        select new
-                        {
-                            a,
-                            m,
-                            fp
-                        };
-
-            var result = await query.FirstOrDefaultAsync();
-            if (result != null)
+            try
             {
-                response = result.a;
-                response.MonedaDescription = result.m.DesMoneda;
-                response.FormaPagoDescription = result?.fp?.Nombre;
+                var query = from a in _context.ExpPedidoCabs.Include(b => b.ExpPedidoDets)
+                            join m in _context.Monedas on a.IdMoneda equals m.IdMoneda into m_join
+                            from m in m_join.DefaultIfEmpty()
+                            join fp in _context.ParTablas on a.IdFormaPago equals fp.IdParTabla into fp_join
+                            from fp in fp_join.DefaultIfEmpty()
+                            where a.IdPedido == id
+                            select new
+                            {
+                                a,
+                                m,
+                                fp
+                            };
+
+                var result = await query.FirstOrDefaultAsync();
+                if (result != null)
+                {
+                    response = result.a;
+                    response.MonedaDescription = result.m.DesMoneda;
+                    response.FormaPagoDescription = result?.fp?.Nombre;
+                    var details = from det in response.ExpPedidoDets
+                                  join a in _context.ArticuloServs on det.IdArticulo equals a.IdArticulo into a_join
+                                  from a in a_join.DefaultIfEmpty()
+                                  join almacen in _context.Almacens on det.IdAlmacen equals almacen.IdAlmacen into almacen_join
+                                  from almacen in almacen_join.DefaultIfEmpty()
+                                  select new
+                                  {
+                                      det,
+                                      a,
+                                      almacen
+                                  };
+                    var resultDetails = details.ToList();
+
+                    response.ExpPedidoDets.ForEach(det =>
+                    {
+                        var item = resultDetails.FirstOrDefault(x => x.det.IdArticulo == det.IdArticulo);
+                        if (item != null)
+                        {
+                            det.CodArticulo = item.a.CodArticulo;
+                            det.AlmacenText = item?.almacen?.DesAlmacen;
+                        }
+                    });
+                }
+                else
+                {
+                    return null;
+                }
+                return response;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
             }
 
-            var details = from det in response.ExpPedidoDets
-                          join a in _context.ArticuloServs on det.IdArticulo equals a.IdArticulo into a_join
-                          from a in a_join.DefaultIfEmpty()
-                          join almacen in _context.Almacens on det.IdAlmacen equals almacen.IdAlmacen into almacen_join
-                          from almacen in almacen_join.DefaultIfEmpty()
-                          select new
-                          {
-                              det,
-                              a,
-                              almacen
-                          };
-            var resultDetails = details.ToList();
-
-            response.ExpPedidoDets.ForEach(det =>
-            {
-                var item = resultDetails.FirstOrDefault(x => x.det.IdArticulo == det.IdArticulo);
-                if (item != null)
-                {
-                    det.CodArticulo = item.a.CodArticulo;
-                    det.AlmacenText = item?.almacen?.DesAlmacen;
-                }
-            });
-
-            return response;
         }
 
         public async Task<List<ListarPedidoNacional>> ListarPedidoNacional(int idEmpresa, int idLocal, string codPedidoCad, bool todos, DateTime fecInicial, DateTime fecFinal,

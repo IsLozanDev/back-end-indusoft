@@ -55,7 +55,20 @@ namespace IDCL.AVGUST.SIP.Manager.Tacama
                 return null;
             }
             var canals = await _masterTacamaUnitOfWork._vendedorRepository.GetSpVendedorCanalesById(idEmpresa, idPersona);
+
+            foreach (var l in canals)
+            {
+                var almacenes = await _masterTacamaUnitOfWork._vendedorRepository.GetSpCanalAlmacences(l.idCanalVenta, idEmpresa);
+                l.almacenes = almacenes;
+            }
+
             var zonas = await _masterTacamaUnitOfWork._vendedorRepository.GetSpVendedorByZonasAsync(idEmpresa, idPersona);
+
+            foreach (var l in zonas)
+            {
+                var zonasEst = await _masterTacamaUnitOfWork._vendedorRepository.GetSpEstablicimientoZonas(idEmpresa, idPersona, l.idEstablecimiento);
+                l.EstZonas = zonasEst;
+            }
 
             response = query;
             response.canales = canals;
@@ -63,7 +76,7 @@ namespace IDCL.AVGUST.SIP.Manager.Tacama
             return response;
         }
 
-        public async Task<List<usp_ApiListarDivision>> GetListDivisionesAsync(int idEmpresa) => 
+        public async Task<List<usp_ApiListarDivision>> GetListDivisionesAsync(int idEmpresa) =>
             await _masterTacamaUnitOfWork._vendedorRepository.GetSpDivisionAsync(idEmpresa);
     }
 }

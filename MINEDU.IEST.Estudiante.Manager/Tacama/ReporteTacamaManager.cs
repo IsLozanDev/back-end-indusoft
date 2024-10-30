@@ -41,6 +41,9 @@ namespace IDCL.AVGUST.SIP.Manager.Tacama
             var userName = _httpContextAccessor.HttpContext.User.Claims.FirstOrDefault(p => p.Type == "UserName")?.Value;
 
             var model = await _tacamaUnitOfWork._pedidoTacamaRepository.GetSpPedidoCabNacional(idEmpresa, idLocal, idPedido);
+
+
+
             model.detalle = await _tacamaUnitOfWork._pedidoTacamaRepository.GetSpPedidoNacionalDet(idEmpresa, idLocal, idPedido);
             model.cuentas = await _tacamaUnitOfWork._pedidoTacamaRepository.GetSpListarCuentasParaDoc(idEmpresa);
 

@@ -7,9 +7,12 @@
         public int idLocal { get; set; }
         public int idEstablecimiento { get; set; }
         public string DesEstablecimientos { get; set; }
-        public int idZona { get; set; }
-        public string DesZona { get; set; }
-        public string idCCostos { get; set; }
-        public int Porcentaje { get; set; }
+        //public int idZona { get; set; }
+        //public string DesZona { get; set; }
+        //public string idCCostos { get; set; }
+        //public int Porcentaje { get; set; }
+
+        public List<usp_ApiListarVendedoresEstablecimientoZona> EstZonas { get; set; }
+
     }
 }

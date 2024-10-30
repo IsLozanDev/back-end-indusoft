@@ -17,6 +17,7 @@ using IDCL.AVGUST.SIP.Repository.Tacama;
 using IDCL.AVGUST.SIP.Repository.Tacama.Location;
 using IDCL.AVGUST.SIP.Repository.Tacama.Maestro;
 using IDCL.AVGUST.SIP.Repository.Tacama.Procedure;
+using IDCL.AVGUST.SIP.Repository.Tacama.TacamCustomer;
 using IDCL.AVGUST.SIP.Repository.UnitOfWork;
 using IDCL.AVGUST.SIP.Repository.UnitOfWork.Tacama;
 using IDCL.Tacama.Core.Contexto.IDCL.Tacama.Core.Contexto;
@@ -172,6 +173,15 @@ namespace MINEDU.IEST.Estudiante.Inf_Apis.Extension
             services.AddScoped<IUbigeoTacamaRepository, UbigeoTacamaRepository>();
             services.AddScoped<IVendedorRepository, VendedorRepository>();
             services.AddScoped<IPartablaTacamaRepository, PartablaTacamaRepository>();
+
+            //Customers
+
+            services.AddScoped<IClienteContactoRepository, ClienteContactoRepository>();
+            services.AddScoped<IClienteAgenciaEnvioRepository, ClienteAgenciaEnvioRepository>();
+            services.AddScoped<IClienteRepLegalRepository, ClienteRepLegalRepository>();
+            services.AddScoped<IClienteAseguradoraRepository, ClienteAseguradoraRepository>();
+            services.AddScoped<IClienteAvalRepository, ClienteAvalRepository>();
+            services.AddScoped<IPersonaDireccionTacamaRepository, PersonaDireccionTacamaRepository>();
 
 
             services.AddScoped<TacamaUnitOfWork>();

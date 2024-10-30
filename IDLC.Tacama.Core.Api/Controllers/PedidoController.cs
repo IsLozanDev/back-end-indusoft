@@ -37,7 +37,7 @@ namespace IDLC.Tacama.Core.Api.Controllers
             Estado = Estado ?? "%";
             RazonSocial = RazonSocial ?? "%";
 
-            var data = await _tacamaManager.GetListarPedidoNacionalAsync(idEmpresa, idLocal, codPedidoCad, false, fecInicial, fecFinal, Estado, RazonSocial, false, idVendedor, indCotPed);
+            var data = await _tacamaManager.GetListarPedidoNacionalAsync(idEmpresa, idLocal, codPedidoCad, todos, fecInicial, fecFinal, Estado, RazonSocial, Tipo, idVendedor, indCotPed);
 
             return Ok(data);
         }

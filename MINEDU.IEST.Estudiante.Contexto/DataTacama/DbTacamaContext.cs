@@ -23,7 +23,6 @@ namespace IDCL.Tacama.Core.Contexto.IDCL.Tacama.Core.Contexto
         public virtual DbSet<TramaHistorico> TramaHistoricos { get; set; }
         public virtual DbSet<UsuarioTacama> Usuarios { get; set; }
         public virtual DbSet<UsuarioRol> UsuarioRols { get; set; }
-        public virtual DbSet<Cliente> Clientes { get; set; }
         public virtual DbSet<ExpPedidoCab> ExpPedidoCabs { get; set; }
         public virtual DbSet<ExpPedidoDet> ExpPedidoDets { get; set; }
         public virtual DbSet<PersonaTacama> Personas { get; set; }
@@ -54,6 +53,7 @@ namespace IDCL.Tacama.Core.Contexto.IDCL.Tacama.Core.Contexto
         public virtual DbSet<ParTabla> ParTablas { get; set; }
 
         // Customers
+        public virtual DbSet<Cliente> Clientes { get; set; }
         public virtual DbSet<ClienteAgenciaEnvio> ClienteAgenciaEnvios { get; set; } = null!;
         public virtual DbSet<ClienteAseguradora> ClienteAseguradoras { get; set; } = null!;
         public virtual DbSet<ClienteAsociado> ClienteAsociados { get; set; } = null!;

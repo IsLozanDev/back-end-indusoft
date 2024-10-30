@@ -140,9 +140,7 @@ namespace IDCL.AVGUST.SIP.Manager.Tacama
             try
             {
                 var query = await _tacamaUnitOfWork._pedidoTacamaRepository.ListarPedidoNacional(idEmpresa, idLocal, codPedidoCad, todos, fecInicial, fecFinal, Estado, RazonSocial, Tipo, idVendedor, indCotPed);
-                return query.Take(20)
-                    .OrderByDescending(l => l.Fecha)
-                    .ToList();
+                return query.OrderByDescending(l => l.Fecha).ToList();
             }
             catch (Exception ex)
             {
@@ -303,12 +301,24 @@ namespace IDCL.AVGUST.SIP.Manager.Tacama
         /// <returns>A task that represents the asynchronous operation. The task result contains the pedido details.</returns>
         public async Task<GetPedidoTacamaDto> GetPedidoForEditAsync(int idPedido)
         {
-            var query = await _tacamaUnitOfWork._pedidoTacamaRepository.GetPedidoAllByIdAsync(idPedido);
-            var cliente = await this.GetCanalandConditionByIdClienteAsync(query.IdFacturar);
-            var response = _mapper.Map<GetPedidoTacamaDto>(query);
-            response.TipoDescription = response.Tipo.Value ? "Exportación" : "Nacional";
-            response.clienteHeader = cliente;
-            return response;
+            try
+            {
+                var query = await _tacamaUnitOfWork._pedidoTacamaRepository.GetPedidoAllByIdAsync(idPedido);
+
+                if (query != null)
+                {
+                    var cliente = await this.GetCanalandConditionByIdClienteAsync(query.IdFacturar);
+                    var response = _mapper.Map<GetPedidoTacamaDto>(query);
+                    response.TipoDescription = response.Tipo.Value ? "Exportación" : "Nacional";
+                    response.clienteHeader = cliente;
+                    return response;
+                }
+                return null;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
         }
 
         #endregion
