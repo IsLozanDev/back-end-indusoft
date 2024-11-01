@@ -135,11 +135,11 @@ namespace IDCL.AVGUST.SIP.Manager.Tacama
         #region Gestion - Pedidos
 
         public async Task<List<ListarPedidoNacional>> GetListarPedidoNacionalAsync(int idEmpresa, int idLocal, string codPedidoCad, bool todos, DateTime fecInicial, DateTime fecFinal,
-            string Estado, string RazonSocial, bool Tipo, int idVendedor, string indCotPed)
+            string Estado, string RazonSocial, bool Tipo, int idVendedor, string indCotPed, int idCanalVenta)
         {
             try
             {
-                var query = await _tacamaUnitOfWork._pedidoTacamaRepository.ListarPedidoNacional(idEmpresa, idLocal, codPedidoCad, todos, fecInicial, fecFinal, Estado, RazonSocial, Tipo, idVendedor, indCotPed);
+                var query = await _tacamaUnitOfWork._pedidoTacamaRepository.ListarPedidoNacional(idEmpresa, idLocal, codPedidoCad, todos, fecInicial, fecFinal, Estado, RazonSocial, Tipo, idVendedor, indCotPed, idCanalVenta);
                 return query.OrderByDescending(l => l.Fecha).ToList();
             }
             catch (Exception ex)

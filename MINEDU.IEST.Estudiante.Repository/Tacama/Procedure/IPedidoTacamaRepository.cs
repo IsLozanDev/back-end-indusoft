@@ -21,7 +21,7 @@ namespace IDCL.AVGUST.SIP.Repository.Tacama.Procedure
 
         Task<List<ListarPedidoNacional>> ListarPedidoNacional(int idEmpresa, int idLocal, 
             string codPedidoCad, bool todos, DateTime fecInicial, DateTime fecFinal, string Estado, 
-            string RazonSocial, bool Tipo, int idVendedor, string indCotPed);
+            string RazonSocial, bool Tipo, int idVendedor, string indCotPed, int idCanalVenta);
         
         Task<string> ObtenerNroPedido(int idEmpresa, int idLocal, string indCotPed);
         

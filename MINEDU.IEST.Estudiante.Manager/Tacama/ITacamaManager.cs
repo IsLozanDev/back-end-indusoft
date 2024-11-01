@@ -17,7 +17,7 @@ namespace IDCL.AVGUST.SIP.Manager.Tacama
         Task<List<GetTramaDiarioDto>> GetTramaListByIdPersona(int idPersona);
         Task<GetTramaDiarioDto> AddTramaDiaria(GetTramaDiarioDto model);
         Task<List<ListarPedidoNacional>> GetListarPedidoNacionalAsync(int idEmpresa, int idLocal, string codPedidoCad, bool todos, 
-            DateTime fecInicial, DateTime fecFinal, string Estado, string RazonSocial, bool Tipo, int idVendedor, string indCotPed);
+            DateTime fecInicial, DateTime fecFinal, string Estado, string RazonSocial, bool Tipo, int idVendedor, string indCotPed, int idCanalVenta);
         Task<List<GetArticuloTacamaDto>> GetArticulosTacamaAsync(string filter);
         Task<List<GetClienteTacamaDto>> GetClientesFilterAsync(string filter);
         Task<CmdPedidoTacamaDto> SavePedido(CmdPedidoTacamaDto model);

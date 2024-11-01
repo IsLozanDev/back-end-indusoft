@@ -26,10 +26,9 @@ namespace IDLC.Tacama.Core.Api.Controllers
         }
 
 
-        [HttpGet("GetListPedidoNacional/{idEmpresa:int}/{idLocal:int}/{codPedidoCad?}/{todos:bool}/{fecInicial:DateTime}/{fecFinal:DateTime}/{Estado?}/{RazonSocial?}/{Tipo:bool}/{idVendedor:int}/{indCotPed}")]
-
+        [HttpGet("GetListPedidoNacional/{idEmpresa:int}/{idLocal:int}/{codPedidoCad?}/{todos:bool}/{fecInicial:DateTime}/{fecFinal:DateTime}/{Estado?}/{RazonSocial?}/{Tipo:bool}/{idVendedor:int}/{indCotPed}/{idCanalVenta:int}")]
         public async Task<IActionResult> GetGeoByIdPersona(int idEmpresa, int idLocal, string? codPedidoCad, bool todos, DateTime fecInicial, DateTime fecFinal,
-            string? Estado, string? RazonSocial, bool Tipo, int idVendedor, string indCotPed)
+            string? Estado, string? RazonSocial, bool Tipo, int idVendedor, string indCotPed, int idCanalVenta)
 
         {
 
@@ -37,7 +36,7 @@ namespace IDLC.Tacama.Core.Api.Controllers
             Estado = Estado ?? "%";
             RazonSocial = RazonSocial ?? "%";
 
-            var data = await _tacamaManager.GetListarPedidoNacionalAsync(idEmpresa, idLocal, codPedidoCad, todos, fecInicial, fecFinal, Estado, RazonSocial, Tipo, idVendedor, indCotPed);
+            var data = await _tacamaManager.GetListarPedidoNacionalAsync(idEmpresa, idLocal, codPedidoCad, todos, fecInicial, fecFinal, Estado, RazonSocial, Tipo, idVendedor, indCotPed, idCanalVenta);
 
             return Ok(data);
         }

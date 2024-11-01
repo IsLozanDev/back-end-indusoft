@@ -109,9 +109,9 @@ namespace IDCL.AVGUST.SIP.Repository.Tacama.Procedure
         }
 
         public async Task<List<ListarPedidoNacional>> ListarPedidoNacional(int idEmpresa, int idLocal, string codPedidoCad, bool todos, DateTime fecInicial, DateTime fecFinal,
-            string Estado, string RazonSocial, bool Tipo, int idVendedor, string indCotPed)
+            string Estado, string RazonSocial, bool Tipo, int idVendedor, string indCotPed, int idCanalVenta)
         {
-            var procedureName = "usp_ListarPedidoNacional";
+            var procedureName = "usp_ApiListarPedidoNacional";
             var parameters = new DynamicParameters();
             parameters.Add("idEmpresa", idEmpresa, DbType.Int32, ParameterDirection.Input);
             parameters.Add("idLocal", idLocal, DbType.Int32, ParameterDirection.Input);
@@ -124,6 +124,7 @@ namespace IDCL.AVGUST.SIP.Repository.Tacama.Procedure
             parameters.Add("Tipo", Tipo, DbType.Boolean, ParameterDirection.Input);
             parameters.Add("idVendedor", idVendedor, DbType.Int32, ParameterDirection.Input);
             parameters.Add("indCotPed", indCotPed, DbType.String, ParameterDirection.Input);
+            parameters.Add("idCanalVenta", idCanalVenta, DbType.Int32, ParameterDirection.Input);
 
             var qResult = await _database.GetAll<ListarPedidoNacional>(procedureName, parameters, CommandType.StoredProcedure);
             return qResult;
