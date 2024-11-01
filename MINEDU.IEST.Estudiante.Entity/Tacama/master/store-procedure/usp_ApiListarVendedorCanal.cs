@@ -7,6 +7,7 @@
         public int idListaPrecio { get; set; }
         public string nombreCanal { get; set; }
         public string nomListaPrecio { get; set; }
+        public string Mercado { get; set; }
         public List<usp_ApiListarCanalVentaAlmacen> almacenes { get; set; }
 
 

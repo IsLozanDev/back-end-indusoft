@@ -1,6 +1,9 @@
 ﻿using IDCL.AVGUST.SIP.Manager.Tacama;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System;
+using System.Threading.Tasks;
+using static iText.StyledXmlParser.Jsoup.Select.Evaluator;
 
 namespace IDLC.Tacama.Core.Api.Controllers
 {
@@ -47,7 +50,20 @@ namespace IDLC.Tacama.Core.Api.Controllers
 
         #region process-client
 
+        [HttpGet("getclientes/{idEmpresa:int}/{RazonSocial}/{NroDocumento}/{activo}/{inactivo}/{CanalVenta:int}/{idVendedor:int}/{Zona:int}")]
+        public async Task<IActionResult> GetListClienteAsync(int idEmpresa, string RazonSocial, string NroDocumento, bool activo, bool inactivo, int CanalVenta, int idVendedor, int Zona)
+        {
+            RazonSocial = RazonSocial ?? string.Empty;
+            NroDocumento = NroDocumento ?? string.Empty;
 
+            var data = await _customerTacamaManager.GetListClientesParametrosAsync(idEmpresa, RazonSocial, NroDocumento, activo, inactivo, CanalVenta, idVendedor, Zona);
+            if (data == null)
+            {
+                return NotFound("Cliente no encontrado");
+            }
+            return Ok(data);
+
+        }
         #endregion
     }
 }

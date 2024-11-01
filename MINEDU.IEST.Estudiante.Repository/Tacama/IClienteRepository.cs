@@ -9,5 +9,6 @@ namespace IDCL.AVGUST.SIP.Repository.Tacama
         Task<usp_ApiRecuperarClientePorId> GetClienteByIdAsync(int idEmpresa, int idPersona);
         Task<List<usp_ApiListarClienteContacto>> GetClienteContactoAsync(int idEmpresa, int idPersona);
         Task<List<usp_ApiListarPersonaDireccion>> GetClienteDireccionAsync(int idPersona);
+        Task<List<usp_ListarClientePorParametro>> GetListClientesByParameters(int idEmpresa, string RazonSocial, string NroDocumento, bool activo, bool inactivo, int CanalVenta, int idVendedor, int Zona);
     }
 }

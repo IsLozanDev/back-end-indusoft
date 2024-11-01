@@ -1,6 +1,8 @@
 ﻿using AutoMapper;
 using IDCL.AVGUST.SIP.Entity.Tacama.Cliente.store_procedure;
 using IDCL.AVGUST.SIP.Repository.UnitOfWork.Tacama;
+using System;
+using System.Threading.Tasks;
 
 namespace IDCL.AVGUST.SIP.Manager.Tacama
 {
@@ -35,6 +37,12 @@ namespace IDCL.AVGUST.SIP.Manager.Tacama
 
             return response;
 
+        }
+
+        public async Task<List<usp_ListarClientePorParametro>> GetListClientesParametrosAsync(int idEmpresa, string RazonSocial, string NroDocumento, bool activo, bool inactivo, int CanalVenta, int idVendedor, int Zona)
+        {
+            var query = await _customerTacamaUnitOfWork._clienteRepository.GetListClientesByParameters(idEmpresa, RazonSocial, NroDocumento, activo, inactivo, CanalVenta, idVendedor, Zona);
+            return query;
         }
     }
 }
