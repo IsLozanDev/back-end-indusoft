@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using IDCL.AVGUST.SIP.Entity.Tacama.Cliente.store_procedure;
+using IDCL.AVGUST.SIP.ManagerDto.Tacama.Cliente;
 using IDCL.AVGUST.SIP.Repository.UnitOfWork.Tacama;
 using System;
 using System.Threading.Tasks;
@@ -10,11 +11,14 @@ namespace IDCL.AVGUST.SIP.Manager.Tacama
     {
         private readonly IMapper _mapper;
         private readonly CustomerTacamaUnitOfWork _customerTacamaUnitOfWork;
+        private readonly TacamaUnitOfWork _tacamaUnitOfWork;
 
-        public CustomerTacamaManager(IMapper mapper, CustomerTacamaUnitOfWork customerTacamaUnitOfWork)
+        public CustomerTacamaManager(IMapper mapper, CustomerTacamaUnitOfWork customerTacamaUnitOfWork,
+            TacamaUnitOfWork tacamaUnitOfWork)
         {
             _mapper = mapper;
             _customerTacamaUnitOfWork = customerTacamaUnitOfWork;
+            this._tacamaUnitOfWork = tacamaUnitOfWork;
         }
 
         public async Task<usp_ApiRecuperarClientePorId> GetClienteSpByIdAsync(int idPersona)
@@ -44,5 +48,29 @@ namespace IDCL.AVGUST.SIP.Manager.Tacama
             var query = await _customerTacamaUnitOfWork._clienteRepository.GetListClientesByParameters(idEmpresa, RazonSocial, NroDocumento, activo, inactivo, CanalVenta, idVendedor, Zona);
             return query;
         }
+
+
+        #region Crud - Clientes
+
+        public async Task<GetClienteByIdDto> GetClienteByIdAsync(int idCliente)
+        {
+            try
+            {
+                var response = new GetClienteByIdDto();
+                var query = _customerTacamaUnitOfWork._clienteRepository.GetAll(l => l.IdPersona == idCliente, includeProperties: "IdPersonaNavigation").FirstOrDefault();
+                if (query == null)
+                {
+                    return null;
+                }
+                response = _mapper.Map<GetClienteByIdDto>(query);
+                return response;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        #endregion
     }
 }

@@ -2,7 +2,6 @@
 {
     public  class GetDireccionTacamaDto
     {
-        public int IdPersona { get; set; }
         public int IdDireccion { get; set; }
         public string DescripcionSucursal { get; set; } = null!;
         public string? CodUbigeo { get; set; }

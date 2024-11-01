@@ -64,6 +64,18 @@ namespace IDLC.Tacama.Core.Api.Controllers
             return Ok(data);
 
         }
+
+        [HttpGet("getClienteById/{idCliente:int}")]
+        public async Task<IActionResult> GetClienteByIdAsync(int idCliente)
+        {
+
+            var data = await _customerTacamaManager.GetClienteByIdAsync(idCliente);
+            if (data == null)
+            {
+                return NotFound("Cliente no encontrado");
+            }
+            return Ok(data);
+        }
         #endregion
     }
 }

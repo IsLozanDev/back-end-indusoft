@@ -28,6 +28,11 @@ namespace IDCL.AVGUST.SIP.Manager.MappingDto
                 .ForMember(dest => dest.IdListaPrecio, source => source.MapFrom(s => s.CanalesVenta.FirstOrDefault().IdListaPrecioNav.IdListaPrecio))
                 .ForMember(dest => dest.NombreListaPrecio, source => source.MapFrom(s => s.CanalesVenta.FirstOrDefault().IdListaPrecioNav.Nombre))
                 .ForMember(dest => dest.Direccion, source => source.MapFrom(s => s.DireccionCompleta));
+
+            CreateMap<PersonaTacama, GetClienteByIdDto>();
+            CreateMap<Cliente, GetClienteByIdDto>();
+
+
             #endregion
 
             #region Maestros

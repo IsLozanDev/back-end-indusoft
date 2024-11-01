@@ -12,5 +12,6 @@
         public int codUniMedAlmacen { get; set; }
         public string nomUMedida { get; set; }
         public string indAfectoIgv { get; set; }
+        public decimal porigv { get; set; }
     }
 }
