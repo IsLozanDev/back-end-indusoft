@@ -1,5 +1,6 @@
 ﻿using IDCL.AVGUST.SIP.Entity.Tacama.Cliente.store_procedure;
 using IDCL.AVGUST.SIP.ManagerDto.Tacama.Cliente;
+using IDCL.AVGUST.SIP.ManagerDto.Tacama.Cliente.Cmd;
 
 namespace IDCL.AVGUST.SIP.Manager.Tacama
 {
@@ -8,5 +9,6 @@ namespace IDCL.AVGUST.SIP.Manager.Tacama
         Task<GetClienteByIdDto> GetClienteByIdAsync(int idCliente);
         Task<usp_ApiRecuperarClientePorId> GetClienteSpByIdAsync(int idPersona);
         Task<List<usp_ListarClientePorParametro>> GetListClientesParametrosAsync(int idEmpresa, string RazonSocial, string NroDocumento, bool activo, bool inactivo, int CanalVenta, int idVendedor, int Zona);
+        Task<int> SaveClienteAsync(CmdPersonaClienteDto model);
     }
 }

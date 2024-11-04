@@ -464,13 +464,7 @@
         MODULOS_TRANSVERSALES = 160,
         MODULO_TECNICO = 169
     }
-    public enum EnumTIPO_LICENCIA
-    {
-        SALUD = 161,
-        VIAJE = 162,
-        ECONÓMICO = 163,
-        OTROS = 164
-    }
+    
     public enum EnumTIPO_TIEMPO_LICENCIA
     {
         UN_PERIODO = 165,

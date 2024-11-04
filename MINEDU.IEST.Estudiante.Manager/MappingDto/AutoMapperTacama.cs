@@ -2,10 +2,12 @@
 using IDCL.AVGUST.SIP.Entity.Tacama.SpEntity;
 using IDCL.AVGUST.SIP.ManagerDto.Tacama.Articulo;
 using IDCL.AVGUST.SIP.ManagerDto.Tacama.Cliente;
+using IDCL.AVGUST.SIP.ManagerDto.Tacama.Cliente.Cmd;
 using IDCL.AVGUST.SIP.ManagerDto.Tacama.Location;
 using IDCL.AVGUST.SIP.ManagerDto.Tacama.Maestro;
 using IDCL.AVGUST.SIP.ManagerDto.Tacama.Maestro.CondicioVenta;
 using IDCL.Tacama.Core.Entity;
+using IDCL.Tacama.Core.Entity.Tacama.Customer;
 using IDCL.Tacama.Core.Entity.Tacama.master;
 
 namespace IDCL.AVGUST.SIP.Manager.MappingDto
@@ -31,6 +33,11 @@ namespace IDCL.AVGUST.SIP.Manager.MappingDto
 
             CreateMap<PersonaTacama, GetClienteByIdDto>();
             CreateMap<Cliente, GetClienteByIdDto>();
+
+            CreateMap<PersonaTacama, CmdPersonaClienteDto>().ReverseMap();
+            CreateMap<Cliente, CmdClienteDto>().ReverseMap();
+            CreateMap<PersonaDireccion, CmdPersonaDireccionDto>().ReverseMap();
+            CreateMap<ClienteContacto, CmdClienteContactoDto>().ReverseMap();
 
 
             #endregion

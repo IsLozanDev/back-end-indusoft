@@ -1,7 +1,9 @@
 ﻿using IDCL.AVGUST.SIP.Manager.Tacama;
+using IDCL.AVGUST.SIP.ManagerDto.Tacama.Cliente.Cmd;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System;
+using System.Net;
 using System.Threading.Tasks;
 using static iText.StyledXmlParser.Jsoup.Select.Evaluator;
 
@@ -42,7 +44,8 @@ namespace IDLC.Tacama.Core.Api.Controllers
         public async Task<IActionResult> GetClienteSpById(int id)
         {
             var data = await _customerTacamaManager.GetClienteSpByIdAsync(id);
-            if (data == null) {
+            if (data == null)
+            {
                 return NotFound("Cliente no encontrado");
             }
             return Ok(data);
@@ -65,16 +68,39 @@ namespace IDLC.Tacama.Core.Api.Controllers
 
         }
 
-        [HttpGet("getClienteById/{idCliente:int}")]
-        public async Task<IActionResult> GetClienteByIdAsync(int idCliente)
-        {
+        //[HttpGet("getClienteById/{idCliente:int}")]
+        //public async Task<IActionResult> GetClienteByIdAsync(int idCliente)
+        //{
 
-            var data = await _customerTacamaManager.GetClienteByIdAsync(idCliente);
-            if (data == null)
+        //    var data = await _customerTacamaManager.GetClienteByIdAsync(idCliente);
+        //    if (data == null)
+        //    {
+        //        return NotFound("Cliente no encontrado");
+        //    }
+        //    return Ok(data);
+        //}
+
+        [HttpPost("saveCliente")]
+        public async Task<IActionResult> SaveClienteAsync(CmdPersonaClienteDto model)
+        {
+            try
             {
-                return NotFound("Cliente no encontrado");
+                if (ModelState.IsValid)
+                {
+                    var resp = await _customerTacamaManager.SaveClienteAsync(model);
+                    return Ok(resp);
+                }
+                else
+                {
+                    var errors = ModelState.Values.SelectMany(v => v.Errors).Select(e => e.ErrorMessage).ToList();
+                    return NotFound(new { message =  errors });
+                }
             }
-            return Ok(data);
+            catch (Exception ex)
+            {
+                return NotFound(ex.Message);
+                throw ex;
+            }
         }
         #endregion
     }
