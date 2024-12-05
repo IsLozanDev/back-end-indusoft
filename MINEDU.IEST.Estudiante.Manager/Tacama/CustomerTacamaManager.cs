@@ -111,7 +111,6 @@ namespace IDCL.AVGUST.SIP.Manager.Tacama
                         c.FechaRegistro = c.FechaModificacion = fecha;
                         c.IdEmpresa = idEmpresa;
                     });
-
                 });
 
                 persona.PersonaDireccions = direccion;
@@ -139,7 +138,6 @@ namespace IDCL.AVGUST.SIP.Manager.Tacama
                 throw ex;
             }
         }
-
 
         #endregion
     }
