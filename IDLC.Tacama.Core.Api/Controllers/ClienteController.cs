@@ -46,7 +46,7 @@ namespace IDLC.Tacama.Core.Api.Controllers
             var data = await _customerTacamaManager.GetClienteSpByIdAsync(id);
             if (data == null)
             {
-                return NotFound("Cliente no encontrado");
+                return NotFound(new { msg = "Cliente no encontrado" });
             }
             return Ok(data);
         }
@@ -93,7 +93,7 @@ namespace IDLC.Tacama.Core.Api.Controllers
                 else
                 {
                     var errors = ModelState.Values.SelectMany(v => v.Errors).Select(e => e.ErrorMessage).ToList();
-                    return NotFound(new { message =  errors });
+                    return NotFound(new { message = errors });
                 }
             }
             catch (Exception ex)
